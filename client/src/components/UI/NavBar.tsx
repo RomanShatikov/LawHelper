@@ -9,7 +9,7 @@ import {
   NavItem,
 } from 'reactstrap';
 
-export default function NavBar(args: any) {
+export default function NavBar(args: any): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -21,32 +21,50 @@ export default function NavBar(args: any) {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
-          <NavItem>
-              <NavLink className='nav-link' to="/cabinet">Личный кабинет</NavLink>
+            <NavItem>
+              <NavLink className="nav-link" to="/cabinet">
+                Личный кабинет
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/">Главная</NavLink>
+              <NavLink className="nav-link" to="/">
+                Главная
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/signup">Зарегистрироваться</NavLink>
+              <NavLink className="nav-link" to="/signup">
+                Зарегистрироваться
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/login">Войти</NavLink>
+              <NavLink className="nav-link" to="/login">
+                Войти
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/theme">Темы</NavLink>
+              <NavLink className="nav-link" to="/theme">
+                Темы
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/logout">Выйти</NavLink>
+              <NavLink className="nav-link" to="/logout">
+                Выйти
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/admin">Мой кабинет</NavLink>
+              <NavLink className="nav-link" to="/admin">
+                Мой кабинет
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/question">Страница вопросов</NavLink>
+              <NavLink className="nav-link" to="/question">
+                Страница вопросов
+              </NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className='nav-link' to="/answer">Страница ответов</NavLink>
+              <NavLink className="nav-link" to="/answer">
+                Страница ответов
+              </NavLink>
             </NavItem>
             {/* <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
