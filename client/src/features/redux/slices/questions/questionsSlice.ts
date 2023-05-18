@@ -13,3 +13,7 @@ export const questionsSlice = createSlice({
     },
   },
 });
+
+export const { setQuestions} = questionsSlice.actions;
+
+export default questionsSlice.reducer;

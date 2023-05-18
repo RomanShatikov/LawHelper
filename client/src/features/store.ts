@@ -1,6 +1,7 @@
 import type { AnyAction, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { useReducer } from 'react';
+import questionReducer from './redux/slices/questions/questionsSlice';
 
 export const store = configureStore({
   reducer: {
