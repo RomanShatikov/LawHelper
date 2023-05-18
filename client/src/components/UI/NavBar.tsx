@@ -16,7 +16,7 @@ export default function NavBar(args: any): JSX.Element {
 
   return (
     <div>
-      <Navbar className="NavBar" color="dark" container="fluid" dark="true" {...args}>
+      <Navbar className="NavBar" color="dark" container="fluid" dark={true} {...args}>
         <NavbarBrand href="/">LawHelper</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

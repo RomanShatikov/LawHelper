@@ -3,35 +3,33 @@ import SearchInputQuest from '../UI/SearchInputQuest';
 import { Button } from 'reactstrap';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import { getAllQuestions } from '../../features/redux/slices/questions/questionsThunk';
+import { QuestionType } from '../../types/questions/questionType';
 
-export default function QuestionsPage():JSX.Element {
-  const [questions, setQuestions] = React.useState<any[]>(['dasfa', 'afaafdsa']);
-
+export default function QuestionsPage(): JSX.Element {
+  const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
   const dispatch = useAppDispatch();
 
-  const { questions } = useAppSelector((state) => state.questions);
-
   useEffect(() => {
-    dispatch(questionsThunk)
-  });
+    dispatch(getAllQuestions());
+  }, []);
 
   return (
     <>
-      <form>
+      <div>
         <SearchInputQuest />
         <Button type="submit" variant="outlined">
           Найти
         </Button>
-      </form>
-      {questions.map((question) => (
-        <div>
-          <div>{question.title}</div>
+      </div>
+      {questions?.map((question) => (
+        <div key={question?.title}>
+          <div>{question?.title}</div>
           <Button type="button" variant="outlined">
             <GradeIcon />
           </Button>
         </div>
       ))}
-      {/* <Chat /> */}
     </>
   );
 }
