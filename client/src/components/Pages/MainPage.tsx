@@ -1,5 +1,9 @@
 import React from 'react';
+import NavBar from '../UI/NavBar';
 
 export default function MainPage() {
-  return <div>Главная страница</div>;
+  return <div>
+    <NavBar/>
+    <
+  </div>;
 }
