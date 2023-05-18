@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Question.init(
     {
-      title: DataTypes.STRING,
+      title: DataTypes.TEXT,
       answer: DataTypes.TEXT,
       themeId: DataTypes.INTEGER,
       views: DataTypes.STRING,
