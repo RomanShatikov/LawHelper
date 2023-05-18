@@ -5,3 +5,5 @@ export type QuestionType = {
   themeId: number;
   views: string;
 }; // описали тип модели Question
+
+

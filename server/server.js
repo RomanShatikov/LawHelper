@@ -30,6 +30,6 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', indexRouter);
+app.use('/api', indexRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));
