@@ -5,4 +5,4 @@ export default function LoginPage(): JSX.Element {
   return (
     <LoginForm/>
   )
-}
+};
