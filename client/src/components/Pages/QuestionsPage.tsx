@@ -11,13 +11,15 @@ import {
 import { QuestionType } from '../../types/questions/questionType';
 import { Stack } from '@mui/material';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import MediaCard from '../UI/MediaCard';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
   const [pageCount, setPageCount] = React.useState(1);
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  console.log('==========', location);
 
   useEffect(() => {
     axios('/questionsPageCount')
@@ -44,7 +46,12 @@ export default function QuestionsPage(): JSX.Element {
       </form>
       <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
       {questions?.map((question) => (
-        <MediaCard key={question?.id} title={question?.title} id={question?.id} views={question?.views}/>
+        <MediaCard
+          key={question?.id}
+          title={question?.title}
+          id={question?.id}
+          views={question?.views}
+        />
       ))}
     </>
   );
