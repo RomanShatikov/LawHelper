@@ -36,13 +36,15 @@ export default function QuestionsPage(): JSX.Element {
 
   return (
     <>
-      <SearchInputQuest />
-      <Button type="submit" variant="outlined">
-        Найти
-      </Button>
+      <form>
+        <SearchInputQuest />
+        <Button type="submit" variant="outlined">
+          Найти
+        </Button>
+      </form>
       <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
       {questions?.map((question) => (
-        <MediaCard key={question?.id} title={question?.title} id={question?.id} />
+        <MediaCard key={question?.id} title={question?.title} id={question?.id} views={question?.views}/>
       ))}
     </>
   );
