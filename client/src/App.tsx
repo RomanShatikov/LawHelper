@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import AdminPage from './components/Pages/AdminPage';
@@ -10,19 +10,35 @@ import CabinetPage from './components/Pages/CabinetPage';
 import ThemePage from './components/Pages/ThemePage';
 import QuestionsPage from './components/Pages/QuestionsPage';
 import AnswerPage from './components/Pages/AnswerPage';
+import { useAppDispatch, useAppSelector } from './features/hooks';
+import PrivateRoute from './components/HOC/PrivateRouter';
+import { checkUserThunk } from './features/redux/slices/user/thunkActions';
 
 function App(): JSX.Element {
+  const user = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(checkUserThunk());
+  }, []);
+
   return (
     <Container>
       <NavBar />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="/cabinet" element={<CabinetPage/>} />
+        <Route element={<PrivateRoute isAllowed={user.status === 'guest'} />}>
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
+        <Route
+          element={<PrivateRoute isAllowed={user.status === 'logged'} redirectPath="/login" />}
+        >
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/cabinet" element={<CabinetPage />} />
+        </Route>
         <Route path="/theme" element={<ThemePage />} />
-        <Route path="/question" element={<QuestionsPage/>} />
+        <Route path="/question" element={<QuestionsPage />} />
         <Route path="/answer" element={<AnswerPage />} />
       </Routes>
     </Container>

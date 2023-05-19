@@ -2,10 +2,12 @@ import type { AnyAction, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
 import { useReducer } from 'react';
 import questionReducer from './redux/slices/questions/questionsSlice';
+import userReducer from './redux/slices/user/userSlice'
 
 export const store = configureStore({
   reducer: {
     question: questionReducer,
+    user: userReducer,
   },
 });
 

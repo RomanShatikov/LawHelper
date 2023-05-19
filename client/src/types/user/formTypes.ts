@@ -3,7 +3,7 @@ export type LoginForm = {
     password: string;
   };
   
-  export type SignUpForm = {
+  export type SignUpFormType = {
     firstName: string;
     lastName: string;
     email: string;
