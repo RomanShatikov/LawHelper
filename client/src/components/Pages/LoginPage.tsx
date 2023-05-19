@@ -1,5 +1,9 @@
-import React from 'react';
+import React from 'react'
+import LoginForm from '../UI/LoginForm'
 
 export default function LoginPage(): JSX.Element {
-  return <div>Страница входа на сайт</div>;
+  return (
+    <LoginForm/>
+  )
+>>>>>>> refs/remotes/origin/main
 }
