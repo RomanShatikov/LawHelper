@@ -6,8 +6,8 @@ module.exports = {
     const arr = [];
     for (let i = 0; i < 20; i++) {
       arr.push({
-        title: faker.lorem.lines({ min: 10, max: 20 }),
-        answer: faker.lorem.lines({ min: 10, max: 20 }),
+        title: faker.lorem.lines({ min: 1, max: 2 }),
+        answer: faker.lorem.lines({ min: 1, max: 2 }),
         themeId: Math.floor(Math.random() * 20) + 1,
         views: Math.floor(Math.random() * 10000) + 1,
       });
