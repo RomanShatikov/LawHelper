@@ -13,6 +13,7 @@ export default function ThemePage():JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
   const [pageCount, setPageCount] = React.useState(1);
   const dispatch = useAppDispatch();
+  
 
   useEffect(() => {
     axios('/themesPageCount')
