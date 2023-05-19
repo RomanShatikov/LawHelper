@@ -5,8 +5,8 @@ const indexRouter = express.Router();
 
 indexRouter.get('/firstQuestions', async (req, res) => {
   try {
-    const questions = await Question.findAll({
-      order: [['views', 'DESC']],
+     const questions = await Question.findAll({
+       order: [['views', 'DESC']],
       limit: 5,
     });
     res.send(questions);
@@ -32,7 +32,7 @@ indexRouter.post('/paginationQuestions', async (req, res) => {
       order: [['views', 'DESC']],
       offset: (page - 1) * 5,
       limit: 5,
-    });
+     });
     res.send(questions);
   } catch (err) {
     console.log(err);

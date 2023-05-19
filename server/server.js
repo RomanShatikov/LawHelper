@@ -4,11 +4,12 @@ const cors = require('cors');
 const session = require('express-session');
 const store = require('session-file-store');
 const indexRouter = require('./routes/indexRouter');
+const authRouter = require('./routes/authRouter');
 
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001
 
 const FileStore = store(session);
 
@@ -24,12 +25,13 @@ const sessionConfig = {
   },
 };
 
-app.use(cors({ credentials: true, origin: true }));
 app.use(session(sessionConfig));
+app.use(cors({ credentials: true, origin: true }));
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', indexRouter);
+app.use('/api/auth', authRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

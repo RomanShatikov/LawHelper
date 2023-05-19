@@ -1,9 +1,8 @@
 import React from 'react'
+import LoginForm from '../UI/LoginForm'
 
-export default function LoginPage() {
+export default function LoginPage(): JSX.Element {
   return (
-    <div>
-      Страница входа на сайт
-    </div>
+    <LoginForm/>
   )
 }
