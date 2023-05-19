@@ -11,9 +11,10 @@ import { useNavigate } from 'react-router-dom';
 type MediaCardProps = {
   title: string;
   id: number;
+  views: number;
 };
 
-export default function MediaCard({ title, id }: MediaCardProps) {
+export default function MediaCard({ title, id, views }: MediaCardProps) {
   const addFavoritesHandler = () => {};
   const navigate = useNavigate();
   return (
@@ -24,7 +25,10 @@ export default function MediaCard({ title, id }: MediaCardProps) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={(e) => navigate(`/answer/${id}`)}>
+        <Button
+          size="small"
+          onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+        >
           Узнать больше
         </Button>
         <Button size="small" onClick={addFavoritesHandler}>
