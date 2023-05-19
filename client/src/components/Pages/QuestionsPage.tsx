@@ -11,6 +11,8 @@ import {
 import { QuestionType } from '../../types/questions/questionType';
 import { Stack } from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import MediaCard from '../UI/MediaCard';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
@@ -23,12 +25,9 @@ export default function QuestionsPage(): JSX.Element {
       .catch((err) => console.log(err));
   }, []);
 
-
   useEffect(() => {
     dispatch(getFirstQuestions());
   }, []);
-
-  const addFavoritesHandler = () => {};
 
   const paginationHandler = (e) => {
     const page = Number(e.target.textContent);
@@ -43,12 +42,7 @@ export default function QuestionsPage(): JSX.Element {
       </Button>
       <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
       {questions?.map((question) => (
-        <div key={question?.title}>
-          <div>{question?.title}</div>
-          <Button type="button" variant="outlined" onClick={addFavoritesHandler}>
-            <GradeIcon />
-          </Button>
-        </div>
+        <MediaCard key={question?.id} title={question?.title} id={question?.id} />
       ))}
     </>
   );
