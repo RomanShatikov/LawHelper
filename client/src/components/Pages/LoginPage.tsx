@@ -5,5 +5,4 @@ export default function LoginPage(): JSX.Element {
   return (
     <LoginForm/>
   )
->>>>>>> refs/remotes/origin/main
-}
+};
