@@ -5,8 +5,22 @@ const indexRouter = express.Router();
 
 indexRouter.get('/firstQuestions', async (req, res) => {
   try {
-     const questions = await Question.findAll({
-       order: [['views', 'DESC']],
+    const questions = await Question.findAll({
+      order: [['views', 'DESC']],
+      limit: 5,
+    });
+    res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/firstQuestions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const questions = await Question.findAll({
+      where: { themeId: id },
+      order: [['views', 'DESC']],
       limit: 5,
     });
     res.send(questions);
@@ -27,13 +41,23 @@ indexRouter.get('/questionsPageCount', async (req, res) => {
 
 indexRouter.post('/paginationQuestions', async (req, res) => {
   try {
-    const { page } = req.body;
-    const questions = await Question.findAll({
-      order: [['views', 'DESC']],
-      offset: (page - 1) * 5,
-      limit: 5,
-     });
-    res.send(questions);
+    const { id, page } = req.body;
+    if (id) {
+      const questions = await Question.findAll({
+        where: { themeId: id },
+        order: [['views', 'DESC']],
+        offset: (page - 1) * 5,
+        limit: 5,
+      });
+      res.send(questions);
+    } else {
+      const questions = await Question.findAll({
+        order: [['views', 'DESC']],
+        offset: (page - 1) * 5,
+        limit: 5,
+      });
+      res.send(questions);
+    }
   } catch (err) {
     console.log(err);
   }

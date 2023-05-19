@@ -11,15 +11,15 @@ import {
 import { QuestionType } from '../../types/questions/questionType';
 import { Stack } from '@mui/material';
 import axios from 'axios';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MediaCard from '../UI/MediaCard';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
   const [pageCount, setPageCount] = React.useState(1);
   const dispatch = useAppDispatch();
-  const location = useLocation();
-  console.log('==========', location);
+  const { id } = useParams();
+  console.log('-----------id', id);
 
   useEffect(() => {
     axios('/questionsPageCount')
@@ -28,12 +28,12 @@ export default function QuestionsPage(): JSX.Element {
   }, []);
 
   useEffect(() => {
-    dispatch(getFirstQuestions());
+    dispatch(getFirstQuestions(Number(id)));
   }, []);
 
   const paginationHandler = (e) => {
     const page = Number(e.target.textContent);
-    dispatch(getQuestionsByPage(page));
+    dispatch(getQuestionsByPage(Number(id), page));
   };
 
   return (
