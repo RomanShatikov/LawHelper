@@ -43,7 +43,7 @@ export default function ThemePage():JSX.Element {
           Найти
         </Button>
       </form>
-      <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
+      {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
       {themes?.map((theme) => (
         <MediaCard key={theme?.id} title={theme?.title} id={theme?.id} />
       ))}

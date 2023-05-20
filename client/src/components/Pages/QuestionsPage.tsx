@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import SearchInputQuest from '../UI/SearchInputQuest';
-import { Button } from 'reactstrap';
+import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
@@ -18,33 +18,39 @@ export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
   const [pageCount, setPageCount] = React.useState(1);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  console.log('-----------id', id);
+  const { id, title } = useParams();
 
   useEffect(() => {
-    axios('/questionsPageCount')
+    axios
+      .post('/questionsPageCount', { id, title })
       .then((res) => setPageCount(res.data.pageCount))
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-    dispatch(getFirstQuestions(Number(id)));
+    axios
+      .post('/questionsPageCount', { id, title })
+      .then((res) => setPageCount(res.data.pageCount))
+      .catch((err) => console.log(err));
+  }, [title]);
+
+  useEffect(() => {
+    dispatch(getFirstQuestions(Number(id), title));
   }, []);
+
+  useEffect(() => {
+    dispatch(getFirstQuestions(Number(id), title));
+  }, [title]);
 
   const paginationHandler = (e) => {
     const page = Number(e.target.textContent);
-    dispatch(getQuestionsByPage(Number(id), page));
+    dispatch(getQuestionsByPage(Number(id), page, title));
   };
 
   return (
     <>
-      <form>
-        <SearchInputQuest />
-        <Button type="submit" variant="outlined">
-          Найти
-        </Button>
-      </form>
-      <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
+      <SearchInputQuest />
+      {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
       {questions?.map((question) => (
         <MediaCard
           key={question?.id}
