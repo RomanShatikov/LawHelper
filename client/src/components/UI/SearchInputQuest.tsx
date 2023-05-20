@@ -1,4 +1,5 @@
 import { Autocomplete, Stack, TextField } from '@mui/material';
+import axios from 'axios';
 import React from 'react';
 
 const top100Films = [
@@ -7,7 +8,32 @@ const top100Films = [
   { title: 'The Godfather: Part II', year: 1974 },
 ];
 
-export default function SearchInputQuest():JSX.Element {
+export default function SearchInputQuest(): JSX.Element {
+  const [questions, setQuestions] = React.useState([]);
+  const [input, setInput] = React.useState('');
+
+  React.useEffect(() => {
+    axios('/preSearchQuestions')
+      .then((res) => setQuestions(res.data))
+      .catch((e) => console.log(e));
+  }, []);
+
+  console.log(questions);
+
+  React.useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      axios
+        .post('/searchQuestions', { title: input })
+        .then((res) => setQuestions(res.data))
+        .catch((e) => console.log(e));
+    }, 300);
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [input]);
+
+  console.log(questions);
+
   return (
     <Stack>
       <Autocomplete
@@ -15,8 +41,16 @@ export default function SearchInputQuest():JSX.Element {
         selectOnFocus
         clearOnBlur
         freeSolo
-        options={top100Films.map((option) => option.title)}
-        renderInput={(params) => <TextField {...params} label="Вопрос" name="title" />}
+        options={questions.map((option) => option.title)}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Вопрос"
+            name="title"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+        )}
       />
     </Stack>
   );

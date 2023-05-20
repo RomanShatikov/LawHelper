@@ -1,25 +1,13 @@
 const express = require('express');
-const { Question, Theme } = require('../db/models');
+const { Question, Theme, Sequelize } = require('../db/models');
+
+const { Op } = Sequelize;
 
 const indexRouter = express.Router();
 
 indexRouter.get('/firstQuestions', async (req, res) => {
   try {
     const questions = await Question.findAll({
-      order: [['views', 'DESC']],
-      limit: 5,
-    });
-    res.send(questions);
-  } catch (err) {
-    console.log(err);
-  }
-});
-
-indexRouter.get('/firstQuestions/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-    const questions = await Question.findAll({
-      where: { themeId: id },
       order: [['views', 'DESC']],
       limit: 5,
     });
@@ -103,6 +91,53 @@ indexRouter.post('/paginationThemes', async (req, res) => {
       limit: 5,
     });
     res.send(themes);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/preSearchQuestions', async (req, res) => {
+  try {
+    const questions = await Question.findAll({
+      order: [['views', 'DESC']],
+      attributes: ['title'],
+      limit: 3,
+    });
+    console.log('-------------', questions);
+    res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.post('/searchQuestions', async (req, res) => {
+  try {
+    const { title } = req.body;
+    console.log('-------------', title);
+    const questions = await Question.findAll({
+      where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), {
+        [Op.iLike]: `%${title.trim().toLowerCase()}%`,
+      }),
+      order: [['views', 'DESC']],
+      attributes: ['title'],
+      limit: 3,
+    });
+    console.log('-------------', questions);
+    res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/firstQuestions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const questions = await Question.findAll({
+      where: { themeId: id },
+      order: [['views', 'DESC']],
+      limit: 5,
+    });
+    res.send(questions);
   } catch (err) {
     console.log(err);
   }
