@@ -13,6 +13,7 @@ export default function ThemePage():JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
   const [pageCount, setPageCount] = React.useState(1);
   const dispatch = useAppDispatch();
+  
 
   useEffect(() => {
     axios('/themesPageCount')
@@ -42,7 +43,7 @@ export default function ThemePage():JSX.Element {
           Найти
         </Button>
       </form>
-      <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
+      {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
       {themes?.map((theme) => (
         <MediaCard key={theme?.id} title={theme?.title} id={theme?.id} />
       ))}
