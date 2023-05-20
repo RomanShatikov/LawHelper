@@ -22,7 +22,8 @@ export default function QuestionsPage(): JSX.Element {
   console.log('-----------id', id);
 
   useEffect(() => {
-    axios('/questionsPageCount')
+    axios
+      .post('/questionsPageCount', { id })
       .then((res) => setPageCount(res.data.pageCount))
       .catch((err) => console.log(err));
   }, []);
@@ -44,7 +45,8 @@ export default function QuestionsPage(): JSX.Element {
           Найти
         </Button>
       </form>
-      <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} />
+
+      {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
       {questions?.map((question) => (
         <MediaCard
           key={question?.id}

@@ -29,11 +29,22 @@ indexRouter.get('/firstQuestions/:id', async (req, res) => {
   }
 });
 
-indexRouter.get('/questionsPageCount', async (req, res) => {
+indexRouter.post('/questionsPageCount', async (req, res) => {
   try {
-    const questions = await Question.findAll();
-    const pageCount = Math.floor(questions.length / 5);
-    res.send({ pageCount });
+    const { id } = req.body;
+    if (id) {
+      const questions = await Question.findAll({
+        where: { themeId: id },
+      });
+      const pageCount = Math.floor(questions.length / 5);
+      console.log('---------pageCount withId', pageCount);
+      res.send({ pageCount });
+    } else {
+      const questions = await Question.findAll();
+      const pageCount = Math.floor(questions.length / 5);
+      console.log('---------pageCount withoutId', pageCount);
+      res.send({ pageCount });
+    }
   } catch (err) {
     console.log(err);
   }
