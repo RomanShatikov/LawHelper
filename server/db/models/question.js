@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.TEXT,
       answer: DataTypes.TEXT,
       themeId: DataTypes.INTEGER,
-      views: DataTypes.STRING,
+      views: DataTypes.INTEGER,
     },
     {
       sequelize,

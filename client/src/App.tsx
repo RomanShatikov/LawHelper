@@ -38,8 +38,10 @@ function App(): JSX.Element {
           <Route path="/cabinet" element={<CabinetPage />} />
         </Route>
         <Route path="/theme" element={<ThemePage />} />
+        <Route path="/theme/:title" element={<ThemePage />} />
         <Route path="/question" element={<QuestionsPage />} />
-        <Route path='/theme/:id' element={<QuestionsPage />} />
+        <Route path="/theme/:id" element={<QuestionsPage />} />
+        <Route path="/question/:title" element={<QuestionsPage />} />
         <Route path="/answer/:id" element={<AnswerPage />} />
       </Routes>
     </Container>

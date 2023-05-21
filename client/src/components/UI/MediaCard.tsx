@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 type MediaCardProps = {
   title: string;
@@ -23,6 +24,14 @@ export default function MediaCard({ title, id, views }: MediaCardProps) {
         <Typography gutterBottom variant="h5" component="div">
           {title}
         </Typography>
+        {views && (
+          <div>
+            <VisibilityIcon />
+            <Typography gutterBottom variant="h6" component="div">
+              {views}
+            </Typography>
+          </div>
+        )}
       </CardContent>
       <CardActions>
         <Button
