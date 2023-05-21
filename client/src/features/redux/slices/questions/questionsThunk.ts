@@ -15,7 +15,6 @@ export const getFirstQuestions: ThunkActionCreater<QuestionType['id'] | Question
       console.log('------------res', res.data);
       dispatch(setQuestions(res.data));
     } else {
-      console.log('------nothing-----', title, id);
       const res = await axios<QuestionType[]>('/firstQuestions');
       dispatch(setQuestions(res.data));
     }
