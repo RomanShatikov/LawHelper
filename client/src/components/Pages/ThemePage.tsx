@@ -48,9 +48,9 @@ export default function ThemePage(): JSX.Element {
       <SearchInputQuest />
       <SearchInputTheme />
       {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
-      {themes?.map((theme) => (
+      {themes.length ? themes?.map((theme) => (
         <MediaCard key={theme?.id} title={theme?.title} id={theme?.id} />
-      ))}
+      )) : <p>Тут ничего нет, попробуйте поискать другую тему</p> }
     </>
   );
 }

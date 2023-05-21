@@ -51,14 +51,18 @@ export default function QuestionsPage(): JSX.Element {
     <>
       <SearchInputQuest />
       {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
-      {questions?.map((question) => (
-        <MediaCard
-          key={question?.id}
-          title={question?.title}
-          id={question?.id}
-          views={question?.views}
-        />
-      ))}
+      {questions.length ? (
+        questions?.map((question) => (
+          <MediaCard
+            key={question?.id}
+            title={question?.title}
+            id={question?.id}
+            views={question?.views}
+          />
+        ))
+      ) : (
+        <p>Тут ничего нет, попробуйте поискать другую тему</p>
+      )}
     </>
   );
 }
