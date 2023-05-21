@@ -42,7 +42,7 @@ export default function QuestionsPage(): JSX.Element {
     dispatch(getFirstQuestions(Number(id), title));
   }, [title]);
 
-  const paginationHandler = (e) => {
+  const paginationHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const page = Number(e.target.textContent);
     dispatch(getQuestionsByPage(Number(id), page, title));
   };

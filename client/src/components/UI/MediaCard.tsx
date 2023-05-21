@@ -13,9 +13,10 @@ type MediaCardProps = {
   title: string;
   id: number;
   views: number;
+  feedback: string;
 };
 
-export default function MediaCard({ title, id, views }: MediaCardProps) {
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
   const addFavoritesHandler = () => {};
   const navigate = useNavigate();
   return (
@@ -31,6 +32,11 @@ export default function MediaCard({ title, id, views }: MediaCardProps) {
               {views}
             </Typography>
           </div>
+        )}
+        {feedback && (
+          <Typography gutterBottom variant="h6" component="div">
+            {feedback}
+          </Typography>
         )}
       </CardContent>
       <CardActions>

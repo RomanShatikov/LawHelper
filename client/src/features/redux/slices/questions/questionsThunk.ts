@@ -3,7 +3,7 @@ import type { ThunkActionCreater } from '../../../store';
 import { setQuestions } from './questionsSlice';
 import { QuestionType } from '../../../../types/questions/questionType';
 
-export const getFirstQuestions: ThunkActionCreater<QuestionType['id'] | QuestionType['title']> =
+export const getFirstQuestions: ThunkActionCreater<QuestionType['id'], QuestionType['title']> =
   (id, title) => async (dispatch) => {
     if (id) {
       console.log('------id-----', id);
@@ -20,19 +20,22 @@ export const getFirstQuestions: ThunkActionCreater<QuestionType['id'] | Question
     }
   };
 
-export const getQuestionsByPage: ThunkActionCreater<QuestionType['id'] | number> =
-  (id, page, title) => async (dispatch) => {
-    if (id) {
-      console.log('------id-----', id);
-      const res = await axios.post<QuestionType[]>('/paginationQuestions', { id, page });
-      dispatch(setQuestions(res.data));
-    } else if (title) {
-      console.log('------title-----', title);
-      const res = await axios.post<QuestionType[]>('/paginationQuestions', { title, page });
-      dispatch(setQuestions(res.data));
-    } else {
-      console.log('------nothing-----');
-      const res = await axios.post<QuestionType[]>('/paginationQuestions', { page });
-      dispatch(setQuestions(res.data));
-    }
-  };
+export const getQuestionsByPage: ThunkActionCreater<
+  QuestionType['id'],
+  number,
+  QuestionType['title']
+> = (id, page, title) => async (dispatch) => {
+  if (id) {
+    console.log('------id-----', id);
+    const res = await axios.post<QuestionType[]>('/paginationQuestions', { id, page });
+    dispatch(setQuestions(res.data));
+  } else if (title) {
+    console.log('------title-----', title);
+    const res = await axios.post<QuestionType[]>('/paginationQuestions', { title, page });
+    dispatch(setQuestions(res.data));
+  } else {
+    console.log('------nothing-----');
+    const res = await axios.post<QuestionType[]>('/paginationQuestions', { page });
+    dispatch(setQuestions(res.data));
+  }
+};
