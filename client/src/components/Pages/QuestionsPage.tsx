@@ -54,9 +54,7 @@ export default function QuestionsPage(): JSX.Element {
       {questions?.map((question) => (
         <MediaCard
           key={question?.id}
-          title={question?.title}
-          id={question?.id}
-          views={question?.views}
+         question={question}
         />
       ))}
     </>

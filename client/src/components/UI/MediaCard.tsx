@@ -2,32 +2,36 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useNavigate } from 'react-router-dom';
+import type { QuestionType } from '../../types/questions/questionType';
+import { useAppDispatch } from '../../features/hooks';
+import { setCurrentQuestion } from '../../features/redux/slices/questions/questionsSlice';
 
 type MediaCardProps = {
-  title: string;
-  id: number;
-  views: number;
+  question: QuestionType;
 };
 
-export default function MediaCard({ title, id, views }: MediaCardProps) {
-  const addFavoritesHandler = () => {};
+export default function MediaCard({ question }: MediaCardProps): JSX.Element {
+  const addFavoritesHandler = (): void => {};
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {title}
+          {question.title}
         </Typography>
       </CardContent>
       <CardActions>
         <Button
           size="small"
-          onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+          onClick={() => {
+            dispatch(setCurrentQuestion(question));
+            question.views ? navigate(`/answer/${question.id}`) : navigate(`/theme/${question.id}`);
+          }}
         >
           Узнать больше
         </Button>

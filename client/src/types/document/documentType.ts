@@ -3,3 +3,8 @@ export type DocumentType = {
   questionId: number;
   urlDoc: string;
 };
+
+export type DocumentSliceType = {
+  documents: DocumentType[] | [];
+  currentDocument: DocumentType | null;
+};

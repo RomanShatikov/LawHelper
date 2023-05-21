@@ -1,5 +1,5 @@
 const express = require('express');
-const { Question, Theme, Sequelize } = require('../db/models');
+const { Question, Theme, Document, Sequelize } = require('../db/models');
 
 const { Op } = Sequelize;
 
@@ -183,6 +183,26 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
       limit: 5,
     });
     res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/answer/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const answer = await Question.findOne({ where: { id } });
+    res.send(answer);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/document/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const document = await Document.findOne({ where: { id } });
+    res.send(document);
   } catch (err) {
     console.log(err);
   }
