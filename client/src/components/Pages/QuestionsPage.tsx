@@ -16,7 +16,7 @@ import MediaCard from '../UI/MediaCard';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
-  const [pageCount, setPageCount] = React.useState(1);
+  const [pageCount, setPageCount] = React.useState(0);
   const dispatch = useAppDispatch();
   const { id, title } = useParams();
 

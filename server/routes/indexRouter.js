@@ -24,7 +24,7 @@ indexRouter.post('/questionsPageCount', async (req, res) => {
       const questions = await Question.findAll({
         where: { themeId: id },
       });
-      const pageCount = Math.floor(questions.length / 5);
+      const pageCount = Math.ceil(questions.length / 5);
       res.send({ pageCount });
     } else if (title) {
       const questions = await Question.findAll({
@@ -32,12 +32,11 @@ indexRouter.post('/questionsPageCount', async (req, res) => {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
       });
-      const pageCount = Math.floor(questions.length / 5);
-      console.log('--------PageCount', pageCount);
+      const pageCount = Math.ceil(questions.length / 5);
       res.send({ pageCount });
     } else {
       const questions = await Question.findAll();
-      const pageCount = Math.floor(questions.length / 5);
+      const pageCount = Math.ceil(questions.length / 5);
       res.send({ pageCount });
     }
   } catch (err) {
@@ -79,22 +78,48 @@ indexRouter.post('/paginationQuestions', async (req, res) => {
   }
 });
 
-indexRouter.get('/themesPageCount', async (req, res) => {
+indexRouter.post('/themesPageCount', async (req, res) => {
   try {
-    const themes = await Theme.findAll();
-    const pageCount = Math.floor(themes.length / 5);
-    res.send({ pageCount });
+    const { title } = req.body;
+    console.log(title);
+    if (title) {
+      const themes = await Theme.findAll({
+        where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), {
+          [Op.like]: `%${title.trim().toLowerCase()}%`,
+        }),
+      });
+      console.log(themes.length);
+      const pageCount = Math.ceil(themes.length / 5);
+      console.log('--------', pageCount);
+      res.send({ pageCount });
+    } else {
+      const themes = await Theme.findAll();
+      const pageCount = Math.ceil(themes.length / 5);
+      res.send({ pageCount });
+    }
   } catch (err) {
     console.log(err);
   }
 });
 
-indexRouter.get('/firstThemes', async (req, res) => {
+indexRouter.post('/firstThemes', async (req, res) => {
   try {
-    const themes = await Theme.findAll({
-      limit: 5,
-    });
-    res.send(themes);
+    const { title } = req.body;
+    console.log('l---------', title);
+    if (title) {
+      const themes = await Theme.findAll({
+        where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
+          [Op.like]: `%${title.trim().toLowerCase()}%`,
+        }),
+        limit: 5,
+      });
+      res.send(themes);
+    } else {
+      const themes = await Theme.findAll({
+        limit: 5,
+      });
+      res.send(themes);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -102,12 +127,23 @@ indexRouter.get('/firstThemes', async (req, res) => {
 
 indexRouter.post('/paginationThemes', async (req, res) => {
   try {
-    const { page } = req.body;
-    const themes = await Theme.findAll({
-      offset: (page - 1) * 5,
-      limit: 5,
-    });
-    res.send(themes);
+    const { title, page } = req.body;
+    if (title) {
+      const themes = await Theme.findAll({
+        where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
+          [Op.like]: `%${title.trim().toLowerCase()}%`,
+        }),
+        offset: (page - 1) * 5,
+        limit: 5,
+      });
+      res.send(themes);
+    } else {
+      const themes = await Theme.findAll({
+        offset: (page - 1) * 5,
+        limit: 5,
+      });
+      res.send(themes);
+    }
   } catch (err) {
     console.log(err);
   }
@@ -126,6 +162,28 @@ indexRouter.get('/preSearchQuestions', async (req, res) => {
   }
 });
 
+indexRouter.get('/preSearchTheme', async (req, res) => {
+  try {
+    const themes = await Theme.findAll({
+      attributes: [
+        'id',
+        'title',
+        [Sequelize.fn('SUM', Sequelize.col('Questions.views')), 'totalViews'],
+      ],
+      include: {
+        model: Question,
+        attributes: [],
+      },
+      group: ['Theme.id', 'Theme.title'],
+      raw: true,
+    });
+    const sortedThemes = themes.sort((a, b) => b.totalViews - a.totalViews).slice(0, 3);
+    res.send(sortedThemes);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 indexRouter.post('/intualSearchQuestions', async (req, res) => {
   try {
     const { title } = req.body;
@@ -138,6 +196,32 @@ indexRouter.post('/intualSearchQuestions', async (req, res) => {
       limit: 3,
     });
     res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.post('/intualSearchTheme', async (req, res) => {
+  try {
+    const { title } = req.body;
+    const themes = await Theme.findAll({
+      where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
+        [Op.like]: `%${title.trim().toLowerCase()}%`,
+      }),
+      attributes: [
+        'id',
+        'title',
+        [Sequelize.fn('SUM', Sequelize.col('Questions.views')), 'totalViews'],
+      ],
+      include: {
+        model: Question,
+        attributes: [],
+      },
+      group: ['Theme.id', 'Theme.title'],
+      raw: true,
+    });
+    const sortedThemes = themes.sort((a, b) => b.totalViews - a.totalViews).slice(0, 3);
+    res.send(sortedThemes);
   } catch (err) {
     console.log(err);
   }

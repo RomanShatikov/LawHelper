@@ -23,17 +23,17 @@ module.exports = {
         },
       },
       views: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("Now"),
+        defaultValue: Sequelize.fn('Now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn("Now"),
+        defaultValue: Sequelize.fn('Now'),
       },
     });
   },
