@@ -14,6 +14,8 @@ export type UserType = GuestType | FetchingUserType | LoggedType;
 
 export type UserFromBackend = {
   id: number;
+  firstName: string;
+  lastName: string;
   email: string;
   hashpass: string;
 };
