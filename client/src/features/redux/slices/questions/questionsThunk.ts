@@ -1,6 +1,10 @@
 import axios from 'axios';
 import type { ThunkActionCreater } from '../../../store';
+<<<<<<< HEAD
 import { setQuestions } from './questionsSlice';
+=======
+import { setCurrentQuestion, setQuestions } from './questionsSlice';
+>>>>>>> d98ecf9 (answercomponents)
 import type { QuestionType } from '../../../../types/questions/questionType';
 
 type GetFirstQuestionsArg = {
@@ -46,3 +50,17 @@ export const getQuestionsByPage: ThunkActionCreater<GetQuestionsByPageThunkArg> 
     //   dispatch(setQuestions(res.data));
     // }
   };
+
+export const getQuestionById: ThunkActionCreater<QuestionType['id'] | number> =
+  (id) => (dispatch) => {
+    axios<QuestionType>(`/answer/${id}`)
+      .then(({ data }) => dispatch(setCurrentQuestion(data)))
+      .catch((err) => console.error(err));
+  };
+
+// export const getDocumentById: ThunkActionCreater<QuestionType['id'] | number> =
+//   (id) => (dispatch) => {
+//     axios<QuestionType>(`/document/${id}`)
+//       .then(({ data }) => dispatch(setCurrentQuestion(data)))
+//       .catch((err) => console.error(err));
+//   };

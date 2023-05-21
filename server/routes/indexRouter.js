@@ -1,5 +1,9 @@
 const express = require('express');
+<<<<<<< HEAD
 const { Question, Theme, Favorite, Request, Sequelize } = require('../db/models');
+=======
+const { Question, Theme, Document, Sequelize } = require('../db/models');
+>>>>>>> d98ecf9 (answercomponents)
 
 const { Op } = Sequelize;
 
@@ -272,6 +276,7 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
 indexRouter.get('/favorites/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
@@ -285,11 +290,19 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
     });
     console.log('-------favorite--', favorites);
     res.send(favorites);
+=======
+indexRouter.get('/answer/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const answer = await Question.findOne({ where: { id } });
+    res.send(answer);
+>>>>>>> d98ecf9 (answercomponents)
   } catch (err) {
     console.log(err);
   }
 });
 
+<<<<<<< HEAD
 indexRouter.get('/requests/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
@@ -300,6 +313,13 @@ indexRouter.get('/requests/:userId', async (req, res) => {
     });
     console.log('------request---', requests);
     res.send(requests);
+=======
+indexRouter.get('/document/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const document = await Document.findOne({ where: { id } });
+    res.send(document);
+>>>>>>> d98ecf9 (answercomponents)
   } catch (err) {
     console.log(err);
   }
