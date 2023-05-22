@@ -20,15 +20,15 @@ export default function AnswerPage(): JSX.Element {
   console.log(document);
   const dispatch = useAppDispatch();
   const location = useLocation();
-  // const { id } = useParams();
+  const { id } = useParams();
   console.log('---answerpageID--', question?.id);
   console.log('---document---', document?.id);
 
   React.useEffect(() => {
-    // dispatch(getQuestionById(question?.id));
-    // dispatch(getDocumentById(document?.id));
-    dispatch(getQuestionById(+location.pathname.slice(-1)));
-    dispatch(getDocumentById(+location.pathname.slice(-1)));
+    dispatch(getQuestionById(id));
+    dispatch(getDocumentById(id));
+    // dispatch(getQuestionById(+location.pathname.slice(-1)));
+    // dispatch(getDocumentById(+location.pathname.slice(-1)));
   }, []);
 
   const addFavoritesHandler = (): void => {};
@@ -56,10 +56,13 @@ export default function AnswerPage(): JSX.Element {
       </Card>
       <Card sx={{ maxWidth: 400 }}>
         <CardMedia sx={{ height: 100 }} />
-        <CardContent> Список документов по вопросу
-          <Typography gutterBottom variant="h5" component="div">
+        <CardContent>
+          {' '}
+          Список документов по вопросу
+          <a href={document?.urlDoc} download><Typography gutterBottom variant="h5" component="div">
             {document?.urlDoc}
           </Typography>
+          </a>
           <Typography gutterBottom variant="h5" component="div">
             {document?.id}
           </Typography>

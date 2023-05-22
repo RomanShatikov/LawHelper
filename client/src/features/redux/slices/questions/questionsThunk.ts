@@ -34,17 +34,7 @@ export const getQuestionsByPage: ThunkActionCreater<GetQuestionsByPageThunkArg> 
   async (dispatch) => {
     const res = await axios.post<QuestionType[]>('/paginationQuestions', { id, page, title });
     dispatch(setQuestions(res.data));
-    // if (id) {
-    //   const res = await axios.post<QuestionType[]>('/paginationQuestions', { id, page });
-    //   dispatch(setQuestions(res.data));
-    // } else if (title) {
-    //   const res = await axios.post<QuestionType[]>('/paginationQuestions', { title, page });
-    //   dispatch(setQuestions(res.data));
-    // } else {
-    //   const res = await axios.post<QuestionType[]>('/paginationQuestions', { page });
-    //   dispatch(setQuestions(res.data));
-    // }
-  };
+  }
 
 export const getQuestionById: ThunkActionCreater<QuestionType['id'] | number> =
   (id) => (dispatch) => {
