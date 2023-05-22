@@ -4,22 +4,16 @@ import { useReducer } from 'react';
 import questionReducer from './redux/slices/questions/questionsSlice';
 import themeReducer from './redux/slices/themes/themeSlice';
 import userReducer from './redux/slices/user/userSlice';
-<<<<<<< HEAD
 import requestReducer from './redux/slices/request/requestSlice';
-=======
 import documentReducer from './redux/slices/documents/documentSlice'
->>>>>>> d98ecf9 (answercomponents)
 
 export const store = configureStore({
   reducer: {
     question: questionReducer,
     theme: themeReducer,
     user: userReducer,
-<<<<<<< HEAD
     request: requestReducer,
-=======
     document: documentReducer,
->>>>>>> d98ecf9 (answercomponents)
   },
 });
 
