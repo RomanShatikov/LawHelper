@@ -21,6 +21,7 @@ export default function Favorites() {
           key={favorite?.id}
           title={favorite?.Question?.title}
           views={favorite?.Question?.views}
+          id={favorite?.Question?.id}
         />
       ))}
     </div>

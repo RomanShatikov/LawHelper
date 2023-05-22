@@ -7,28 +7,21 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
 import { Container } from 'reactstrap';
-import { DocumentType } from '../../types/document/documentType';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
-import { QuestionType } from '../../types/questions/questionType';
+import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
+
 
 export default function AnswerPage(): JSX.Element {
   const question = useAppSelector((state) => state.question.currentQuestion);
   const document = useAppSelector((state) => state.document.currentDocument);
-  // console.log(question);
-  console.log(document);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { id } = useParams();
-  console.log('---answerpageID--', question?.id);
-  console.log('---document---', document?.id);
 
   React.useEffect(() => {
     dispatch(getQuestionById(id));
     dispatch(getDocumentById(id));
-    // dispatch(getQuestionById(+location.pathname.slice(-1)));
-    // dispatch(getDocumentById(+location.pathname.slice(-1)));
   }, []);
 
   const addFavoritesHandler = (): void => {};

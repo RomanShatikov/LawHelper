@@ -16,6 +16,7 @@ import { checkUserThunk } from './features/redux/slices/user/thunkActions';
 
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
+  console.log(user);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -39,7 +40,6 @@ function App(): JSX.Element {
           <Route path="/cabinet/requests" element={<CabinetPage />} />
         </Route>
         <Route path="/theme" element={<ThemePage />} />
-        <Route path="/theme/:title" element={<ThemePage />} />
         <Route path="/question" element={<QuestionsPage />} />
         <Route path="/theme/:id" element={<QuestionsPage />} />
         <Route path="/question/:title" element={<QuestionsPage />} />
