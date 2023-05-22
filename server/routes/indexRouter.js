@@ -1,9 +1,5 @@
 const express = require('express');
-<<<<<<< HEAD
-const { Question, Theme, Favorite, Request, Sequelize } = require('../db/models');
-=======
-const { Question, Theme, Document, Sequelize } = require('../db/models');
->>>>>>> d98ecf9 (answercomponents)
+const { Question, Theme, Favorite, Request, Sequelize, Document } = require('../db/models');
 
 const { Op } = Sequelize;
 
@@ -276,7 +272,6 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
 indexRouter.get('/favorites/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
@@ -290,26 +285,23 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
     });
     console.log('-------favorite--', favorites);
     res.send(favorites);
-=======
-indexRouter.get('/answer/:id', async (req, res) => {
-  const id = Number(req.params.id);
-  try {
-<<<<<<< HEAD
-    const answer = await Question.findOne({ where: { id } });
-    res.send(answer);
->>>>>>> d98ecf9 (answercomponents)
-=======
-    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
-    // const document = await Document.findOne({ where: { id } });
-    console.log(answer);
-    res.json(answer);
->>>>>>> 8c0514b (answerPage)
   } catch (err) {
     console.log(err);
   }
 });
 
-<<<<<<< HEAD
+indexRouter.get('/answer/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  try {
+    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
+    // const document = await Document.findOne({ where: { id } });
+    console.log(answer);
+    res.json(answer);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 indexRouter.get('/requests/:userId', async (req, res) => {
   try {
     const { userId } = req.params;
@@ -320,18 +312,16 @@ indexRouter.get('/requests/:userId', async (req, res) => {
     });
     console.log('------request---', requests);
     res.send(requests);
-=======
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 indexRouter.get('/document/:id', async (req, res) => {
   const { id } = req.params;
   try {
-<<<<<<< HEAD
-    const document = await Document.findOne({ where: { id } });
-    res.send(document);
->>>>>>> d98ecf9 (answercomponents)
-=======
     const document = await Document.findOne({ where: { questionId: Number(id) } });
     res.json(document);
->>>>>>> 8c0514b (answerPage)
   } catch (err) {
     console.log(err);
   }
