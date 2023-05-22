@@ -13,6 +13,7 @@ export default function Requests() {
   useEffect(() => {
     dispatch(getRequests(user.id));
   }, []);
+
   return (
     <div>
       <Typography>Ваши предложения</Typography>

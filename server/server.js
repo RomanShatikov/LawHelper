@@ -5,6 +5,7 @@ const session = require('express-session');
 const store = require('session-file-store');
 const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
+const crudRouter = require('./routes/crudRouter');
 
 require('dotenv').config();
 
@@ -32,6 +33,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', indexRouter);
+app.use('/api/crud', crudRouter);
 app.use('/api/auth', authRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

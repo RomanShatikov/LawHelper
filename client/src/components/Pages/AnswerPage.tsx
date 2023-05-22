@@ -15,13 +15,9 @@ import { getQuestionById } from '../../features/redux/slices/questions/questions
 export default function AnswerPage(): JSX.Element {
   const question = useAppSelector((state) => state.question.currentQuestion);
   const document = useAppSelector((state) => state.document.currentDocument);
-  // console.log(question);
-  console.log(document);
   const dispatch = useAppDispatch();
   const location = useLocation();
   const { id } = useParams();
-  console.log('---answerpageID--', question?.id);
-  console.log('---document---', document?.id);
 
   React.useEffect(() => {
     dispatch(getQuestionById(id));
