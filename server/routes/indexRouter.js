@@ -189,10 +189,12 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
 });
 
 indexRouter.get('/answer/:id', async (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
   try {
-    const answer = await Question.findOne({ where: { id } });
-    res.send(answer);
+    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
+    // const document = await Document.findOne({ where: { id } });
+    console.log(answer);
+    res.json(answer);
   } catch (err) {
     console.log(err);
   }
@@ -201,8 +203,8 @@ indexRouter.get('/answer/:id', async (req, res) => {
 indexRouter.get('/document/:id', async (req, res) => {
   const { id } = req.params;
   try {
-    const document = await Document.findOne({ where: { id } });
-    res.send(document);
+    const document = await Document.findOne({ where: { questionId: Number(id) } });
+    res.json(document);
   } catch (err) {
     console.log(err);
   }

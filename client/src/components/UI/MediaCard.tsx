@@ -18,6 +18,7 @@ export default function MediaCard({ question }: MediaCardProps): JSX.Element {
   const addFavoritesHandler = (): void => {};
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  console.log('---meadiaCard---ID---TITLE', question.id, question.title);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
