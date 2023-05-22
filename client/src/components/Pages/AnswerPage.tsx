@@ -13,6 +13,7 @@ import { DocumentType } from '../../types/document/documentType';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
 import { QuestionType } from '../../types/questions/questionType';
 
+
 export default function AnswerPage(): JSX.Element {
   const question = useAppSelector((state) => state.question.currentQuestion);
   const document = useAppSelector((state) => state.document.currentDocument);

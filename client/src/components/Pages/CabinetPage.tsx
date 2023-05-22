@@ -1,11 +1,18 @@
-import React from 'react';
 import { Avatar, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import { UserType } from '../../types/user/userType';
+import { LoggedType } from '../../types/user/userType';
+import { QuestionType } from '../../types/questions/questionType';
+import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
+import MediaCard from '../UI/MediaCard';
+import { RequestType } from '../../types/request/requestType';
+import { getRequests } from '../../features/redux/slices/request/requestThunk';
+import Requests from '../UI/Requests';
+import { Favorite } from '@mui/icons-material';
+import Favorites from '../UI/Favorites';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import type { LoggedType } from '../../types/user/userType';
-import Requests from '../UI/Requests';
-import Favorites from '../UI/Favorites';
-import { useAppSelector } from '../../features/hooks';
 
 export default function CabinetPage(): JSX.Element {
   const user = useAppSelector<LoggedType>((state) => state.user);
