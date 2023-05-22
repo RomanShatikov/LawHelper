@@ -1,10 +1,6 @@
 import axios from 'axios';
 import type { ThunkActionCreater } from '../../../store';
-<<<<<<< HEAD
-import { setQuestions } from './questionsSlice';
-=======
 import { setCurrentQuestion, setQuestions } from './questionsSlice';
->>>>>>> d98ecf9 (answercomponents)
 import type { QuestionType } from '../../../../types/questions/questionType';
 
 type GetFirstQuestionsArg = {
@@ -13,9 +9,8 @@ type GetFirstQuestionsArg = {
   title?: QuestionType['title'];
 };
 
-export const getFirstQuestions: ThunkActionCreater<GetFirstQuestionsArg> =
-  ({ id, title }) =>
-  async (dispatch) => {
+export const getFirstQuestions: ThunkActionCreater<QuestionType['id'], QuestionType['title']> =
+  (id, title) => async (dispatch) => {
     if (id) {
       const res = await axios<QuestionType[]>(`/firstQuestionsById/${id}`);
       dispatch(setQuestions(res.data));
