@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
 import { Container } from 'reactstrap';
 import { DocumentType } from '../../types/document/documentType';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
