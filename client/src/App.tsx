@@ -39,7 +39,6 @@ function App(): JSX.Element {
           <Route path="/cabinet/requests" element={<CabinetPage />} />
         </Route>
         <Route path="/theme" element={<ThemePage />} />
-        <Route path="/theme/:title" element={<ThemePage />} />
         <Route path="/question" element={<QuestionsPage />} />
         <Route path="/theme/:id" element={<QuestionsPage />} />
         <Route path="/question/:title" element={<QuestionsPage />} />

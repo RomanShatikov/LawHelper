@@ -19,6 +19,7 @@ export default function QuestionsPage(): JSX.Element {
   const [pageCount, setPageCount] = React.useState(0);
   const dispatch = useAppDispatch();
   const { id, title } = useParams();
+  console.log(id);
 
   useEffect(() => {
     axios

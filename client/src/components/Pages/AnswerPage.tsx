@@ -8,9 +8,8 @@ import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { Container } from 'reactstrap';
-import { DocumentType } from '../../types/document/documentType';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
-import { QuestionType } from '../../types/questions/questionType';
+import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
 
 
 export default function AnswerPage(): JSX.Element {
@@ -27,8 +26,6 @@ export default function AnswerPage(): JSX.Element {
   React.useEffect(() => {
     dispatch(getQuestionById(id));
     dispatch(getDocumentById(id));
-    // dispatch(getQuestionById(+location.pathname.slice(-1)));
-    // dispatch(getDocumentById(+location.pathname.slice(-1)));
   }, []);
 
   const addFavoritesHandler = (): void => {};

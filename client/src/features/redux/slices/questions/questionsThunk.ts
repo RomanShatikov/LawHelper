@@ -34,3 +34,10 @@ export const getQuestionsByPage: ThunkActionCreater<
     dispatch(setQuestions(res.data));
   }
 };
+
+export const getQuestionById: ThunkActionCreater<QuestionType['id'] | number> =
+  (id) => (dispatch) => {
+    axios<QuestionType>(`/answer/${id}`)
+      .then(({ data }) => dispatch(setCurrentQuestion(data)))
+      .catch((err) => console.error(err));
+  };
