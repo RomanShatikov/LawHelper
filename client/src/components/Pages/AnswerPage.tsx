@@ -1,9 +1,8 @@
-import React from 'react'
+import usePagination from '@mui/material/usePagination/usePagination';
+import React from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function AnswerPage() {
-  return (
-    <div>
-     Страница с вопросами
-    </div>
-  )
+  const { id } = useParams();
+  return <div>Страница с вопросами</div>;
 }

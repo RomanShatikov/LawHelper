@@ -18,7 +18,6 @@ export default function SearchInputTheme(): JSX.Element {
       .then((res) => setThemesInInput(res.data))
       .catch((e) => console.log(e));
   }, []);
-  console.log(themesInInput);
 
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -32,7 +31,7 @@ export default function SearchInputTheme(): JSX.Element {
     };
   }, [input]);
 
-  console.log(themesInInput);
+
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();

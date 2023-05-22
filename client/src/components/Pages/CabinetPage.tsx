@@ -8,17 +8,17 @@ import { getFavorites } from '../../features/redux/slices/questions/favoritesThu
 import MediaCard from '../UI/MediaCard';
 import { RequestType } from '../../types/request/requestType';
 import { getRequests } from '../../features/redux/slices/request/requestThunk';
+import Requests from '../UI/Requests';
+import { Favorite } from '@mui/icons-material';
+import Favorites from '../UI/Favorites';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 export default function CabinetPage(): JSX.Element {
   const user = useAppSelector<LoggedType>((state) => state.user);
-  const dispatch = useAppDispatch();
-  const favorites = useAppSelector<QuestionType[]>((state) => state.question.favorites);
-  const requests = useAppSelector<RequestType[]>((state) => state.request.requests);
-  console.log('---------', requests);
-  useEffect(() => {
-    dispatch(getFavorites(user.id));
-    dispatch(getRequests(user.id));
-  }, []);
+  console.log(user);
+  const location = useLocation();
+  const navigate = useNavigate();
   return (
     <div>
       <Avatar sx={{ bgcolor: '#1ebc6d' }}>
@@ -28,22 +28,13 @@ export default function CabinetPage(): JSX.Element {
       <Typography>
         {user?.firstName} {user?.lastName}
       </Typography>
-      <div>
-        <Typography>Ваши избранные вопросы</Typography>
-        {favorites.map((favorite) => (
-          <MediaCard
-            key={favorite?.id}
-            title={favorite?.Question?.title}
-            views={favorite?.Question?.views}
-          />
-        ))}
-      </div>
-      <div>
-        <Typography>Ваши предложения</Typography>
-        {requests.map((request) => (
-          <MediaCard key={request?.id} title={request?.title} feedback={request?.feedback} />
-        ))}
-      </div>
+      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/favorites')}>
+        Избранное
+      </Button>
+      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/requests')}>
+        Предложения
+      </Button>
+      {location.pathname === '/cabinet/requests' ? <Requests /> : <Favorites />}
     </div>
   );
 }

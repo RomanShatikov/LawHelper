@@ -22,7 +22,7 @@ export default function NavBar(args: any): JSX.Element {
           <Nav className="me-auto" navbar>
             <NavItem>
               {user.status === 'logged' && (
-                <NavLink className="nav-link" to="/cabinet">
+                <NavLink className="nav-link" to="/cabinet/requests">
                   Личный кабинет
                 </NavLink>
               )}
