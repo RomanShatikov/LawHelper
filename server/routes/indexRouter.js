@@ -281,7 +281,7 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
         model: Question,
       },
       order: [['createdAt', 'DESC']],
-      limit: 3,
+      limit: 10,
     });
     console.log('-------favorite--', favorites);
     res.send(favorites);
@@ -296,7 +296,7 @@ indexRouter.get('/requests/:userId', async (req, res) => {
     const requests = await Request.findAll({
       where: { userId },
       order: [['createdAt', 'DESC']],
-      limit: 3,
+      limit: 10,
     });
     console.log('------request---', requests);
     res.send(requests);
