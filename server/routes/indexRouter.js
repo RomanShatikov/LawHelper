@@ -1,5 +1,5 @@
 const express = require('express');
-const { Question, Theme, Sequelize } = require('../db/models');
+const { Question, Theme, Favorite, Request, Sequelize } = require('../db/models');
 
 const { Op } = Sequelize;
 
@@ -267,6 +267,39 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
       limit: 5,
     });
     res.send(questions);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/favorites/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const favorites = await Favorite.findAll({
+      where: { userId },
+      include: {
+        model: Question,
+      },
+      order: [['createdAt', 'DESC']],
+      limit: 10,
+    });
+    console.log('-------favorite--', favorites);
+    res.send(favorites);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/requests/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const requests = await Request.findAll({
+      where: { userId },
+      order: [['createdAt', 'DESC']],
+      limit: 10,
+    });
+    console.log('------request---', requests);
+    res.send(requests);
   } catch (err) {
     console.log(err);
   }

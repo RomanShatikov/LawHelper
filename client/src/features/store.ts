@@ -3,13 +3,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useReducer } from 'react';
 import questionReducer from './redux/slices/questions/questionsSlice';
 import themeReducer from './redux/slices/themes/themeSlice';
-import userReducer from './redux/slices/user/userSlice'
+import userReducer from './redux/slices/user/userSlice';
+import requestReducer from './redux/slices/request/requestSlice';
 
 export const store = configureStore({
   reducer: {
     question: questionReducer,
     theme: themeReducer,
     user: userReducer,
+    request: requestReducer,
   },
 });
 

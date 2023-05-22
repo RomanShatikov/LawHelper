@@ -8,6 +8,7 @@ module.exports = {
       arr.push({
         title: faker.lorem.lines({ min: 1, max: 3 }),
         userId: Math.floor(Math.random() * 20) + 1,
+        feedback: faker.lorem.lines({ min: 1, max: 3 }),
       });
     }
     await queryInterface.bulkInsert('Requests', arr, {});
