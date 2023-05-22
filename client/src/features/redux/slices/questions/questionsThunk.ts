@@ -34,7 +34,7 @@ export const getQuestionsByPage: ThunkActionCreater<GetQuestionsByPageThunkArg> 
   async (dispatch) => {
     const res = await axios.post<QuestionType[]>('/paginationQuestions', { id, page, title });
     dispatch(setQuestions(res.data));
-  }
+  };
 
 export const getQuestionById: ThunkActionCreater<QuestionType['id'] | number> =
   (id) => (dispatch) => {
