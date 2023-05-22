@@ -292,11 +292,18 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
     res.send(favorites);
 =======
 indexRouter.get('/answer/:id', async (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
   try {
+<<<<<<< HEAD
     const answer = await Question.findOne({ where: { id } });
     res.send(answer);
 >>>>>>> d98ecf9 (answercomponents)
+=======
+    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
+    // const document = await Document.findOne({ where: { id } });
+    console.log(answer);
+    res.json(answer);
+>>>>>>> 8c0514b (answerPage)
   } catch (err) {
     console.log(err);
   }
@@ -317,9 +324,14 @@ indexRouter.get('/requests/:userId', async (req, res) => {
 indexRouter.get('/document/:id', async (req, res) => {
   const { id } = req.params;
   try {
+<<<<<<< HEAD
     const document = await Document.findOne({ where: { id } });
     res.send(document);
 >>>>>>> d98ecf9 (answercomponents)
+=======
+    const document = await Document.findOne({ where: { questionId: Number(id) } });
+    res.json(document);
+>>>>>>> 8c0514b (answerPage)
   } catch (err) {
     console.log(err);
   }
