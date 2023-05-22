@@ -1,10 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { QuestionSliceType, QuestionType } from '../../../../types/questions/questionType';
+import type { FavoriteType } from '../../../../types/favorite/favoriteType';
 
 const initialState: QuestionSliceType = {
   questions: [],
   currentQuestion: null,
+  favorites: [],
 };
 
 export const questionsSlice = createSlice({
@@ -17,9 +19,12 @@ export const questionsSlice = createSlice({
     setCurrentQuestion: (state, action: PayloadAction<QuestionType>) => {
       state.currentQuestion = action.payload;
     },
+    setFavorites: (state, action: PayloadAction<FavoriteType[]>) => {
+      state.favorites = action.payload;
+    },
   },
 });
 
-export const { setQuestions, setCurrentQuestion } = questionsSlice.actions;
+export const { setQuestions, setFavorites, setCurrentQuestion } = questionsSlice.actions;
 
 export default questionsSlice.reducer;

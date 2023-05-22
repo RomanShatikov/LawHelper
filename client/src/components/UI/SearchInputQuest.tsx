@@ -20,7 +20,6 @@ export default function SearchInputQuest(): JSX.Element {
       .catch((e) => console.log(e));
   }, []);
 
-
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
       axios
@@ -32,7 +31,6 @@ export default function SearchInputQuest(): JSX.Element {
       clearTimeout(timeoutId);
     };
   }, [input]);
-
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -47,18 +45,13 @@ export default function SearchInputQuest(): JSX.Element {
         clearOnBlur
         freeSolo
         options={questsInInput.map((option) => option.title)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Вопрос"
-            name="title"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-          />
-        )}
+        onInputChange={(event, newInputValue) => {
+          setInput(newInputValue);
+        }}
+        renderInput={(params) => <TextField {...params} label="Вопрос" name="title" />}
       />
       <Button type="submit" variant="contained">
-        Contained
+        Найти
       </Button>
     </form>
   );

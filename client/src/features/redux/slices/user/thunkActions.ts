@@ -5,7 +5,6 @@ import type { ThunkActionCreater } from '../../../store';
 import { logoutUser, setUser } from './userSlice';
 
 export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (dispatch) => {
-    console.log(formData);
   axios
     .post<UserFromBackend>('/auth/signup', {
       firstName: formData.firstName,

@@ -16,7 +16,7 @@ import MediaCard from '../UI/MediaCard';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
-  const [pageCount, setPageCount] = React.useState(1);
+  const [pageCount, setPageCount] = React.useState(0);
   const dispatch = useAppDispatch();
   const { id, title } = useParams();
 
@@ -42,7 +42,7 @@ export default function QuestionsPage(): JSX.Element {
     dispatch(getFirstQuestions(Number(id), title));
   }, [title]);
 
-  const paginationHandler = (e) => {
+  const paginationHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     const page = Number(e.target.textContent);
     dispatch(getQuestionsByPage(Number(id), page, title));
   };
@@ -51,12 +51,11 @@ export default function QuestionsPage(): JSX.Element {
     <>
       <SearchInputQuest />
       {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
-      {questions?.map((question) => (
-        <MediaCard
-          key={question?.id}
-         question={question}
-        />
-      ))}
+      {questions.length ? (
+        questions?.map((question) => <MediaCard key={question?.id} question={question} />)
+      ) : (
+        <p>Тут ничего нет, попробуйте поискать другую тему</p>
+      )}
     </>
   );
 }

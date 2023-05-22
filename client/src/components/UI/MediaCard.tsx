@@ -2,43 +2,59 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
-import { useNavigate } from 'react-router-dom';
-import type { QuestionType } from '../../types/questions/questionType';
-import { useAppDispatch } from '../../features/hooks';
-import { setCurrentQuestion } from '../../features/redux/slices/questions/questionsSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 type MediaCardProps = {
-  question: QuestionType;
+  title: string;
+  id: number;
+  views: number;
+  feedback: string;
 };
 
-export default function MediaCard({ question }: MediaCardProps): JSX.Element {
-  const addFavoritesHandler = (): void => {};
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
+  const addFavoritesHandler = () => {};
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  console.log('---meadiaCard---ID---TITLE', question.id, question.title);
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {question.title}
+          {title}
         </Typography>
+        {views && (
+          <div>
+            <VisibilityIcon />
+            <Typography gutterBottom variant="h6" component="div">
+              {views}
+            </Typography>
+          </div>
+        )}
+        {feedback && (
+          <Typography gutterBottom variant="h6" component="div">
+            {feedback}
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
-        <Button
-          size="small"
-          onClick={() => {
-            dispatch(setCurrentQuestion(question));
-            question.views ? navigate(`/answer/${question.id}`) : navigate(`/theme/${question.id}`);
-          }}
-        >
-          Узнать больше
-        </Button>
-        <Button size="small" onClick={addFavoritesHandler}>
-          <GradeIcon />
-        </Button>
+        {location.pathname !== '/cabinet/requests' && (
+          <Button
+            size="small"
+            onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+          >
+            Узнать больше
+          </Button>
+        )}
+        {location.pathname !== '/cabinet/requests' && (
+          <Button size="small" onClick={addFavoritesHandler}>
+            <GradeIcon />
+          </Button>
+        )}
       </CardActions>
     </Card>
   );

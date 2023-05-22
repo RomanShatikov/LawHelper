@@ -19,6 +19,9 @@ module.exports = {
           key: 'id',
         },
       },
+      feedback: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
