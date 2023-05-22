@@ -14,8 +14,8 @@ import { getDocumentById } from '../../features/redux/slices/documents/documentT
 import { QuestionType } from '../../types/questions/questionType';
 
 export default function AnswerPage(): JSX.Element {
-  const question = useAppSelector<QuestionType>((state) => state.question.currentQuestion);
-  const document = useAppSelector<DocumentType>((state) => state.document.currentDocument);
+  const question = useAppSelector((state) => state.question.currentQuestion);
+  const document = useAppSelector((state) => state.document.currentDocument);
   // console.log(question);
   console.log(document);
   const dispatch = useAppDispatch();
