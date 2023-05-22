@@ -2,22 +2,21 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import MediaCardFunction from './mediaCardFunction';
 
 type MediaCardProps = {
   title: string;
   id: number;
-  views: number;
-  feedback: string;
+  views?: string;
+  feedback?: string;
 };
 
-export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
-  const addFavoritesHandler = () => {};
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.pathname);
@@ -50,11 +49,13 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
             Узнать больше
           </Button>
         )}
+        {}
         {location.pathname !== '/cabinet/requests' && (
-          <Button size="small" onClick={addFavoritesHandler}>
+          <Button size="small">
             <GradeIcon />
           </Button>
         )}
+        {/* <MediaCardFunction/> */}
       </CardActions>
     </Card>
   );
