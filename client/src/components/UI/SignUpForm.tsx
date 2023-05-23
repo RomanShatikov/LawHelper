@@ -13,11 +13,13 @@ import {
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import { useAppDispatch } from '../../features/hooks';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { signUpThunk } from '../../features/redux/slices/user/thunkActions';
 import type { SignUpFormType } from '../../types/user/formTypes';
 
 export default function SignUpForm(): JSX.Element {
+   const erors = useAppSelector((state) => state.eror);
+   console.log(erors);
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -151,6 +153,7 @@ export default function SignUpForm(): JSX.Element {
                 autoComplete="email"
               />
               {error.email && <p>{error.email}</p>}
+              {erors.EmailEror && <p>{erors.EmailEror}</p>}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -164,7 +167,7 @@ export default function SignUpForm(): JSX.Element {
                 onChange={inputHandler}
                 autoComplete="new-password"
               />
-              <button type="button" onClick={()=>setVisible(!isVisible)}>
+              <button type="button" onClick={() => setVisible(!isVisible)}>
                 <VisibilityIcon />
               </button>
               {error.password && <p>{error.password}</p>}
@@ -181,11 +184,7 @@ export default function SignUpForm(): JSX.Element {
                 onChange={inputHandler}
                 autoComplete="new-password"
               />
-              <button
-                type="button"
-                onClick={()=>setRepeatVisible(!isRepeatVisible)
-                }
-              >
+              <button type="button" onClick={() => setRepeatVisible(!isRepeatVisible)}>
                 <VisibilityIcon />
               </button>
               {error.repeatPassword && <p>{error.repeatPassword}</p>}

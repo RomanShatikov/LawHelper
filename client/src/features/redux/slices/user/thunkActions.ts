@@ -15,7 +15,9 @@ export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (di
       password: formData.password,
     })
     .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
-    .catch(console.log);
+    .catch((err)=>{
+      if (err?.response?.data?.message === 'e-mail уже зарегистрирован') dispatch(setEmailEror(err?.response?.data?.message));
+    });
 };
 
 type ErorFromBackend = {
@@ -31,7 +33,6 @@ export const loginUserThunk: ThunkActionCreater<LoginForm> = (formData) => (disp
     .post<UserFromBackend>('/auth/login', formData)
     .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
     .catch((err: ErorFromBackend) => {
-      console.log(err);
       if (err?.response?.data?.message === 'e-mail не зарегистрирован')
         dispatch(setEmailEror(err?.response?.data?.message));
       if (err?.response?.data?.message === 'Неверный пароль') dispatch(setPasswordEror(err?.response?.data?.message));

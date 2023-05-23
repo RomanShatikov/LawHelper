@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 type ErorsState = {
-  loginEmailEror: string;
+  EmailEror: string;
   loginPasswordEror: string;
 };
 
 const initialState: ErorsState = {
-  loginEmailEror: '',
+  EmailEror: '',
   loginPasswordEror: '',
 };
 
@@ -15,7 +15,7 @@ export const erorsSlice = createSlice({
   initialState,
   reducers: {
     setEmailEror: (state, action: PayloadAction<string>) => {
-      state.loginEmailEror = action.payload;
+      state.EmailEror = action.payload;
     },
     setPasswordEror: (state, action: PayloadAction<string>) => {
       state.loginPasswordEror = action.payload;
