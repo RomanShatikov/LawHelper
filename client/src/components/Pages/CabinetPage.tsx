@@ -1,22 +1,17 @@
 import { Avatar, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { UserType } from '../../types/user/userType';
+import React, { useState } from 'react';
+import { useAppSelector } from '../../features/hooks';
 import { LoggedType } from '../../types/user/userType';
-import { QuestionType } from '../../types/questions/questionType';
-import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
-import MediaCard from '../UI/MediaCard';
-import { RequestType } from '../../types/request/requestType';
-import { getRequests } from '../../features/redux/slices/request/requestThunk';
 import Requests from '../UI/Requests';
-import { Favorite } from '@mui/icons-material';
 import Favorites from '../UI/Favorites';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import UserModalWindow from '../UI/UserModalWindow';
 
 export default function CabinetPage(): JSX.Element {
   const user = useAppSelector<LoggedType>((state) => state.user);
   console.log(user);
+  const [showModal, setShowModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   return (
@@ -28,6 +23,10 @@ export default function CabinetPage(): JSX.Element {
       <Typography>
         {user?.firstName} {user?.lastName}
       </Typography>
+      <Button variant="contained" type="button" onClick={(e) => setShowModal((prev) => !prev)}>
+        Обратная связь
+      </Button>
+      {showModal && <UserModalWindow showModal={showModal} setShowModal={setShowModal} />}
       <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/favorites')}>
         Избранное
       </Button>

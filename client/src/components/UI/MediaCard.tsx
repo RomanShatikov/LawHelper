@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import FunctionalButton from './FunctionalButton';
 
 type MediaCardProps = {
   title: string;
@@ -17,7 +18,6 @@ type MediaCardProps = {
 };
 
 export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
-  const addFavoritesHandler = () => {};
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.pathname);
@@ -50,11 +50,12 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
             Узнать больше
           </Button>
         )}
-        {location.pathname !== '/cabinet/requests' && (
+        <FunctionalButton id={id} pathname={location.pathname} views={views} />
+        {/* {location.pathname !== '/cabinet/requests' && (
           <Button size="small" onClick={addFavoritesHandler}>
             <GradeIcon />
           </Button>
-        )}
+        )} */}
       </CardActions>
     </Card>
   );

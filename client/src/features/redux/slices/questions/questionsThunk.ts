@@ -1,7 +1,8 @@
 import axios from 'axios';
 import type { ThunkActionCreater } from '../../../store';
-import { setQuestions } from './questionsSlice';
+import { setCurrentQuestion, setQuestions } from './questionsSlice';
 import { QuestionType } from '../../../../types/questions/questionType';
+
 
 export const getFirstQuestions: ThunkActionCreater<QuestionType['id'], QuestionType['title']> =
   (id, title) => async (dispatch) => {
@@ -33,3 +34,10 @@ export const getQuestionsByPage: ThunkActionCreater<
     dispatch(setQuestions(res.data));
   }
 };
+
+export const getQuestionById: ThunkActionCreater<QuestionType['id'] | number> =
+  (id) => (dispatch) => {
+    axios<QuestionType>(`/answer/${id}`)
+      .then(({ data }) => dispatch(setCurrentQuestion(data)))
+      .catch((err) => console.error(err));
+  };

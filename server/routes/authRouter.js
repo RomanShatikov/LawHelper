@@ -18,7 +18,7 @@ authRouter.post('/signup', async (req, res) => {
     },
   });
 
-  if (!created) return res.status(401).json({ message: 'Email is in use' });
+  if (!created) return res.status(401).json({ message: 'e-mail уже зарегистрирован' });
 
   req.session.user = foundUser;
 
@@ -30,14 +30,14 @@ authRouter.post('/login', async (req, res) => {
 
   const foundUser = await User.findOne({ where: { email } });
 
-  if (!foundUser) return res.status(401).json({ message: 'No such email' });
+  if (!foundUser) return res.status(401).json({ message: 'e-mail не зарегистрирован' });
 
   if (await bcrypt.compare(password, foundUser.hashpass)) {
     req.session.user = foundUser;
     return res.json(foundUser);
   }
 
-  return res.status(401).json({ message: 'Wrong password' });
+  return res.status(401).json({ message: 'Неверный пароль' });
 });
 
 authRouter.get('/logout', (req, res) => {
