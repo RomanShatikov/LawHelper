@@ -17,7 +17,7 @@ type MediaCardProps = {
   feedback: string;
 };
 
-export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.pathname);

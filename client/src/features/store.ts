@@ -1,6 +1,5 @@
 import type { AnyAction, ThunkAction } from '@reduxjs/toolkit';
 import { configureStore } from '@reduxjs/toolkit';
-import { useReducer } from 'react';
 import questionReducer from './redux/slices/questions/questionsSlice';
 import themeReducer from './redux/slices/themes/themeSlice';
 import userReducer from './redux/slices/user/userSlice';

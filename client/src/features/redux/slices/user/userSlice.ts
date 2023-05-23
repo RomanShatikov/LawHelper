@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { UserType } from '../../../../types/user/userType';
+import type { UserFromBackend, UserType } from '../../../../types/user/userType';
 
 // Define the initial state using that type
 const initialState: UserType = {
