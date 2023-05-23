@@ -7,7 +7,7 @@ import {
   deleteFavorite,
   getFavorites,
 } from '../../features/redux/slices/questions/favoritesThunk';
-import { LoggedType } from '../../types/user/userType';
+import { UserType } from '../../types/user/userType';
 import { FavoriteType } from '../../types/favorite/favoriteType';
 import GradeIcon from '@mui/icons-material/Grade';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -19,19 +19,9 @@ type FunctionalButtonProps = {
 };
 
 export default function FunctionalButton({ pathname, id, views }: FunctionalButtonProps) {
-  const user = useAppSelector<LoggedType>((state) => state.user);
-  const favorites = useAppSelector<FavoriteType>((state) => state.question.favorites);
-  const navigate = useNavigate();
+  const user = useAppSelector<UserType>((state) => state.user);
+  const favorites = useAppSelector<FavoriteType[]>((state) => state.question.favorites);
   const dispatch = useAppDispatch();
-  console.log(favorites);
-  console.log(
-    '0000000',
-    favorites.find((favorite) => {
-      // console.log(favorite.questionId);
-      // console.log('----------', id);
-      console.log(favorite.questionId === id);
-    }),
-  );
 
   useEffect(() => {
     dispatch(getFavorites(user.id));
@@ -45,9 +35,9 @@ export default function FunctionalButton({ pathname, id, views }: FunctionalButt
     dispatch(deleteFavorite({ userId: user.id, questionId: id }));
   };
 
-  if (
-    favorites.find((favorite) => favorite.questionId === id)
-  ) {
+  if (user.status !== 'logged') return;
+
+  if (favorites.find((favorite) => favorite.questionId === id)) {
     return (
       <Button size="small" onClick={deleteFavoriteHandler}>
         <ClearIcon />
