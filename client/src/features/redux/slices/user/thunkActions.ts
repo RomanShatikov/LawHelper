@@ -27,7 +27,6 @@ type ErorFromBackend = {
     }
   }
 }
-const a = 1
 
 export const loginUserThunk: ThunkActionCreater<LoginForm> = (formData) => (dispatch) => {
   axios
