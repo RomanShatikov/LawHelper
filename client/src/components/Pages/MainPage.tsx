@@ -7,6 +7,5 @@ export default function MainPage():JSX.Element {
   return <div>
     <SearchInputQuest/>
     <SearchInputTheme/>
-    {/* <Chat/> */}
   </div>;
 }

@@ -8,19 +8,23 @@ import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { ThemeType } from '../../types/theme/themeType';
 
+type ThemeFromBackend = {
+  title: string;
+  id: number;
+}
+
 export default function SearchInputTheme(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [themesInInput, setThemesInInput] = React.useState([]);
-  const [input, setInput] = React.useState('');
+  const [themesInInput, setThemesInInput] = React.useState<ThemeFromBackend[]>([]);
+  const [input, setInput] = React.useState<string>('');
 
   React.useEffect(() => {
     axios('/preSearchTheme')
       .then((res) => setThemesInInput(res.data))
       .catch((e) => console.log(e));
   }, []);
-  console.log(themesInInput);
 
   React.useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -34,11 +38,11 @@ export default function SearchInputTheme(): JSX.Element {
     };
   }, [input]);
 
-  console.log(themesInInput);
+
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    navigate(`/theme/${input}`);
+    navigate(`/themes/${input}`);
   };
 
   return (
@@ -48,7 +52,7 @@ export default function SearchInputTheme(): JSX.Element {
         selectOnFocus
         clearOnBlur
         freeSolo
-        options={themesInInput.map((option) => option.title)}
+        options={themesInInput.map((option) => ({ label: option.title, id: option.id }))}
         onInputChange={(event, newInputValue) => {
           setInput(newInputValue);
         }}

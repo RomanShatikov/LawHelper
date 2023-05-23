@@ -9,7 +9,7 @@ import { logoutThunk } from '../../features/redux/slices/user/thunkActions';
 export default function NavBar(args: any): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = ():void => setIsOpen(!isOpen);
+  const toggle = (): void => setIsOpen(!isOpen);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -21,8 +21,8 @@ export default function NavBar(args: any): JSX.Element {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              {user.status === 'logged' && !!user.isAdmin === false &&(
-                <NavLink className="nav-link" to="/cabinet">
+              {user.status === 'logged' && (
+                <NavLink className="nav-link" to="/cabinet/requests">
                   Личный кабинет
                 </NavLink>
               )}
@@ -58,13 +58,13 @@ export default function NavBar(args: any): JSX.Element {
                     Выйти
                   </NavLink>
                 </NavItem>
-                {user.isAdmin && 
+                {user.isAdmin && (
                   <NavItem>
                     <NavLink className="nav-link" to="/admin">
                       Мой кабинет
                     </NavLink>
                   </NavItem>
-                }
+                )}
               </>
             )}
             <NavItem>

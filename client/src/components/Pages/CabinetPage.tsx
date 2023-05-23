@@ -1,24 +1,19 @@
 import { Avatar, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { UserType } from '../../types/user/userType';
+import React, { useState } from 'react';
+import { useAppSelector } from '../../features/hooks';
 import { LoggedType } from '../../types/user/userType';
-import { QuestionType } from '../../types/questions/questionType';
-import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
-import MediaCard from '../UI/MediaCard';
-import { RequestType } from '../../types/request/requestType';
-import { getRequests } from '../../features/redux/slices/request/requestThunk';
+import Requests from '../UI/Requests';
+import Favorites from '../UI/Favorites';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { Button } from 'reactstrap';
+import UserModalWindow from '../UI/UserModalWindow';
 
 export default function CabinetPage(): JSX.Element {
   const user = useAppSelector<LoggedType>((state) => state.user);
-  const dispatch = useAppDispatch();
-  const favorites = useAppSelector<QuestionType[]>((state) => state.question.favorites);
-  const requests = useAppSelector<RequestType[]>((state) => state.request.requests);
-  console.log('---------', requests);
-  useEffect(() => {
-    dispatch(getFavorites(user.id));
-    dispatch(getRequests(user.id));
-  }, []);
+  console.log(user);
+  const [showModal, setShowModal] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
   return (
     <div>
       <Avatar sx={{ bgcolor: '#1ebc6d' }}>
@@ -28,22 +23,17 @@ export default function CabinetPage(): JSX.Element {
       <Typography>
         {user?.firstName} {user?.lastName}
       </Typography>
-      <div>
-        <Typography>Ваши избранные вопросы</Typography>
-        {favorites.map((favorite) => (
-          <MediaCard
-            key={favorite?.id}
-            title={favorite?.Question?.title}
-            views={favorite?.Question?.views}
-          />
-        ))}
-      </div>
-      <div>
-        <Typography>Ваши предложения</Typography>
-        {requests.map((request) => (
-          <MediaCard key={request?.id} title={request?.title} feedback={request?.feedback} />
-        ))}
-      </div>
+      <Button variant="contained" type="button" onClick={(e) => setShowModal((prev) => !prev)}>
+        Обратная связь
+      </Button>
+      {showModal && <UserModalWindow showModal={showModal} setShowModal={setShowModal} />}
+      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/favorites')}>
+        Избранное
+      </Button>
+      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/requests')}>
+        Предложения
+      </Button>
+      {location.pathname === '/cabinet/requests' ? <Requests /> : <Favorites />}
     </div>
   );
 }

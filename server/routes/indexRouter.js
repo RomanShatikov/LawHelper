@@ -1,7 +1,5 @@
 const express = require('express');
-const {
-  Question, Theme, Favorite, Request, Sequelize,
-} = require('../db/models');
+const { Question, Theme, Favorite, Request, Sequelize, Document } = require('../db/models');
 
 const { Op } = Sequelize;
 
@@ -83,16 +81,13 @@ indexRouter.post('/paginationQuestions', async (req, res) => {
 indexRouter.post('/themesPageCount', async (req, res) => {
   try {
     const { title } = req.body;
-    console.log(title);
     if (title) {
       const themes = await Theme.findAll({
         where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('title')), {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
       });
-      console.log(themes.length);
       const pageCount = Math.ceil(themes.length / 5);
-      console.log('--------', pageCount);
       res.send({ pageCount });
     } else {
       const themes = await Theme.findAll();
@@ -107,7 +102,6 @@ indexRouter.post('/themesPageCount', async (req, res) => {
 indexRouter.post('/firstThemes', async (req, res) => {
   try {
     const { title } = req.body;
-    console.log('l---------', title);
     if (title) {
       const themes = await Theme.findAll({
         where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
@@ -283,10 +277,19 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
         model: Question,
       },
       order: [['createdAt', 'DESC']],
-      limit: 3,
+      limit: 10,
     });
-    console.log('-------favorite--', favorites);
     res.send(favorites);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/answer/:id', async (req, res) => {
+  const id = Number(req.params.id);
+  try {
+    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
+    res.json(answer);
   } catch (err) {
     console.log(err);
   }
@@ -298,10 +301,19 @@ indexRouter.get('/requests/:userId', async (req, res) => {
     const requests = await Request.findAll({
       where: { userId },
       order: [['createdAt', 'DESC']],
-      limit: 3,
+      limit: 10,
     });
-    console.log('------request---', requests);
     res.send(requests);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+indexRouter.get('/document/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const document = await Document.findOne({ where: { questionId: Number(id) } });
+    res.json(document);
   } catch (err) {
     console.log(err);
   }

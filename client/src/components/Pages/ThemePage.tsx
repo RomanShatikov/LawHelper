@@ -16,7 +16,6 @@ export default function ThemePage(): JSX.Element {
   const [pageCount, setPageCount] = React.useState(0);
   const dispatch = useAppDispatch();
   const { title } = useParams();
-  console.log(title);
 
   useEffect(() => {
     axios

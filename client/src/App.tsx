@@ -32,19 +32,21 @@ function App(): JSX.Element {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
+
         <Route
           element={<PrivateRoute isAllowed={user.status === 'logged'} redirectPath="/login" />}
         >
-          <Route
-          element={<PrivateRoute isAllowed={user.isAdmin === true} redirectPath="/login" />}
-        >
+          <Route path="/cabinet/favorites" element={<CabinetPage />} />
+          <Route path="/cabinet/requests" element={<CabinetPage />} />
+        </Route>
+
+        <Route element={<PrivateRoute isAllowed={user.isAdmin === true} redirectPath="/login" />}>
           <Route path="/admin" element={<AdminPage />} />
         </Route>
-          <Route path="/cabinet" element={<CabinetPage />} />
-        </Route>
+
         <Route path="/theme" element={<ThemePage />} />
-        <Route path="/theme/:title" element={<ThemePage />} />
         <Route path="/question" element={<QuestionsPage />} />
+        <Route path="/themes/:title" element={<ThemePage />} />
         <Route path="/theme/:id" element={<QuestionsPage />} />
         <Route path="/question/:title" element={<QuestionsPage />} />
         <Route path="/answer/:id" element={<AnswerPage />} />

@@ -7,11 +7,16 @@ import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { QuestionType } from '../../types/questions/questionType';
 import { getFirstQuestions } from '../../features/redux/slices/questions/questionsThunk';
 
+type QuestFromBackend = {
+  title: string;
+  id: number;
+};
+
 export default function SearchInputQuest(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [questsInInput, setQuestsInInput] = React.useState([]);
+  const [questsInInput, setQuestsInInput] = React.useState<QuestFromBackend[]>([]);
   const [input, setInput] = React.useState('');
 
   React.useEffect(() => {
@@ -44,7 +49,7 @@ export default function SearchInputQuest(): JSX.Element {
         selectOnFocus
         clearOnBlur
         freeSolo
-        options={questsInInput.map((option) => option.title)}
+        options={questsInInput.map((option) => ({ label: option.title, id: option.id }))}
         onInputChange={(event, newInputValue) => {
           setInput(newInputValue);
         }}

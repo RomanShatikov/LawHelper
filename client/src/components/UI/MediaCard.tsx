@@ -6,8 +6,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import FunctionalButton from './FunctionalButton';
 
 type MediaCardProps = {
   title: string;
@@ -16,9 +17,10 @@ type MediaCardProps = {
   feedback: string;
 };
 
-export default function MediaCard({ title, id, views, feedback }: MediaCardProps):JSX.Element {
-  const addFavoritesHandler = ():void => {};
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps): JSX.Element {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
@@ -40,15 +42,20 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
         )}
       </CardContent>
       <CardActions>
-        <Button
-          size="small"
-          onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
-        >
-          Узнать больше
-        </Button>
-        <Button size="small" onClick={addFavoritesHandler}>
-          <GradeIcon />
-        </Button>
+        {location.pathname !== '/cabinet/requests' && (
+          <Button
+            size="small"
+            onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+          >
+            Узнать больше
+          </Button>
+        )}
+        <FunctionalButton id={id} pathname={location.pathname} views={views} />
+        {/* {location.pathname !== '/cabinet/requests' && (
+          <Button size="small" onClick={addFavoritesHandler}>
+            <GradeIcon />
+          </Button>
+        )} */}
       </CardActions>
     </Card>
   );

@@ -6,6 +6,7 @@ const store = require('session-file-store');
 const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
 const adminRouter = require('./routes/adminRouter');
+const crudRouter = require('./routes/crudRouter');
 
 require('dotenv').config();
 
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', indexRouter);
+app.use('/api/crud', crudRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/admin', adminRouter);
 
