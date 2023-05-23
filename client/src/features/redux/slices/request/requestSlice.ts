@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { QuestionType } from '../../../../types/questions/questionType';
 import { RequestType } from '../../../../types/request/requestType';
 
 
@@ -14,9 +13,12 @@ export const requestSlice = createSlice({
     setRequest: (state, action: PayloadAction<RequestType[]>) => {
       state.requests = action.payload;
     },
+    appendRequest: (state, action: PayloadAction<RequestType>) => {
+      state.requests.push(action.payload);
+    },
   },
 });
 
-export const { setRequest } = requestSlice.actions;
+export const { setRequest, appendRequest } = requestSlice.actions;
 
 export default requestSlice.reducer;
