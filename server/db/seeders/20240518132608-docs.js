@@ -8,6 +8,7 @@ module.exports = {
       arr.push({
         questionId: Math.floor(Math.random() * 20) + 1,
         urlDoc: faker.image.url(),
+        title: faker.lorem.lines({ min: 1, max: 1 }),
       });
     }
     await queryInterface.bulkInsert('Documents', arr, {});
