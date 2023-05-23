@@ -18,7 +18,7 @@ authRouter.post('/signup', async (req, res) => {
     },
   });
 
-  if (!created) return res.status(401).json({ message: 'Email is in use' });
+  if (!created) return res.status(401).json({ message: 'e-mail уже зарегистрирован' });
 
   req.session.user = foundUser;
 

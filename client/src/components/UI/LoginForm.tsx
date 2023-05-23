@@ -23,7 +23,7 @@ export default function LogForm(): JSX.Element {
       <FormGroup>
         <Label for="exampleEmail">Email</Label>
         <Input id="exampleEmail" name="email" type="email" />
-        {erors.loginEmailEror && <p>{erors.loginEmailEror}</p>}
+        {erors.EmailEror && <p>{erors.EmailEror}</p>}
       </FormGroup>
 
       <FormGroup>
