@@ -30,7 +30,6 @@ export default function AnswerPage(): JSX.Element {
     dispatch(getDocumentById(id));
   }, []);
 
-   console.log('0000000000', document);
 
   return (
     <Container>
