@@ -6,6 +6,7 @@ import themeReducer from './redux/slices/themes/themeSlice';
 import userReducer from './redux/slices/user/userSlice';
 import requestReducer from './redux/slices/request/requestSlice';
 import documentReducer from './redux/slices/documents/documentSlice'
+import erorsReducer from './redux/slices/erors/erorsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     user: userReducer,
     request: requestReducer,
     document: documentReducer,
+    eror: erorsReducer
   },
 });
 
