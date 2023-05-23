@@ -1,5 +1,5 @@
 const express = require('express');
-const { Favorite } = require('../db/models');
+const { Favorite, Request } = require('../db/models');
 
 const crudRouter = express.Router();
 
@@ -19,6 +19,18 @@ crudRouter.post('/delFavorite', async (req, res) => {
     console.log('---------', userId, questionId);
     await Favorite.destroy({ where: { userId, questionId } });
     res.sendStatus(200);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+crudRouter.post('/request', async (req, res) => {
+  try {
+    const { title, userId } = req.body;
+    console.log('---------', req.body);
+    console.log('---------', title, userId);
+    const request = await Request.create({ title, userId });
+    res.send(request);
   } catch (err) {
     console.log(err);
   }
