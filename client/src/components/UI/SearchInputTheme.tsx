@@ -6,12 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import { ThemeType } from '../../types/theme/themeType';
 import axios from 'axios';
 
+type ThemeFromBackend = {
+  title: string;
+  id: number;
+}
+
 export default function SearchInputTheme(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [themesInInput, setThemesInInput] = React.useState([]);
-  const [input, setInput] = React.useState('');
+  const [themesInInput, setThemesInInput] = React.useState<ThemeFromBackend[]>([]);
+  const [input, setInput] = React.useState<string>('');
 
   React.useEffect(() => {
     axios('/preSearchTheme')
@@ -45,7 +50,7 @@ export default function SearchInputTheme(): JSX.Element {
         selectOnFocus
         clearOnBlur
         freeSolo
-        options={themesInInput.map((option) => option.title)}
+        options={themesInInput.map((option) => ({ label: option.title, id: option.id }))}
         onInputChange={(event, newInputValue) => {
           setInput(newInputValue);
         }}
