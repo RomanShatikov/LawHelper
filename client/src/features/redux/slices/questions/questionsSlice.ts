@@ -20,6 +20,9 @@ export const questionsSlice = createSlice({
     setFavorites: (state, action: PayloadAction<FavoriteType[]>) => {
       state.favorites = action.payload;
     },
+    addQuestion: (state, action: PayloadAction<QuestionType>) => {
+      state.questions.unshift(action.payload);
+    },
     addFavorite: (state, action: PayloadAction<FavoriteType>) => {
       state.favorites.push(action.payload);
     },
@@ -36,10 +39,10 @@ export const questionsSlice = createSlice({
     setCurrentQuestion: (state, action: PayloadAction<QuestionType>) => {
       state.currentQuestion = action.payload;
     },
-  },
-});
+}});
 
-export const { setQuestions, setCurrentQuestion, setFavorites, addFavorite, delFavorite } =
+
+export const { setQuestions, addQuestion,setCurrentQuestion, setFavorites, addFavorite, delFavorite } =
   questionsSlice.actions;
 
 export default questionsSlice.reducer;

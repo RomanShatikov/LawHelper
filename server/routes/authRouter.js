@@ -5,7 +5,9 @@ const { User } = require('../db/models');
 const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
-  const { email, firstName, lastName, password } = req.body;
+  const {
+    email, firstName, lastName, password,
+  } = req.body;
 
   const hashpass = await bcrypt.hash(password, 10);
 

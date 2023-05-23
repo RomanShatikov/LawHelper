@@ -2,9 +2,9 @@ import { Autocomplete, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import React from 'react';
 import Button from '@mui/material/Button';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { QuestionType } from '../../types/questions/questionType';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import type { QuestionType } from '../../types/questions/questionType';
 import { getFirstQuestions } from '../../features/redux/slices/questions/questionsThunk';
 
 type QuestFromBackend = {

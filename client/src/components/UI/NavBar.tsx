@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Navigate, NavLink } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { Button } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { logoutThunk } from '../../features/redux/slices/user/thunkActions';
 
 export default function NavBar(args: any): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = (): void => setIsOpen(!isOpen);
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -32,38 +32,40 @@ export default function NavBar(args: any): JSX.Element {
                 Главная
               </NavLink>
             </NavItem>
-              {user.status === 'guest' && (
-                <>
-            <NavItem>
-                <NavLink className="nav-link" to="/signup">
-                  Зарегистрироваться
-                </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/login">
-                Войти
-              </NavLink>
-            </NavItem>
-            </>
+            {user.status === 'guest' && (
+              <>
+                <NavItem>
+                  <NavLink className="nav-link" to="/signup">
+                    Зарегистрироваться
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink className="nav-link" to="/login">
+                    Войти
+                  </NavLink>
+                </NavItem>
+              </>
             )}
             <NavItem>
               <NavLink className="nav-link" to="/theme">
                 Темы
               </NavLink>
             </NavItem>
-              {user.status === 'logged' && (
- <>
-            <NavItem>
-                <Button className="nav-link" onClick={() => dispatch(logoutThunk())}>
-                  Выйти
-                </Button>
-            </NavItem>
-            <NavItem>
-              <NavLink className="nav-link" to="/admin">
-                Мой кабинет
-              </NavLink>
-            </NavItem>
-            </>
+            {user.status === 'logged' && (
+              <>
+                <NavItem>
+                  <NavLink className="nav-link" to="/" onClick={() => dispatch(logoutThunk())}>
+                    Выйти
+                  </NavLink>
+                </NavItem>
+                {user.isAdmin && (
+                  <NavItem>
+                    <NavLink className="nav-link" to="/admin">
+                      Мой кабинет
+                    </NavLink>
+                  </NavItem>
+                )}
+              </>
             )}
             <NavItem>
               <NavLink className="nav-link" to="/question">

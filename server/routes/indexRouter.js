@@ -288,7 +288,15 @@ indexRouter.get('/favorites/:userId', async (req, res) => {
 indexRouter.get('/answer/:id', async (req, res) => {
   const id = Number(req.params.id);
   try {
-    const answer = await Question.findOne({ include: { model: Document }, where: { id } });
+    const viewsObj = await Question.findOne({ where: { id }, attributes: ['views'] });
+    console.log('-------viewsObj-----', viewsObj);
+    let { views } = viewsObj;
+    console.log('-----views-------', views);
+    views += 1;
+    await Question.update({ views }, { where: { id } });
+    console.log('----viewsUpdated--------', views);
+    const answer = await Question.findOne({ where: { id } });
+    console.log('----answer--------', answer);
     res.json(answer);
   } catch (err) {
     console.log(err);
@@ -309,11 +317,12 @@ indexRouter.get('/requests/:userId', async (req, res) => {
   }
 });
 
-indexRouter.get('/document/:id', async (req, res) => {
+indexRouter.get('/documents/:id', async (req, res) => {
   const { id } = req.params;
+  console.log('-------------', id);
   try {
-    const document = await Document.findOne({ where: { questionId: Number(id) } });
-    res.json(document);
+    const documents = await Document.findAll({ where: { questionId: id } });
+    res.json(documents);
   } catch (err) {
     console.log(err);
   }
