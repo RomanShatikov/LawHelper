@@ -5,11 +5,12 @@ const session = require('express-session');
 const store = require('session-file-store');
 const indexRouter = require('./routes/indexRouter');
 const authRouter = require('./routes/authRouter');
+const adminRouter = require('./routes/adminRouter');
 
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3001;
 
 const FileStore = store(session);
 
@@ -33,5 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', indexRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/admin', adminRouter);
 
 app.listen(PORT, () => console.log(`Server has started on PORT ${PORT}`));

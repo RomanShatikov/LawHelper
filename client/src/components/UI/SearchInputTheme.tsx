@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 import React from 'react';
 import { Autocomplete, Stack, TextField } from '@mui/material';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { useNavigate } from 'react-router-dom';
-import { ThemeType } from '../../types/theme/themeType';
-import axios from 'axios';
+import type { ThemeType } from '../../types/theme/themeType';
 
 export default function SearchInputTheme(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
@@ -50,6 +52,7 @@ export default function SearchInputTheme(): JSX.Element {
         onInputChange={(event, newInputValue) => {
           setInput(newInputValue);
         }}
+        // eslint-disable-next-line react/jsx-props-no-spreading
         renderInput={(params) => <TextField {...params} label="Тема" name="title" />}
       />
       <Button type="submit" variant="contained">

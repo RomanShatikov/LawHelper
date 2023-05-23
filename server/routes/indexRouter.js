@@ -1,5 +1,7 @@
 const express = require('express');
-const { Question, Theme, Favorite, Request, Sequelize } = require('../db/models');
+const {
+  Question, Theme, Favorite, Request, Sequelize,
+} = require('../db/models');
 
 const { Op } = Sequelize;
 

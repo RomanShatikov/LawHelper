@@ -1,5 +1,5 @@
 import axios from 'axios';
-import type {  LoginForm, SignUpForm, SignUpFormType } from '../../../../types/user/formTypes';
+import type {  LoginForm, SignUpFormType } from '../../../../types/user/formTypes';
 import type { UserFromBackend } from '../../../../types/user/userType';
 import type { ThunkActionCreater } from '../../../store'; 
 import { logoutUser, setUser } from './userSlice';

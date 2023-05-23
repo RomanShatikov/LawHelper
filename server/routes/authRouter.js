@@ -5,7 +5,9 @@ const { User } = require('../db/models');
 const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
-  const { email, firstName, lastName, password } = req.body;
+  const {
+    email, firstName, lastName, password,
+  } = req.body;
 
   const hashpass = await bcrypt.hash(password, 10);
 
@@ -29,7 +31,7 @@ authRouter.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   const foundUser = await User.findOne({ where: { email } });
-
+console.log(foundUser);
   if (!foundUser) return res.status(401).json({ message: 'No such email' });
 
   if (await bcrypt.compare(password, foundUser.hashpass)) {

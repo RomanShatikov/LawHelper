@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { ThunkActionCreater } from '../../../store';
-import { setQuestions } from './questionsSlice';
-import { QuestionType } from '../../../../types/questions/questionType';
+import { addQuestion, setQuestions } from './questionsSlice';
+import type { QuestionType } from '../../../../types/questions/questionType';
 
 export const getFirstQuestions: ThunkActionCreater<QuestionType['id'], QuestionType['title']> =
   (id, title) => async (dispatch) => {
@@ -38,4 +38,15 @@ export const getQuestionsByPage: ThunkActionCreater<
     const res = await axios.post<QuestionType[]>('/paginationQuestions', { page });
     dispatch(setQuestions(res.data));
   }
+};
+export const submitQuestion: ThunkActionCreater<QuestionType> = (data) => async (dispatch) => {
+  try {
+    const response = await axios.post<QuestionType>('/admin/questions', data);
+    const question = response.data;
+    dispatch(addQuestion(question));
+    console.log(question)
+  } catch (error) {
+    console.error('Error submitting question:', error);
+  }
+  
 };

@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useEffect } from 'react';
-import SearchInputTheme from '../UI/SearchInputTheme';
-import SearchInputQuest from '../UI/SearchInputQuest';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 import { Button } from 'reactstrap';
 import Pagination from '@mui/material/Pagination';
+import SearchInputTheme from '../UI/SearchInputTheme';
+import SearchInputQuest from '../UI/SearchInputQuest';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { ThemeType } from '../../types/theme/themeType';
-import axios from 'axios';
+import type { ThemeType } from '../../types/theme/themeType';
 import { getFirstThemes, getThemesByPage } from '../../features/redux/slices/themes/themeThunk';
 import MediaCard from '../UI/MediaCard';
-import { useParams } from 'react-router-dom';
 
 export default function ThemePage(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);

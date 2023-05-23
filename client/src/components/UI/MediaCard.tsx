@@ -16,8 +16,8 @@ type MediaCardProps = {
   feedback: string;
 };
 
-export default function MediaCard({ title, id, views, feedback }: MediaCardProps) {
-  const addFavoritesHandler = () => {};
+export default function MediaCard({ title, id, views, feedback }: MediaCardProps):JSX.Element {
+  const addFavoritesHandler = ():void => {};
   const navigate = useNavigate();
   return (
     <Card sx={{ maxWidth: 345 }}>

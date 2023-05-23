@@ -16,6 +16,7 @@ import { checkUserThunk } from './features/redux/slices/user/thunkActions';
 
 function App(): JSX.Element {
   const user = useAppSelector((store) => store.user);
+  const userAdmin = useAppSelector((store) => store.userAdmin);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,7 +35,11 @@ function App(): JSX.Element {
         <Route
           element={<PrivateRoute isAllowed={user.status === 'logged'} redirectPath="/login" />}
         >
+          <Route
+          element={<PrivateRoute isAllowed={user.isAdmin === true} redirectPath="/login" />}
+        >
           <Route path="/admin" element={<AdminPage />} />
+        </Route>
           <Route path="/cabinet" element={<CabinetPage />} />
         </Route>
         <Route path="/theme" element={<ThemePage />} />
