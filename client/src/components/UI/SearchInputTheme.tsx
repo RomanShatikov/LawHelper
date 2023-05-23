@@ -40,7 +40,7 @@ export default function SearchInputTheme(): JSX.Element {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    navigate(`/theme/${input}`);
+    navigate(`/themes/${input}`);
   };
 
   return (
