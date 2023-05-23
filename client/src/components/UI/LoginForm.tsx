@@ -3,11 +3,14 @@ import { Button, Form, FormGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Input, Label } from 'reactstrap';
 import { loginUserThunk } from '../../features/redux/slices/user/thunkActions';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import type { LoginForm } from '../../types/user/formTypes';
+import { useAppSelector } from '../../features/hooks';
 
 export default function LogForm(): JSX.Element {
-  const [errorEmail, setErrorEmail] = useState('');
-  const [errorPassword, setErrorPassword] = useState('');
+  const erors = useAppSelector((state) => state.eror);
+  console.log(erors);
+  const [isVisible, setVisible] = useState(false);
   const dispatch = useDispatch();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -20,13 +23,16 @@ export default function LogForm(): JSX.Element {
       <FormGroup>
         <Label for="exampleEmail">Email</Label>
         <Input id="exampleEmail" name="email" type="email" />
-        {errorEmail && <p>{errorEmail}</p>}
+        {erors.loginEmailEror && <p>{erors.loginEmailEror}</p>}
       </FormGroup>
 
       <FormGroup>
         <Label for="examplePassword">Password</Label>
-        <Input id="examplePassword" name="password" type="password" />
-        {errorPassword && <p>{errorPassword}</p>}
+        <Input id="examplePassword" name="password" type={isVisible ? 'text' : 'password'} />
+        <button type="button" onClick={() => setVisible(!isVisible)}>
+          <VisibilityIcon />
+        </button>
+        {erors.loginPasswordEror && <p>{erors.loginPasswordEror}</p>}
       </FormGroup>
       <Button type="submit">Войти</Button>
     </Form>

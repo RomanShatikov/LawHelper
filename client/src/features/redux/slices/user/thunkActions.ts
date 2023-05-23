@@ -1,9 +1,10 @@
 import type { AxiosResponse, AxiosError } from 'axios';
 import axios from 'axios';
-import type { LoginForm, SignUpForm, SignUpFormType } from '../../../../types/user/formTypes';
+import type { LoginForm, SignUpFormType } from '../../../../types/user/formTypes';
 import type { UserFromBackend } from '../../../../types/user/userType';
 import type { ThunkActionCreater } from '../../../store';
 import { logoutUser, setUser } from './userSlice';
+import { setEmailEror, setPasswordEror } from '../erors/erorsSlice';
 
 export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (dispatch) => {
   axios
@@ -17,12 +18,23 @@ export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (di
     .catch(console.log);
 };
 
+type ErorFromBackend = {
+  response: {
+    data:{
+      message: string
+    }
+  }
+}
+
 export const loginUserThunk: ThunkActionCreater<LoginForm> = (formData) => (dispatch) => {
   axios
     .post<UserFromBackend>('/auth/login', formData)
     .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
-    .catch((err: AxiosError) => {
-      dispatch(setErrorEmail(err.message)); // err.response.message
+    .catch((err: ErorFromBackend) => {
+      console.log(err);
+      if (err?.response?.data?.message === 'e-mail не зарегистрирован')
+        dispatch(setEmailEror(err?.response?.data?.message));
+      if (err?.response?.data?.message === 'Неверный пароль') dispatch(setPasswordEror(err?.response?.data?.message));
     });
 };
 
