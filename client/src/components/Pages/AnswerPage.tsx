@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
 import { Container } from 'reactstrap';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
 import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
@@ -20,8 +21,6 @@ export default function AnswerPage(): JSX.Element {
   const location = useLocation();
   const { id } = useParams();
 
- 
-
   React.useEffect(() => {
     dispatch(getQuestionById(id));
   }, []);
@@ -29,7 +28,6 @@ export default function AnswerPage(): JSX.Element {
   React.useEffect(() => {
     dispatch(getDocumentById(id));
   }, []);
-
 
   return (
     <Container>
@@ -39,6 +37,12 @@ export default function AnswerPage(): JSX.Element {
           <Typography gutterBottom variant="h5" component="div">
             {question?.title}
           </Typography>
+          <div>
+            <VisibilityIcon />
+            <Typography gutterBottom variant="h5" component="div">
+              {question?.views}
+            </Typography>
+          </div>
           <Typography gutterBottom variant="h5" component="div">
             {question?.answer}
           </Typography>
