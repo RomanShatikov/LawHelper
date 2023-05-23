@@ -51,11 +51,6 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
           </Button>
         )}
         <FunctionalButton id={id} pathname={location.pathname} views={views} />
-        {/* {location.pathname !== '/cabinet/requests' && (
-          <Button size="small" onClick={addFavoritesHandler}>
-            <GradeIcon />
-          </Button>
-        )} */}
       </CardActions>
     </Card>
   );

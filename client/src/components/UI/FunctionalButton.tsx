@@ -15,10 +15,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 type FunctionalButtonProps = {
   pathname: string;
   id: number;
-  views: number;
+  views?: number;
 };
 
-export default function FunctionalButton({ pathname, id, views }: FunctionalButtonProps) {
+export default function FunctionalButton({ pathname, id, views }: FunctionalButtonProps):JSX.Element  {
   const user = useAppSelector<UserType>((state) => state.user);
   const favorites = useAppSelector<FavoriteType[]>((state) => state.question.favorites);
   const dispatch = useAppDispatch();
