@@ -38,15 +38,18 @@ export default function MediaCard({
           borderColor: '#16c0ce',
           borderWidth: '2px',
           borderStyle: 'solid',
+          borderRadius: '20px'
         }}
       >
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant="h5" component="div"
+          >
             {title}
           </Typography>
+          <hr style={{ margin: '8px 0', color: '#16c0ce', borderStyle: 'solid', borderWidth: '2px'}} />
           <Typography gutterBottom variant="h6" component="div">
                 {answer}
-              </Typography>
+              </Typography><hr style={{ margin: '10px 0', color: '#1d9bf0', borderStyle: 'solid', borderWidth: '2px'}} />
           {views && (
             <div>
               <VisibilityIcon />
@@ -60,6 +63,7 @@ export default function MediaCard({
               {feedback}
             </Typography>
           )}
+          
         </CardContent>
         <CardActions>
           {location.pathname !== '/cabinet/requests' && (

@@ -26,7 +26,7 @@ export default function NavBar(args: any): JSX.Element {
       >
         <div className="logo">
           <Link href="/">
-            <img src="client/public/logo.png" alt="logo" />
+            <img src="logo.png" alt="logo" />
           </Link>
         </div>
         <NavbarBrand style={{ fontSize: '30px', color: 'white' }} href="/">
