@@ -13,6 +13,7 @@ import { Stack } from '@mui/material';
 import axios from 'axios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import MediaCard from '../UI/MediaCard';
+import { Row } from 'reactstrap';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
@@ -59,18 +60,23 @@ export default function QuestionsPage(): JSX.Element {
           // onClick={(e) => paginationHandler(e)}
         />
       ) : null}
-      {questions.length ? (
-        questions?.map((question) => (
-          <MediaCard
-            key={question?.id}
-            title={question?.title}
-            id={question?.id}
-            views={question?.views}
-          />
-        ))
-      ) : (
-        <p>Тут ничего нет, попробуйте поискать другую тему</p>
-      )}
+      <div className="question-list">
+        {questions.length ? (
+          <Row>
+            {questions.map((question) => (
+              <MediaCard
+                key={question?.id}
+                title={question?.title}
+                id={question?.id}
+                views={question?.views}
+                answer={question?.answer}
+              />
+            ))}
+          </Row>
+        ) : (
+          <p>Тут ничего нет, попробуйте поискать другую тему</p>
+        )}
+      </div>
     </>
   );
 }

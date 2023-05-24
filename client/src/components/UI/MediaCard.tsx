@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import GradeIcon from '@mui/icons-material/Grade';
+import { Col } from 'reactstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import FunctionalButton from './FunctionalButton';
@@ -15,43 +16,63 @@ type MediaCardProps = {
   id: number;
   views: number;
   feedback: string;
+  answer: string
 };
 
-export default function MediaCard({ title, id, views, feedback }: MediaCardProps): JSX.Element {
+export default function MediaCard({
+  title,
+  id,
+  views,
+  answer,
+  feedback,
+}: MediaCardProps): JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
   console.log(location.pathname);
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {title}
-        </Typography>
-        {views && (
-          <div>
-            <VisibilityIcon />
-            <Typography gutterBottom variant="h6" component="div">
-              {views}
-            </Typography>
-          </div>
-        )}
-        {feedback && (
-          <Typography gutterBottom variant="h6" component="div">
-            {feedback}
+    <Col md={4} className="mt-5" style={{ marginBottom: '80px' }}>
+      <Card
+        sx={{
+          maxWidth: 450,
+          height: 400,
+          borderColor: '#16c0ce',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+        }}
+      >
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {title}
           </Typography>
-        )}
-      </CardContent>
-      <CardActions>
-        {location.pathname !== '/cabinet/requests' && (
-          <Button
-            size="small"
-            onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
-          >
-            Узнать больше
-          </Button>
-        )}
-        <FunctionalButton id={id} pathname={location.pathname} views={views} />
-      </CardActions>
-    </Card>
+          <Typography gutterBottom variant="h6" component="div">
+                {answer}
+              </Typography>
+          {views && (
+            <div>
+              <VisibilityIcon />
+              <Typography gutterBottom variant="h6" component="div">
+                {views}
+              </Typography>
+            </div>
+          )}
+          {feedback && (
+            <Typography gutterBottom variant="h6" component="div">
+              {feedback}
+            </Typography>
+          )}
+        </CardContent>
+        <CardActions>
+          {location.pathname !== '/cabinet/requests' && (
+            <Button
+              size="small"
+              onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+            >
+              Узнать больше
+            </Button>
+          )}
+          <FunctionalButton id={id} pathname={location.pathname} views={views} />
+        </CardActions>
+      </Card>
+    </Col>
   );
 }
