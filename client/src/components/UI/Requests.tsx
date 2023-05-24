@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
+import { Typography } from '@mui/material';
 import { getRequests } from '../../features/redux/slices/request/requestThunk';
 import MediaCard from './MediaCard';
-import { Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { RequestType } from '../../types/request/requestType';
-import { LoggedType } from '../../types/user/userType';
+import type { RequestType } from '../../types/request/requestType';
+import type{ ActiveType } from '../../types/user/userType';
 
-export default function Requests() {
-  const user = useAppSelector<LoggedType>((state) => state.user);
+export default function Requests():JSX.Element {
+  const user = useAppSelector<ActiveType>((state) => state.user);
   const dispatch = useAppDispatch();
   const requests = useAppSelector<RequestType[]>((state) => state.request.requests);
   useEffect(() => {

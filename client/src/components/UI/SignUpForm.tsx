@@ -17,9 +17,10 @@ import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { signUpThunk } from '../../features/redux/slices/user/thunkActions';
 import type { SignUpFormType } from '../../types/user/formTypes';
 
+
 export default function SignUpForm(): JSX.Element {
-   const erors = useAppSelector((state) => state.eror);
-   console.log(erors);
+  const erors = useAppSelector((state) => state.eror);
+  console.log(erors);
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -44,8 +45,7 @@ export default function SignUpForm(): JSX.Element {
   };
 
   function validatePassword(password: string, repeatPassword: string): boolean {
-    const regex =
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (password === '') {
       setError((prev) => ({ ...prev, password: 'Введите пароль' }));
@@ -55,7 +55,7 @@ export default function SignUpForm(): JSX.Element {
       setError((prev) => ({
         ...prev,
         password:
-          'Введите пароль длиной 8 символов, который содержит 3 прописные латинские буквы, 2 заглавные буквы, 2 цифры и специальный символ',
+          'Введите пароль длинной минимум восемь символов, содержащий минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ:',
       }));
       return false;
     }
@@ -92,6 +92,7 @@ export default function SignUpForm(): JSX.Element {
     ) {
       const data = Object.fromEntries(new FormData(e.currentTarget)) as SignUpFormType;
       dispatch(signUpThunk(data));
+      alert('Проверьте почту')
     }
   };
 
@@ -190,6 +191,7 @@ export default function SignUpForm(): JSX.Element {
               {error.repeatPassword && <p>{error.repeatPassword}</p>}
             </Grid>
           </Grid>
+
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Зарегистрироваться
           </Button>

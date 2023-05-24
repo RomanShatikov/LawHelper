@@ -1,15 +1,15 @@
 import { Avatar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useAppSelector } from '../../features/hooks';
-import { LoggedType } from '../../types/user/userType';
-import Requests from '../UI/Requests';
-import Favorites from '../UI/Favorites';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import { useAppSelector } from '../../features/hooks';
+import type { ActiveType } from '../../types/user/userType';
+import Requests from '../UI/Requests';
+import Favorites from '../UI/Favorites';
 import UserModalWindow from '../UI/UserModalWindow';
 
 export default function CabinetPage(): JSX.Element {
-  const user = useAppSelector<LoggedType>((state) => state.user);
+  const user = useAppSelector<ActiveType>((state) => state.user);
   console.log(user);
   const [showModal, setShowModal] = useState(false);
   const location = useLocation();

@@ -24,6 +24,7 @@ module.exports = {
       },
       views: {
         type: Sequelize.INTEGER,
+        defaultValue: 1,
       },
       mark1: {
         type: Sequelize.STRING,

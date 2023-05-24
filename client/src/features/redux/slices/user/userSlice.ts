@@ -1,6 +1,6 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { UserFromBackend, UserType } from '../../../../types/user/userType';
+import type { ActiveType, UserFromBackend, UserType } from '../../../../types/user/userType';
 
 // Define the initial state using that type
 const initialState: UserType = {
@@ -13,6 +13,7 @@ export const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<UserType>) => action.payload,
     logoutUser: (state) => ({ status: 'guest' }),
+
   },
 });
 

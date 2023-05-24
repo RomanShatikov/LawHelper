@@ -1,15 +1,17 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { LoggedType } from '../../types/user/userType';
-import { QuestionType } from '../../types/questions/questionType';
-import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
 import { Typography } from '@mui/material';
-import MediaCard from './MediaCard';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import type { ActiveType } from '../../types/user/userType';
+import type { QuestionType } from '../../types/questions/questionType';
+import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
 
-export default function Favorites() {
-  const user = useAppSelector<LoggedType>((state) => state.user);
+import MediaCard from './MediaCard';
+import type { FavoriteType } from '../../types/favorite/favoriteType';
+
+export default function Favorites():JSX.Element {
+  const user = useAppSelector<ActiveType>((state) => state.user);
   const dispatch = useAppDispatch();
-  const favorites = useAppSelector<QuestionType[]>((state) => state.question.favorites);
+  const favorites = useAppSelector<FavoriteType[]>((state) => state.question.favorites);
   useEffect(() => {
     dispatch(getFavorites(user.id));
   }, []);
@@ -20,7 +22,7 @@ export default function Favorites() {
         <MediaCard
           key={favorite?.id}
           title={favorite?.Question?.title}
-          views={favorite?.Question?.views}
+          views={Number(favorite?.Question?.views)}
           id={favorite?.Question?.id}
         />
       ))}

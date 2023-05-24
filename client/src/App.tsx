@@ -13,11 +13,13 @@ import AnswerPage from './components/Pages/AnswerPage';
 import { useAppDispatch, useAppSelector } from './features/hooks';
 import PrivateRoute from './components/HOC/PrivateRouter';
 import { checkUserThunk } from './features/redux/slices/user/thunkActions';
+import type { UserType } from './types/user/userType';
 import Loader from './components/HOC/Loader';
 
 function App(): JSX.Element {
-  const user = useAppSelector((store) => store.user);
-  const userAdmin = useAppSelector((store) => store.userAdmin);
+  const user = useAppSelector<UserType>((store) => store.user);
+  console.log(user);
+  const userAdmin = useAppSelector<UserType>((store) => store.userAdmin);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -31,13 +33,13 @@ function App(): JSX.Element {
       <NavBar />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route element={<PrivateRoute isAllowed={user.status === 'guest'} />}>
+        <Route element={<PrivateRoute isAllowed={user.status === 'guest' || user.status === 'non-active'} />}>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/login" element={<LoginPage />} />
         </Route>
 
         <Route
-          element={<PrivateRoute isAllowed={user.status === 'logged'} redirectPath="/login" />}
+          element={<PrivateRoute isAllowed={user.status === 'active'} redirectPath="/login" />}
         >
           <Route path="/cabinet/favorites" element={<CabinetPage />} />
           <Route path="/cabinet/requests" element={<CabinetPage />} />
