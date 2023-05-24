@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const crypto = require('crypto');
 const { User } = require('../db/models');
 const sendEmail = require('../nodemailer');
 
@@ -36,11 +37,10 @@ authRouter.get('/confirm/:confirmationCode', async (req, res) => {
 
   const foundUser = await User.findOne({ where: { confirmationCode } });
 
-  if (!user) {
+  if (!foundUser) {
     return res.status(404).json({ message: 'Неверный код подтверждения' });
   }
 
-  // Устанавливаем флаг подтверждения в true
   foundUser.confirmed = true;
   req.session.user = foundUser;
 
