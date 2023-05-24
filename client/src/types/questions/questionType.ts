@@ -1,4 +1,4 @@
-import { FavoriteType } from '../favorite/favoriteType';
+import type { FavoriteType } from '../favorite/favoriteType';
 
 export type QuestionType = {
   id: number;
