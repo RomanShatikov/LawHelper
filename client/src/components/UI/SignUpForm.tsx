@@ -45,8 +45,7 @@ export default function SignUpForm(): JSX.Element {
   };
 
   function validatePassword(password: string, repeatPassword: string): boolean {
-    const regex =
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (password === '') {
       setError((prev) => ({ ...prev, password: 'Введите пароль' }));
@@ -56,7 +55,7 @@ export default function SignUpForm(): JSX.Element {
       setError((prev) => ({
         ...prev,
         password:
-          'Введите пароль длиной 8 символов, который содержит 3 прописные латинские буквы, 2 заглавные буквы, 2 цифры и специальный символ',
+          'Введите пароль длинной минимум восемь символов, содержащий минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ:',
       }));
       return false;
     }
