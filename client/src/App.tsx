@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from './features/hooks';
 import PrivateRoute from './components/HOC/PrivateRouter';
 import { checkUserThunk } from './features/redux/slices/user/thunkActions';
 import type { UserType } from './types/user/userType';
+import Loader from './components/HOC/Loader';
 
 function App(): JSX.Element {
   const user = useAppSelector<UserType>((store) => store.user);
@@ -27,6 +28,8 @@ function App(): JSX.Element {
 
   return (
     <Container>
+      <Loader>
+        <>
       <NavBar />
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -53,6 +56,8 @@ function App(): JSX.Element {
         <Route path="/question/:title" element={<QuestionsPage />} />
         <Route path="/answer/:id" element={<AnswerPage />} />
       </Routes>
+      </>
+      </Loader>
     </Container>
   );
 }

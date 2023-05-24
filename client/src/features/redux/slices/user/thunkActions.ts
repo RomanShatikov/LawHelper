@@ -22,11 +22,11 @@ export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (di
 
 type ErorFromBackend = {
   response: {
-    data:{
-      message: string
-    }
-  }
-}
+    data: {
+      message: string;
+    };
+  };
+};
 
 export const loginUserThunk: ThunkActionCreater<LoginForm> = (formData) => (dispatch) => {
   axios
@@ -52,7 +52,11 @@ export const checkUserThunk: ThunkActionCreater = () => (dispatch) => {
         dispatch(setUser({ ...data, status: 'active' }));
       }
     })
-    .catch(() => dispatch(logoutUser()));
+    .catch(() => {
+      setTimeout(() => {
+        dispatch(logoutUser());
+      }, 2000);
+    });
 };
 
 export const logoutThunk: ThunkActionCreater = () => (dispatch) => {
