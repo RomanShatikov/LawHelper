@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const { User } = require('../db/models');
+const sendEmail = require('../nodemailer');
 
 const authRouter = express.Router();
 
@@ -11,21 +12,29 @@ authRouter.post('/signup', async (req, res) => {
 
   const hashpass = await bcrypt.hash(password, 10);
 
+    const confirmationCode = crypto.randomBytes(20).toString('hex');
+
   const [foundUser, created] = await User.findOrCreate({
     where: { email },
     defaults: {
       firstName,
       lastName,
       hashpass,
+      confirmationCode,
     },
   });
 
   if (!created) return res.status(401).json({ message: 'e-mail уже зарегистрирован' });
 
+  sendEmail(foundUser, confirmationCode);
+
+
+
   req.session.user = foundUser;
 
   return res.json(foundUser);
 });
+
 
 authRouter.post('/login', async (req, res) => {
   const { email, password } = req.body;

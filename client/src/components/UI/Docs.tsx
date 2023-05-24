@@ -16,6 +16,7 @@ type DocCardProps = {
 };
 
 export default function DocCard({ url, id }: DocCardProps): JSX.Element {
+  const localhost = 'http://localhost:5173/'
   const documents = useAppSelector((state) => state.document.documents);
   const dispatch = useAppDispatch();
   const location = useLocation();
