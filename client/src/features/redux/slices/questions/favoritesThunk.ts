@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { LoggedType } from '../../../../types/user/userType';
+import type { ActiveType } from '../../../../types/user/userType';
 import { ThunkActionCreater } from '../../../store';
 import { QuestionType } from '../../../../types/questions/questionType';
 import { addFavorite, delFavorite, setFavorites } from './questionsSlice';
-import { FavoriteType } from '../../../../types/favorite/favoriteType';
+import type { FavoriteType } from '../../../../types/favorite/favoriteType';
 
-export const getFavorites: ThunkActionCreater<LoggedType['id']> = (userId) => async (dispatch) => {
+export const getFavorites: ThunkActionCreater<ActiveType['id']> = (userId) => async (dispatch) => {
   const res = await axios<FavoriteType[]>(`/favorites/${userId}`);
   dispatch(setFavorites(res.data));
 };

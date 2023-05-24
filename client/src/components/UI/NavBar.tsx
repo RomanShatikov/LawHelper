@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, Navigate, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
-import { Button } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { logoutThunk } from '../../features/redux/slices/user/thunkActions';
 
@@ -21,7 +19,7 @@ export default function NavBar(args: any): JSX.Element {
         <Collapse isOpen={isOpen} navbar>
           <Nav className="me-auto" navbar>
             <NavItem>
-              {user.status === 'logged' && (
+              {user.status === 'active' && (
                 <NavLink className="nav-link" to="/cabinet/requests">
                   Личный кабинет
                 </NavLink>
@@ -51,7 +49,7 @@ export default function NavBar(args: any): JSX.Element {
                 Темы
               </NavLink>
             </NavItem>
-            {user.status === 'logged' && (
+            {user.status === 'active' && (
               <>
                 <NavItem>
                   <NavLink className="nav-link" to="/" onClick={() => dispatch(logoutThunk())}>
@@ -77,17 +75,6 @@ export default function NavBar(args: any): JSX.Element {
                 Страница ответов
               </NavLink>
             </NavItem>
-            {/* <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown> */}
           </Nav>
         </Collapse>
       </Navbar>

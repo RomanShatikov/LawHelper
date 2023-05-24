@@ -10,7 +10,7 @@ function sendEmail(user, code) {
     to: user.email,
     subject: 'Код подтверждения',
     html: `<p>Перейди по ссылке для завершения регистрации: 
-    <br /><strong>http://localhost:5173/login/forget/${code}</strong></p>`,
+    <a href="http://localhost:3001/api/auth/confirm/${code}">ссылка для подверждения</a>`,
   };
 
   const transporter = nodemailer.createTransport({
@@ -19,7 +19,7 @@ function sendEmail(user, code) {
     secure: true,
     auth: {
       user: 'lawhelper@bk.ru',
-      pass: 'trxkttvltfjgjhzi2',
+      pass: 'huY5wdcSjdeajAy2pi24',
     },
   });
 

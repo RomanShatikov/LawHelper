@@ -17,9 +17,10 @@ import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { signUpThunk } from '../../features/redux/slices/user/thunkActions';
 import type { SignUpFormType } from '../../types/user/formTypes';
 
+
 export default function SignUpForm(): JSX.Element {
-   const erors = useAppSelector((state) => state.eror);
-   console.log(erors);
+  const erors = useAppSelector((state) => state.eror);
+  console.log(erors);
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -92,6 +93,7 @@ export default function SignUpForm(): JSX.Element {
     ) {
       const data = Object.fromEntries(new FormData(e.currentTarget)) as SignUpFormType;
       dispatch(signUpThunk(data));
+      alert('Проверьте почту')
     }
   };
 
@@ -190,6 +192,7 @@ export default function SignUpForm(): JSX.Element {
               {error.repeatPassword && <p>{error.repeatPassword}</p>}
             </Grid>
           </Grid>
+
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Зарегистрироваться
           </Button>

@@ -14,7 +14,7 @@ export const signUpThunk: ThunkActionCreater<SignUpFormType> = (formData) => (di
       email: formData.email,
       password: formData.password,
     })
-    .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
+    .then(({ data }) => dispatch(setUser({ ...data, status: 'non-active' })))
     .catch((err)=>{
       if (err?.response?.data?.message === 'e-mail уже зарегистрирован') dispatch(setEmailEror(err?.response?.data?.message));
     });
@@ -31,18 +31,27 @@ type ErorFromBackend = {
 export const loginUserThunk: ThunkActionCreater<LoginForm> = (formData) => (dispatch) => {
   axios
     .post<UserFromBackend>('/auth/login', formData)
-    .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
+    .then(({ data }) => dispatch(setUser({ ...data, status: 'active' })))
     .catch((err: ErorFromBackend) => {
       if (err?.response?.data?.message === 'e-mail не зарегистрирован')
         dispatch(setEmailEror(err?.response?.data?.message));
       if (err?.response?.data?.message === 'Неверный пароль') dispatch(setPasswordEror(err?.response?.data?.message));
+      if (err?.response?.data?.message === 'Пожалуйста подвердите свой e-mail')
+        dispatch(setEmailEror(err?.response?.data?.message));
     });
 };
 
 export const checkUserThunk: ThunkActionCreater = () => (dispatch) => {
   axios
     .get<UserFromBackend>('/auth/check')
-    .then(({ data }) => dispatch(setUser({ ...data, status: 'logged' })))
+    .then(({ data }) => {
+      if (!data.confirmed) {
+        dispatch(setUser({ ...data, status: 'non-active' }));
+      }
+      if (data.confirmed) {
+        dispatch(setUser({ ...data, status: 'active' }));
+      }
+    })
     .catch(() => dispatch(logoutUser()));
 };
 

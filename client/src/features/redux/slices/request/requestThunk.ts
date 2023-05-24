@@ -1,11 +1,11 @@
 import axios from 'axios';
-import type { LoggedType } from '../../../../types/user/userType';
+import type { ActiveType } from '../../../../types/user/userType';
 import type { ThunkActionCreater } from '../../../store';
 import type { RequestType } from '../../../../types/request/requestType';
 import { deleteRequest, appendRequest, setRequest } from './requestSlice';
 
 // eslint-disable-next-line import/prefer-default-export
-export const getRequests: ThunkActionCreater<LoggedType['id']> = (userId) => async (dispatch) => {
+export const getRequests: ThunkActionCreater<ActiveType['id']> = (userId) => async (dispatch) => {
   const res = await axios<RequestType[]>(`/requests/${userId}`);
   dispatch(setRequest(res.data));
 };
