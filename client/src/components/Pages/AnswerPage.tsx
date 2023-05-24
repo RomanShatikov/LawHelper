@@ -6,13 +6,14 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Col, Container } from 'reactstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { getDocumentById } from '../../features/redux/slices/documents/documentThunk';
 import { getQuestionById } from '../../features/redux/slices/questions/questionsThunk';
 import Docs from '../UI/Docs';
 import FunctionalButton from '../UI/FunctionalButton';
+import YandexMap from '../UI/YandexMap';
 
 export default function AnswerPage(): JSX.Element {
   const question = useAppSelector((state) => state.question.currentQuestion);
@@ -58,6 +59,7 @@ export default function AnswerPage(): JSX.Element {
           />
         </CardActions>
       </Card>
+      <Col>{question && question.mark1 && question.mark2 && <YandexMap />}</Col>
       {document?.length !== 0 && <Docs id={id} />}
     </Container>
   );

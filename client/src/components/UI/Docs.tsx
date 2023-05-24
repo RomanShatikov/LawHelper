@@ -26,7 +26,7 @@ export default function DocCard({ url, id }: DocCardProps): JSX.Element {
   return (
     <>
       <Typography gutterBottom variant="h5" component="div">
-        Документы по вопросу;
+        Документы по вопросу
       </Typography>
       {documents.map((document) => (
         <Card sx={{ maxWidth: 400 }} key={document.id}>
