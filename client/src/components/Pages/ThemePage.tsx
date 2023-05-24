@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { Button } from 'reactstrap';
 import Pagination from '@mui/material/Pagination';
 import SearchInputTheme from '../UI/SearchInputTheme';
@@ -11,37 +11,43 @@ import type { ThemeType } from '../../types/theme/themeType';
 import { getFirstThemes, getThemesByPage } from '../../features/redux/slices/themes/themeThunk';
 import MediaCard from '../UI/MediaCard';
 
+type PageCountResponse = {
+  data:{
+    pageCount:number
+  }
+}
+
 export default function ThemePage(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
-  const [pageCount, setPageCount] = React.useState(0);
+  const [pageCount, setPageCount] = React.useState<number>(0);
   const dispatch = useAppDispatch();
   const { title } = useParams();
 
   useEffect(() => {
     axios
       .post('/themesPageCount', { title })
-      .then((res) => setPageCount(res.data.pageCount))
+      .then((res: AxiosResponse<PageCountResponse>) => setPageCount(res.data.pageCount))
       .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
     axios
       .post('/themesPageCount', { title })
-      .then((res) => setPageCount(res.data.pageCount))
+      .then((res: AxiosResponse<PageCountResponse>) => setPageCount(res.data.pageCount))
       .catch((err) => console.log(err));
   }, [title]);
 
   useEffect(() => {
-    dispatch(getFirstThemes(title));
+    dispatch(getFirstThemes(title!));
   }, []);
 
   useEffect(() => {
-    dispatch(getFirstThemes(title));
+    dispatch(getFirstThemes(title!));
   }, [title]);
 
-  const paginationHandler = (e) => {
+  const paginationHandler = (e: React.MouseEvent<HTMLElement, MouseEvent>):void => {
     const page = Number(e.target.textContent);
-    dispatch(getThemesByPage(title, page));
+    dispatch(getThemesByPage({title, page}));
   };
   return (
     <>

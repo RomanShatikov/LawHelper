@@ -7,7 +7,7 @@ export default function YandexMap(): JSX.Element {
   useEffect(() => {
     if (question && question.mark1 && question.mark2) {
       function init(): void {
-        const myMap = new window.ymaps.Map('map', {
+        const myMap:any = new window.ymaps.Map('map', {
           center: [Number(question?.mark1), Number(question?.mark2)],
           zoom: 15,
           controls: [],
@@ -28,5 +28,4 @@ export default function YandexMap(): JSX.Element {
     }
   }, []);
   return <div id="map" style={{ width: '300px', height: '300px' }} />;
-
 }

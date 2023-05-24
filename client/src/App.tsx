@@ -19,7 +19,6 @@ import Loader from './components/HOC/Loader';
 function App(): JSX.Element {
   const user = useAppSelector<UserType>((store) => store.user);
   console.log(user);
-  const userAdmin = useAppSelector<UserType>((store) => store.userAdmin);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -45,7 +44,7 @@ function App(): JSX.Element {
           <Route path="/cabinet/requests" element={<CabinetPage />} />
         </Route>
 
-        <Route element={<PrivateRoute isAllowed={user.isAdmin === true} redirectPath="/login" />}>
+        <Route element={<PrivateRoute isAllowed={user?.isAdmin === true} redirectPath="/login" />}>
           <Route path="/admin" element={<AdminPage />} />
         </Route>
 

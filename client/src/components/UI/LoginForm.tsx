@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Button, Form, FormGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { Input, Label } from 'reactstrap';
-import { loginUserThunk } from '../../features/redux/slices/user/thunkActions';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { loginUserThunk } from '../../features/redux/slices/user/thunkActions';
 import type { LoginForm } from '../../types/user/formTypes';
 import { useAppSelector } from '../../features/hooks';
 

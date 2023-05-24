@@ -3,16 +3,17 @@ import { Modal, Button, Dropdown, Form } from 'react-bootstrap';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { addRequest } from '../../features/redux/slices/request/requestThunk';
 
-type UserModalWindow = {
+type UserModalWindowProps = {
   showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function UserModalWindow({ showModal, setShowModal }: UserModalWindow): JSX.Element {
+export default function UserModalWindow({ showModal, setShowModal }: UserModalWindowProps): JSX.Element {
   const [input, setInut] = React.useState('');
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
-  const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = (e: React.FormEvent<HTMLFormElement>):void => {
     e.preventDefault();
     setShowModal(false);
     setInut('');

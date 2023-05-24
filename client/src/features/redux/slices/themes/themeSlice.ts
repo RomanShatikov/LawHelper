@@ -14,7 +14,7 @@ export const themeSlice = createSlice({
       state.themes = action.payload;
     },
     deleteTheme: (state, action: PayloadAction<ThemeType['id']>) => {
-      const foundIndex = state.themes.findIndex((el) => el.id === action.payload);
+      const foundIndex = state.themes.findIndex((el:ThemeType) => el.id === action.payload);
       if (foundIndex!== -1) 
       state.themes.splice(foundIndex, 1);
    },

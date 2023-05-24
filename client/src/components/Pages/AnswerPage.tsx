@@ -23,11 +23,11 @@ export default function AnswerPage(): JSX.Element {
   const { id } = useParams();
 
   React.useEffect(() => {
-    dispatch(getQuestionById(id));
+    dispatch(getQuestionById(Number(id)));
   }, []);
 
   React.useEffect(() => {
-    dispatch(getDocumentById(id));
+    dispatch(getDocumentById(Number(id)));
   }, []);
 
   return (
@@ -60,7 +60,7 @@ export default function AnswerPage(): JSX.Element {
         </CardActions>
       </Card>
       <Col>{question && question.mark1 && question.mark2 && <YandexMap />}</Col>
-      {document?.length !== 0 && <Docs id={id} />}
+      {document?.length !== 0 && <Docs id={Number(id)} />}
     </Container>
   );
 }

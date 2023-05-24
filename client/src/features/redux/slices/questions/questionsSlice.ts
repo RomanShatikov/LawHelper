@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { QuestionSliceType, QuestionType } from '../../../../types/questions/questionType';
-import { FavoriteType } from '../../../../types/favorite/favoriteType';
-import { DelFavoriteArg } from './favoritesThunk';
+import type { FavoriteType } from '../../../../types/favorite/favoriteType';
+import type { DelFavoriteArg } from './favoritesThunk';
 
 const initialState: QuestionSliceType = {
   questions: [],

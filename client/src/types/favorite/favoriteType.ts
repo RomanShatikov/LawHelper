@@ -1,5 +1,5 @@
 import { QueryTypes } from "sequelize";
-import { QuestionType } from "../questions/questionType";
+import type { QuestionType } from "../questions/questionType";
 
 export type FavoriteType = {
   id: number;

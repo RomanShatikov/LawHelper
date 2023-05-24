@@ -4,23 +4,31 @@ import { Dropdown, Modal, Button, Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import type { ThemeType } from '../../types/theme/themeType';
 import { useAppSelector } from '../../features/hooks';
-import { getFirstThemes } from '../../features/redux/slices/themes/themeThunk';
-import { deleteRequest } from '../../features/redux/slices/request/requestSlice';
+import { getAllThemes } from '../../features/redux/slices/themes/themeThunk';
 import { deleteRequestThunk } from '../../features/redux/slices/request/requestThunk';
 import { submitQuestion } from '../../features/redux/slices/questions/questionsThunk';
+import type { RequestType } from '../../types/request/requestType';
 
-interface State {
+type State = {
   theme: number;
+  title: string;
   question: string;
   answer: string;
   urlDoc: string;
-}
+};
 
-export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Element {
+type Props = {
+  showModal: boolean;
+  onHide: () => void;
+  selectedItem: RequestType | null;
+};
+
+export default function ModalPage({ showModal, onHide, selectedItem }: Props): JSX.Element {
   const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
   const [inputs, setInputs] = useState<State>({
     theme: 0,
+    question: '',
     title: '',
     answer: '',
     urlDoc: '',
@@ -43,7 +51,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
       theme: selectedTheme.id,
     }));
   };
-  
+
   const handleDeleteRequest = (): void => {
     dispatch(deleteRequestThunk(selectedItem.id));
     setTitle('');
@@ -53,14 +61,15 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
     dispatch(submitQuestion(inputs));
     setShowForm(false);
     setInputs({
-      theme: '',
+      theme: 0,
       title: '',
+      question: '',
       answer: '',
       urlDoc: '',
     });
   };
   useEffect(() => {
-    dispatch(getFirstThemes());
+    dispatch(getAllThemes(null));
   }, []);
 
   return (
@@ -69,8 +78,8 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
         <Modal.Title>Добавить новый запрос</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="title">{selectedItem.title}</p>
-        <p className="feedback">{selectedItem.feedback}</p>
+        <p className="title">{selectedItem?.title}</p>
+        <p className="feedback">{selectedItem?.feedback}</p>
         <div className="buttons">
           <Button
             variant="secondary"
@@ -95,12 +104,12 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
           <Form>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {title ? title : 'Выберите тему'}
+                {title || 'Выберите тему'}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                {themes?.map((theme) => (
-                  <Dropdown.Item key={theme.id} onClick={() => handleThemeChange(theme)}>
-                    {theme.title}
+                {themes?.map((theme: ThemeType) => (
+                  <Dropdown.Item key={theme?.id} onClick={() => handleThemeChange(theme)}>
+                    {theme?.title}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -110,7 +119,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
               <Form.Control
                 type="text"
                 name="title"
-                value={inputs.title}
+                value={inputs?.title}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -119,7 +128,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
               <Form.Control
                 type="text"
                 name="answer"
-                value={inputs.answer}
+                value={inputs?.answer}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -128,7 +137,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
               <Form.Control
                 type="text"
                 name="urlDoc"
-                value={inputs.urlDoc}
+                value={inputs?.urlDoc}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -140,7 +149,9 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
           <Button variant="secondary" onClick={onHide}>
             Закрыть
           </Button>
-          <Button variant="primary" onClick={submitHandler}>Добавить</Button>
+          <Button variant="primary" onClick={(e) => submitHandler}>
+            Добавить
+          </Button>
         </Modal.Footer>
       )}
     </Modal>

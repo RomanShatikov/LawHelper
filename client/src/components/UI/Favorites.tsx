@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { ActiveType } from '../../types/user/userType';
-import type { QuestionType } from '../../types/questions/questionType';
 import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
 
 import MediaCard from './MediaCard';

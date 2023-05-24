@@ -1,7 +1,11 @@
 import axios from 'axios';
 import type { ThunkActionCreater } from '../../../store';
-import { ThemeType } from '../../../../types/theme/themeType';
+import type { ThemeType } from '../../../../types/theme/themeType';
 import { setThemes } from './themeSlice';
+
+type GetFirstThemesProps = {
+  title?: ThemeType['title'];
+};
 
 export const getFirstThemes: ThunkActionCreater<ThemeType['title']> =
   (title) => async (dispatch) => {
@@ -14,8 +18,14 @@ export const getFirstThemes: ThunkActionCreater<ThemeType['title']> =
     }
   };
 
-export const getThemesByPage: ThunkActionCreater<ThemeType['title'], number> =
-  (title, page) => async (dispatch) => {
+type GetThemesByPageProps = {
+  title?: ThemeType['title'];
+  page?: number;
+};
+
+export const getThemesByPage: ThunkActionCreater<GetThemesByPageProps> =
+  ({ title, page }) =>
+  async (dispatch) => {
     if (title) {
       const res = await axios.post<ThemeType[]>('/paginationThemes', { title, page });
       dispatch(setThemes(res.data));
@@ -24,3 +34,8 @@ export const getThemesByPage: ThunkActionCreater<ThemeType['title'], number> =
       dispatch(setThemes(res.data));
     }
   };
+
+export const getAllThemes: ThunkActionCreater<null> = () => async (dispatch) => {
+  const res = await axios.post<ThemeType[]>('/allThemes');
+  dispatch(setThemes(res.data));
+};

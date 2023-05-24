@@ -11,7 +11,7 @@ import UserModalWindow from '../UI/UserModalWindow';
 export default function CabinetPage(): JSX.Element {
   const user = useAppSelector<ActiveType>((state) => state.user);
   console.log(user);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
   return (

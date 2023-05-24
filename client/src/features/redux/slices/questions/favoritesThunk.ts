@@ -18,7 +18,6 @@ type AppendFavoriteArg = {
 export const appendFavorite: ThunkActionCreater<AppendFavoriteArg> =
   ({ userId, questionId }) =>
   async (dispatch) => {
-    console.log(userId, questionId, '--------------');
     const res = await axios.post<FavoriteType>(`/crud/favorite`, { userId, questionId });
     if (res.status === 200) dispatch(addFavorite(res.data));
   };
@@ -31,7 +30,6 @@ export type DelFavoriteArg = {
 export const deleteFavorite: ThunkActionCreater<DelFavoriteArg> =
   ({ userId, questionId }) =>
   async (dispatch) => {
-    console.log('000000000', userId, questionId);
     const res = await axios.post<FavoriteType>(`/crud/delFavorite`, { userId, questionId });
     if (res.status === 200) dispatch(delFavorite({ userId, questionId }));
   };

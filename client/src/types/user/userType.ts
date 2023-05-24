@@ -4,6 +4,7 @@ export type ActiveType = UserFromBackend & {
 
 export type FetchingUserType = {
   status: 'fetching';
+  isAdmin: false;
 };
 
 export type GuestType = {

@@ -121,6 +121,15 @@ indexRouter.post('/firstThemes', async (req, res) => {
   }
 });
 
+indexRouter.post('/allThemes', async (req, res) => {
+  try {
+    const themes = await Theme.findAll();
+    res.send(themes);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 indexRouter.post('/paginationThemes', async (req, res) => {
   try {
     const { title, page } = req.body;
