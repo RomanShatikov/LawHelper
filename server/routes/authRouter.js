@@ -28,11 +28,23 @@ authRouter.post('/signup', async (req, res) => {
 
   sendEmail(foundUser, confirmationCode);
 
+  return res.json({ message: 'Письмо с подтверждением отправлено' });
+});
 
+authRouter.get('/confirm/:confirmationCode', async (req, res) => {
+  const { confirmationCode } = req.params;
 
+  const foundUser = await User.findOne({ where: { confirmationCode } });
+
+  if (!user) {
+    return res.status(404).json({ message: 'Неверный код подтверждения' });
+  }
+
+  // Устанавливаем флаг подтверждения в true
+  foundUser.confirmed = true;
   req.session.user = foundUser;
 
-  return res.json(foundUser);
+  return res.json({ message: 'Регистрация подтверждена' });
 });
 
 
