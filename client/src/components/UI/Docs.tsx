@@ -16,22 +16,22 @@ type DocCardProps = {
 };
 
 export default function DocCard({ url, id }: DocCardProps): JSX.Element {
-  const localhost = 'http://localhost:5173/'
+  const localhost = 'http://localhost:5173/';
   const documents = useAppSelector((state) => state.document.documents);
   const dispatch = useAppDispatch();
   const location = useLocation();
-  console.log(location)
+  console.log(location);
 
   console.log('---ddd----', id);
 
   return (
-    <>
+    <div style={{ maxHeight: 'max-content', maxWidth: 'max-content', margin: 0 }}>
       <Typography gutterBottom variant="h5" component="div">
         Документы
       </Typography>
       {documents.map((document) => (
-        <Card sx={{ maxWidth: 400 }} key={document.id}>
-          <CardMedia sx={{ height: 100 }} />
+        <Card key={document.id}>
+          <CardMedia />
           <CardContent>
             <div>
               <a href={document.urlDoc} download>
@@ -39,13 +39,13 @@ export default function DocCard({ url, id }: DocCardProps): JSX.Element {
               </a>
               <a href={document.urlDoc} download>
                 <Typography gutterBottom variant="h5" component="div">
-                  {document.title}
+                  {`${document.title.slice(0, 20)}...`}
                 </Typography>
               </a>
             </div>
           </CardContent>
         </Card>
       ))}
-    </>
+    </div>
   );
 }

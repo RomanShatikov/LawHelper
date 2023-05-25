@@ -13,16 +13,24 @@ adminRouter.route('/').get(async (req, res) => {
 module.exports = adminRouter;
 
 adminRouter.route('/request/:id').delete(async (req, res) => {
-  await Request.destroy({ where: { id: req.params.id } });
-  res.sendStatus(200);
+  try {
+    await Request.destroy({ where: { id: req.params.id } });
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 adminRouter.route('/questions').post(async (req, res) => {
-  const newQuestion = await Question.create({ ...req.body, themeId: req.body.theme });
-  console.log(req.body);
-  const newQuestionWithThemeAnswer = await Question.findOne({
-    where: { id: newQuestion.id },
-    include: [Theme, Document],
-  });
-  res.json(newQuestionWithThemeAnswer);
+  try {
+    const newQuestion = await Question.create({ ...req.body, themeId: req.body.theme });
+    console.log(req.body);
+    const newQuestionWithThemeAnswer = await Question.findOne({
+      where: { id: newQuestion.id },
+      include: [Theme, Document],
+    });
+    res.json(newQuestionWithThemeAnswer);
+  } catch (e) {
+    console.log(e);
+  }
 });

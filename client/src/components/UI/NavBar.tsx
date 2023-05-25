@@ -1,6 +1,6 @@
 import { BottomNavigation, BottomNavigationAction, Link } from '@mui/material';
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 import LoginIcon from '@mui/icons-material/Login';
 import HomeIcon from '@mui/icons-material/Home';
@@ -8,14 +8,18 @@ import QuizIcon from '@mui/icons-material/Quiz';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import LogoutIcon from '@mui/icons-material/Logout';
+import BalanceIcon from '@mui/icons-material/Balance';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { logoutThunk } from '../../features/redux/slices/user/thunkActions';
-import { UserType } from '../../types/user/userType';
-import { Fingerprint } from '@mui/icons-material';
+import type { UserType } from '../../types/user/userType';
+import { Avatar } from '@mui/material';
 
 export default function NavBar(args: any): JSX.Element {
   const dispatch = useAppDispatch();
   const user = useAppSelector<UserType>((state) => state.user);
+  const navigate = useNavigate();
   const [value, setValue] = React.useState('recents');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -23,129 +27,104 @@ export default function NavBar(args: any): JSX.Element {
   };
 
   return (
-    <div
-      style={{ backgroundColor: '#0b4ba6', height: '98px' }}
-      className="d-flex justify-content-between align-items-center"
+    <Navbar
+      style={{
+        backgroundColor: 'white',
+        height: '98px',
+        display: 'flex',
+        justifyItems: 'center',
+        justifyContent: 'space-around',
+        gap: '10%',
+        alignItems: 'center',
+        margin: '0',
+      }}
+      className="container d-flex justify-content-between align-items-center"
     >
-      <Navbar
-        style={{ fontSize: '18px', color: 'white' }}
-        className="container d-flex justify-content-between align-items-center"
+      <BottomNavigation
+        style={{
+          backgroundColor: 'white',
+          height: '98px',
+          display: 'flex',
+          justifyItems: 'center',
+          justifyContent: 'space-between',
+          gap: '20%',
+          alignItems: 'center',
+          margin: 'auto',
+        }}
+        sx={{ width: 500 }}
+        value={value}
+        onChange={handleChange}
       >
-        <div className="logo">
-          <Link href="/">
-            <img src="logo.png" alt="logo" />
-          </Link>
-        </div>
-        <BottomNavigation
-          style={{ backgroundColor: '#0b4ba6', height: '98px' }}
-          sx={{ width: 500 }}
-          // style={{ fontSize: '18px', color: 'white' }}
-          value={value}
-          onChange={handleChange}
-        >
-          {user.status === 'guest' && (
-            <>
-              <BottomNavigationAction
-                href="/signup"
-                label="Зарегистрироваться"
-                value="favorites"
-                icon={<LoginIcon fontSize="large" style={{ color: 'white' }} />}
-              />
-              <BottomNavigationAction
-                href="/login"
-                label="Войти"
-                value="nearby"
-                icon={<FingerprintIcon fontSize="large" style={{ color: 'white' }} />}
-              />
-            </>
-          )}
-          <BottomNavigationAction
-            href="/theme"
-            label="Folder"
-            value="folder"
-            icon={<ContentPasteIcon fontSize="large" style={{ color: 'white' }} />}
-          />
-
-          {user.status === 'active' && (
-            <>
-              <BottomNavigationAction
-                href="/"
-                onClick={() => dispatch(logoutThunk())}
-                label="Folder"
-                value="folder"
-                icon={<LogoutIcon fontSize="large" style={{ color: 'white' }} />}
-              />
-              {user.isAdmin && (
-                <BottomNavigationAction
-                  href="/admin"
-                  label="Recents"
-                  value=""
-                  icon={<HomeIcon fontSize="large" style={{ color: 'white' }} />}
-                />
-              )}
-            </>
-          )}
-          <BottomNavigationAction
-            href="/question"
-            label="Folder"
-            value="folder"
-            icon={<QuizIcon fontSize="large" style={{ color: 'white' }} />}
-          />
-          {user.status === 'active' && (
-            <BottomNavigationAction
-              href="/cabinet/requests"
-              label="Folder"
-              value="folder"
-              icon={<QuizIcon fontSize="large" style={{ color: 'white' }} />}
-            />
-          )}
-        </BottomNavigation>
-      </Navbar>
-      {/* {user.status === 'active' && (
-          <NavLink className="nav-link" to="/cabinet/requests">
-            <HomeIcon fontSize="large" color="disabled" />
-          </NavLink>
-        )}  */}
-
-      {/* <NavLink className="nav-link" to="/">
-              </NavLink> */}
-      {/* {user.status === 'guest' && (
+        <BottomNavigationAction
+          onClick={() => navigate('/')}
+          value="main"
+          icon={<img src="../../../public/logo.png" alt="logo" width="50px" />}
+        />
+        {user.status === 'guest' && (
           <>
-            <NavLink className="nav-link" to="/signup">
-              Зарегистрироваться
-              <LoginIcon fontSize="large" style={{color:"white"}} />
-            </NavLink>
-            <NavLink className="nav-link" to="/login">
-              Войти
-              <FingerprintIcon fontSize="large" style={{color:"white"}} />
-            </NavLink>
+            <BottomNavigationAction
+              onClick={() => navigate('/signup')}
+              label="Зарегистрироваться"
+              value="signup"
+              icon={<LoginIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+            />
+            <BottomNavigationAction
+              onClick={() => navigate('/login')}
+              label="Войти"
+              value="login"
+              icon={<FingerprintIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+            />
           </>
         )}
-        <NavLink className="nav-link" to="/theme">
-          Тематика
-          <ContentPasteIcon fontSize="large" style={{color:"white"}} />
-        </NavLink>
+        <BottomNavigationAction
+          onClick={() => navigate('/theme')}
+          label="Темы"
+          value="theme"
+          icon={<BalanceIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+        />
+
         {user.status === 'active' && (
           <>
-            <NavLink className="nav-link" to="/" onClick={() => dispatch(logoutThunk())}>
-              <LogoutIcon fontSize="large" style={{color:"white"}} />
-            </NavLink>
+            <BottomNavigationAction
+              href="/"
+              onClick={() => {
+                dispatch(logoutThunk());
+                navigate('/');
+              }}
+              label="Выйти"
+              value="logout"
+              icon={<LogoutIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+            />
             {user.isAdmin && (
-              <NavLink className="nav-link" to="/admin">
-                <HomeIcon fontSize="large" style={{color:"white"}} />
-              </NavLink>
+              <BottomNavigationAction
+                onClick={() => navigate('/admin')}
+                label="Кабинет администратора"
+                value="admin"
+                icon={<AdminPanelSettingsIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+              />
             )}
           </>
         )}
-        <NavLink className="nav-link" to="/question">
-          Страница вопросов
-          <QuizIcon fontSize="large" style={{color:"white"}} />
-        </NavLink>
-        <NavLink className="nav-link" to="/answer">
-          Страница ответов
-        </NavLink>
-      </Navbar> */}
-      <hr style={{ margin: '0', borderTop: '1px solid #ccc', color: 'black' }} />
-    </div>
+        <BottomNavigationAction
+          onClick={() => navigate('/question')}
+          label="Вопросы"
+          value="question"
+          icon={<QuestionMarkIcon fontSize="large" style={{ color: '#3F88CC' }} />}
+        />
+        {user.status === 'active' && (
+          <BottomNavigationAction
+            onClick={() => navigate('/cabinet/requests')}
+            label="Личный кабинет"
+            value="folder"
+            icon={
+              <Avatar sx={{ bgcolor: '#3F88CC' }}>
+                {user?.firstName[0]}
+                {user?.lastName[0]}
+              </Avatar>
+            }
+          />
+        )}
+      </BottomNavigation>
+    </Navbar>
   );
 }

@@ -5,6 +5,7 @@ import GradeIcon from '@mui/icons-material/Grade';
 import { Stack } from '@mui/material';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { Row } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import SearchInputQuest from '../UI/SearchInputQuest';
 import type { QuestionType } from '../../types/questions/questionType';
@@ -13,7 +14,6 @@ import {
   getQuestionsByPage,
 } from '../../features/redux/slices/questions/questionsThunk';
 import MediaCard from '../UI/MediaCard';
-import { Row } from 'reactstrap';
 
 export default function QuestionsPage(): JSX.Element {
   const questions = useAppSelector<QuestionType[]>((state) => state.question.questions);
@@ -51,9 +51,14 @@ export default function QuestionsPage(): JSX.Element {
 
   return (
     <>
-      <SearchInputQuest />
+      <div style={{ margin: 'auto', width: '70%',  }}>
+        <SearchInputQuest />
+      </div>
+
       {pageCount ? (
         <Pagination
+          style={{ display: 'flex', flexWrap: 'wrap', gap: '1%', justifyContent: 'center', marginTop: '20px' }}
+          color="primary"
           count={pageCount}
           page={currentPage}
           onChange={paginationHandler}
@@ -62,7 +67,7 @@ export default function QuestionsPage(): JSX.Element {
       ) : null}
       <div className="question-list">
         {questions.length ? (
-          <Row>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1%', justifyContent: 'center', margin: '0', padding: '0' }}>
             {questions.map((question) => (
               <MediaCard
                 key={question?.id}
@@ -72,7 +77,7 @@ export default function QuestionsPage(): JSX.Element {
                 answer={question?.answer}
               />
             ))}
-          </Row>
+          </div>
         ) : (
           <p>Тут ничего нет, попробуйте поискать другую тему</p>
         )}

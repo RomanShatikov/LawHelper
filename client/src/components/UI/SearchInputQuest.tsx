@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { QuestionType } from '../../types/questions/questionType';
+import SearchIcon from '@mui/icons-material/Search';
 import { getFirstQuestions } from '../../features/redux/slices/questions/questionsThunk';
 
 type QuestFromBackend = {
@@ -43,13 +44,14 @@ export default function SearchInputQuest(): JSX.Element {
   };
 
   return (
-    <form onSubmit={(e) => submitHandler(e)} style={{ display: 'flex', alignItems: 'center' }}>
-      <div style={{ width: '30%' }}>
+    <form onSubmit={(e) => submitHandler(e)} style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
         <Autocomplete
           id="free-solo-demo"
           selectOnFocus
           clearOnBlur
           freeSolo
+          style={{ width: '100%' }}
           options={questsInInput.map((option) => ({ label: option.title, id: option.id }))}
           onInputChange={(event, newInputValue) => {
             setInput(newInputValue);
@@ -57,18 +59,22 @@ export default function SearchInputQuest(): JSX.Element {
           // eslint-disable-next-line react/jsx-props-no-spreading
           renderInput={(params) => (
             <TextField
-              variant="filled"
               {...params}
-              label="Вопрос"
+              InputProps={{
+                ...params.InputProps,
+                style: {
+                  color: 'black',
+                  backgroundColor: 'white',
+                  width: '100%',
+                },
+              }}
+              label="Введите вопрос"
               name="title"
-              style={{ width: '100%', borderRadius: '10px' }}
+              style={{ borderRadius: '10px' }}
             />
           )}
         />
       </div>
-      <Button type="submit" variant="contained" style={{ marginLeft: '10px' }}>
-        Найти
-      </Button>
     </form>
   );
 }

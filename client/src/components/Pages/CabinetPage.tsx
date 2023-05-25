@@ -20,23 +20,57 @@ export default function CabinetPage(): JSX.Element {
 
   return (
     <div>
-      <Avatar sx={{ bgcolor: '#1ebc6d' }}>
-        {user?.firstName[0]}
-        {user?.lastName[0]}
-      </Avatar>
-      <Typography>
-        {user?.firstName} {user?.lastName}
-      </Typography>
-      <Button variant="contained" type="button" onClick={(e) => setShowModal((prev) => !prev)}>
-        Обратная связь
-      </Button>
-      {showModal && <UserModalWindow showModal={showModal} setShowModal={setShowModal} />}
-      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/favorites')}>
-        Избранное
-      </Button>
-      <Button variant="contained" type="button" onClick={(e) => navigate('/cabinet/requests')}>
-        Предложения
-      </Button>
+      <div style={{ marginLeft: '12%',  marginTop: '30px' }}>
+        <Avatar sx={{ bgcolor: '#3F88CC', width: '70px', height: '70px' }}>
+          {user?.firstName[0]}
+          {user?.lastName[0]}
+        </Avatar>
+        <Typography>
+          {user?.firstName} {user?.lastName}
+        </Typography>
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <Button
+          variant="contained"
+          type="button"
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'white',
+            color: '#3F88CC',
+            margin: 'auto',
+          }}
+          onClick={(e) => setShowModal((prev) => !prev)}
+        >
+          Обратная связь
+        </Button>
+        {showModal && <UserModalWindow showModal={showModal} setShowModal={setShowModal} />}
+        <Button
+          variant="contained"
+          type="button"
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'white',
+            color: '#3F88CC',
+            margin: 'auto',
+          }}
+          onClick={(e) => navigate('/cabinet/favorites')}
+        >
+          Избранное
+        </Button>
+        <Button
+          variant="contained"
+          type="button"
+          style={{
+            backgroundColor: 'white',
+            borderColor: 'white',
+            color: '#3F88CC',
+            margin: 'auto',
+          }}
+          onClick={(e) => navigate('/cabinet/requests')}
+        >
+          Предложения
+        </Button>
+      </div>
       {location.pathname === '/cabinet/requests' ? <Requests /> : <Favorites />}
     </div>
   );

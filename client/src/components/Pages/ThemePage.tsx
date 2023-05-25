@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import Pagination from '@mui/material/Pagination';
+import { Row } from 'reactstrap';
 import SearchInputTheme from '../UI/SearchInputTheme';
 import SearchInputQuest from '../UI/SearchInputQuest';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
@@ -51,11 +52,38 @@ export default function ThemePage(): JSX.Element {
   };
   return (
     <>
-      <SearchInputQuest />
-      <SearchInputTheme />
-      {pageCount ? <Pagination count={pageCount} onClick={(e) => paginationHandler(e)} /> : null}
+      <div style={{ margin: 'auto', width: '70%', marginBottom: '2%' }}>
+        <SearchInputQuest />
+        <SearchInputTheme />
+      </div>
+      {pageCount ? (
+        <Pagination
+          count={pageCount}
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1%',
+            justifyContent: 'center',
+          }}
+          color="primary"
+          onClick={(e) => paginationHandler(e)}
+        />
+      ) : null}
       {themes.length ? (
-        themes?.map((theme) => <MediaCard key={theme?.id} title={theme?.title} id={theme?.id} />)
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10%',
+            alignContent: 'center',
+            alignItems: 'center',
+            marginLeft: '20%'
+          }}
+        >
+          {themes?.map((theme) => (
+            <MediaCard key={theme?.id} title={theme?.title} id={theme?.id} />
+          ))}
+        </div>
       ) : (
         <p>Тут ничего нет, попробуйте поискать другую тему</p>
       )}
