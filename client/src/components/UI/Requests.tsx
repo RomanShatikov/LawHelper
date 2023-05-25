@@ -4,14 +4,14 @@ import { getRequests } from '../../features/redux/slices/request/requestThunk';
 import MediaCard from './MediaCard';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { RequestType } from '../../types/request/requestType';
-import type{ ActiveType } from '../../types/user/userType';
+import type { ActiveType, UserType } from '../../types/user/userType';
 
-export default function Requests():JSX.Element {
-  const user = useAppSelector<ActiveType>((state) => state.user);
+export default function Requests(): JSX.Element {
+  const user = useAppSelector<UserType>((state) => state.user);
   const dispatch = useAppDispatch();
   const requests = useAppSelector<RequestType[]>((state) => state.request.requests);
   useEffect(() => {
-    dispatch(getRequests(user.id));
+    if (user.status === 'active') dispatch(getRequests(user.id));
   }, []);
 
   return (

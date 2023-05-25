@@ -11,10 +11,10 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import FunctionalButton from './FunctionalButton';
 
 type MediaCardProps = {
-  title: string;
-  id: number;
-  views: number;
-  feedback: string;
+  title?: string;
+  id?: number;
+  views?: number;
+  feedback?: string;
 };
 
 export default function MediaCard({ title, id, views, feedback }: MediaCardProps): JSX.Element {
@@ -45,12 +45,14 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
         {location.pathname !== '/cabinet/requests' && (
           <Button
             size="small"
-            onClick={(e) => (views ? navigate(`/answer/${id}`) : navigate(`/theme/${id}`))}
+            onClick={(e) =>
+              views ? navigate(`/answer/${Number(id)}`) : navigate(`/theme/${Number(id)}`)
+            }
           >
             Узнать больше
           </Button>
         )}
-        <FunctionalButton id={id} pathname={location.pathname} views={views} />
+        <FunctionalButton id={id} pathname={location.pathname} />
       </CardActions>
     </Card>
   );

@@ -52,12 +52,12 @@ export const checkUserThunk: ThunkActionCreater = () => (dispatch) => {
         dispatch(setUser({ ...data, status: 'active' }));
       }
     })
-    .catch(() => dispatch(logoutUser()));
+    .catch(() => dispatch(logoutUser('guest')));
 };
 
 export const logoutThunk: ThunkActionCreater = () => (dispatch) => {
   axios
     .get('/auth/logout')
-    .then(() => dispatch(logoutUser()))
+    .then(() => dispatch(logoutUser('guest')))
     .catch((err) => console.log(err));
 };

@@ -21,7 +21,6 @@ export type UserFromBackend = {
   firstName: string;
   lastName: string;
   email: string;
-  hashpass: string;
   isAdmin: boolean;
   confirmed: boolean;
 };

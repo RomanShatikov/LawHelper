@@ -9,20 +9,25 @@ export const getRequests: ThunkActionCreater<ActiveType['id']> = (userId) => asy
   const res = await axios<RequestType[]>(`/requests/${userId}`);
   dispatch(setRequest(res.data));
 };
-export const deleteRequestThunk: ThunkActionCreater<RequestType['id']> = (requestId) => (dispatch) => {
-  axios
-    .delete(`/admin/request/${requestId}`)
-    .then(() => dispatch(deleteRequest(requestId)))
-    .catch(console.log)
-};
+export const deleteRequestThunk: ThunkActionCreater<RequestType['id']> =
+  (requestId) => (dispatch) => {
+    axios
+      .delete(`/admin/request/${requestId}`)
+      .then(() => dispatch(deleteRequest(requestId)))
+      .catch(console.log);
+  };
 export const loadRequests: ThunkActionCreater = () => (dispatch) => {
   axios<RequestType[]>('/admin/')
     .then(({ data }) => dispatch(setRequest(data)))
     .catch(console.log);
-}
+};
 
-export const addRequest: ThunkActionCreater<RequestType> = (request) => async (dispatch) => {
-  const res = await axios.post<RequestType>('/crud/request',  request );
-  console.log('-----------', res.data);
+type AddRequestProp = {
+    userId: ActiveType['id'];
+    title: string;
+};
+
+export const addRequest: ThunkActionCreater<AddRequestProp> = ({userId, title}) => async (dispatch) => {
+  const res = await axios.post<RequestType>('/crud/request', {userId, title});
   dispatch(appendRequest(res.data));
 };
