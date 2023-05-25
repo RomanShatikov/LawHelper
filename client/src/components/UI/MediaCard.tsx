@@ -52,7 +52,7 @@ export default function MediaCard({ title, id, views, feedback }: MediaCardProps
             Узнать больше
           </Button>
         )}
-        <FunctionalButton id={id} pathname={location.pathname} views={views} />
+        <FunctionalButton id={id} pathname={location.pathname} />
       </CardActions>
     </Card>
   );

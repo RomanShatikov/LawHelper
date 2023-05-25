@@ -2,7 +2,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit'
 import type { ThemeType } from '../../../../types/theme/themeType';
 
-const initialState = {
+
+type ThemeInitStateSlice = {
+  themes: ThemeType[],
+};
+
+
+const initialState: ThemeInitStateSlice = {
   themes: [],
 };
 

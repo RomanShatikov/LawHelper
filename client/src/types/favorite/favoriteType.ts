@@ -7,3 +7,8 @@ export type FavoriteType = {
   questionId: number;
   Question: QuestionType;
 };
+
+export type FavoriteArg = {
+  userId?: number;
+  questionId?: number;
+};

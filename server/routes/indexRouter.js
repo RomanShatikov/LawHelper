@@ -121,7 +121,7 @@ indexRouter.post('/firstThemes', async (req, res) => {
   }
 });
 
-indexRouter.post('/allThemes', async (req, res) => {
+indexRouter.get('/allThemes', async (req, res) => {
   try {
     const themes = await Theme.findAll();
     res.send(themes);

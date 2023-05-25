@@ -2,7 +2,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { RequestType } from '../../../../types/request/requestType';
 
-const initialState = {
+type RequestInitStateSlice = {
+  requests: RequestType[];
+};
+
+const initialState:RequestInitStateSlice = {
   requests: [],
 };
 

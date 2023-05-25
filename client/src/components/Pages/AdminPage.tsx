@@ -8,7 +8,6 @@ import { getRequests, loadRequests } from '../../features/redux/slices/request/r
 
 export default function TransactionList(): JSX.Element {
   const requests = useAppSelector((store) => store.request.requests);
-  const user = useAppSelector((store) => store.user);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<RequestType | null>(null);
   const dispatch = useAppDispatch();

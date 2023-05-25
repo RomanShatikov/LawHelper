@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import { Dropdown, Modal, Button, Form } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
 import type { ThemeType } from '../../types/theme/themeType';
-import { useAppSelector } from '../../features/hooks';
+import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { getAllThemes } from '../../features/redux/slices/themes/themeThunk';
 import { deleteRequestThunk } from '../../features/redux/slices/request/requestThunk';
 import { submitQuestion } from '../../features/redux/slices/questions/questionsThunk';
 import type { RequestType } from '../../types/request/requestType';
+
 
 type State = {
   theme: number;
@@ -15,6 +15,11 @@ type State = {
   question: string;
   answer: string;
   urlDoc: string;
+  mark1: string;
+  mark2: string;
+  themeId: number;
+  id: number;
+  views: string;
 };
 
 type Props = {
@@ -24,7 +29,7 @@ type Props = {
 };
 
 export default function ModalPage({ showModal, onHide, selectedItem }: Props): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [showForm, setShowForm] = useState(false);
   const [inputs, setInputs] = useState<State>({
     theme: 0,
@@ -32,6 +37,11 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
     title: '',
     answer: '',
     urlDoc: '',
+    mark1: '',
+    mark2: '',
+    themeId: 0,
+    id: 0,
+    views: '',
   });
   const [title, setTitle] = useState('');
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
@@ -53,8 +63,10 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
   };
 
   const handleDeleteRequest = (): void => {
-    dispatch(deleteRequestThunk(selectedItem.id));
-    setTitle('');
+    if (selectedItem && selectedItem.id) {
+      dispatch(deleteRequestThunk(selectedItem.id));
+      setTitle('');
+    }
   };
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
@@ -66,10 +78,15 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
       question: '',
       answer: '',
       urlDoc: '',
+      mark1: '',
+      mark2: '',
+      themeId: 0,
+      id: 0,
+      views: '',
     });
   };
   useEffect(() => {
-    dispatch(getAllThemes(null));
+    dispatch(getAllThemes());
   }, []);
 
   return (

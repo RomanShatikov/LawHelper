@@ -3,10 +3,6 @@ import type { ThunkActionCreater } from '../../../store';
 import type { ThemeType } from '../../../../types/theme/themeType';
 import { setThemes } from './themeSlice';
 
-type GetFirstThemesProps = {
-  title?: ThemeType['title'];
-};
-
 export const getFirstThemes: ThunkActionCreater<ThemeType['title']> =
   (title) => async (dispatch) => {
     if (title) {
@@ -35,7 +31,8 @@ export const getThemesByPage: ThunkActionCreater<GetThemesByPageProps> =
     }
   };
 
-export const getAllThemes: ThunkActionCreater<null> = () => async (dispatch) => {
-  const res = await axios.post<ThemeType[]>('/allThemes');
-  dispatch(setThemes(res.data));
+export const getAllThemes: ThunkActionCreater = () => async (dispatch) => {
+  axios<ThemeType[]>(`/allThemes`)
+    .then(({ data }) => dispatch(setThemes(data)))
+    .catch((err) => console.error(err));
 };
