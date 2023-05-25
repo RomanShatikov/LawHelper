@@ -43,19 +43,30 @@ export default function SearchInputQuest(): JSX.Element {
   };
 
   return (
-    <form onSubmit={(e) => submitHandler(e)}>
-      <Autocomplete
-        id="free-solo-demo"
-        selectOnFocus
-        clearOnBlur
-        freeSolo
-        options={questsInInput.map((option) => ({ label: option.title, id: option.id }))}
-        onInputChange={(event, newInputValue) => {
-          setInput(newInputValue);
-        }}
-        renderInput={(params) => <TextField {...params} label="Вопрос" name="title" />}
-      />
-      <Button type="submit" variant="contained">
+    <form onSubmit={(e) => submitHandler(e)} style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ width: '30%' }}>
+        <Autocomplete
+          id="free-solo-demo"
+          selectOnFocus
+          clearOnBlur
+          freeSolo
+          options={questsInInput.map((option) => ({ label: option.title, id: option.id }))}
+          onInputChange={(event, newInputValue) => {
+            setInput(newInputValue);
+          }}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          renderInput={(params) => (
+            <TextField
+              variant="filled"
+              {...params}
+              label="Вопрос"
+              name="title"
+              style={{ width: '100%', borderRadius: '10px' }}
+            />
+          )}
+        />
+      </div>
+      <Button type="submit" variant="contained" style={{ marginLeft: '10px' }}>
         Найти
       </Button>
     </form>

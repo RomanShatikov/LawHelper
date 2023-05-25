@@ -26,7 +26,7 @@ function App(): JSX.Element {
   }, []);
 
   return (
-    <Container style={{ minHeight: '100vh', margin: 0, minWidth: '100vw' }}>
+    <Container style={{ minWidth: '100vw', margin: 0, minHeight: '100vh' }}>
       <Loader>
         <>
           <NavBar />

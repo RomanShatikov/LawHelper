@@ -1,0 +1,56 @@
+body {
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  padding: 0;
+}
+div#root {
+  padding: 0;
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+}
+
+.img {
+  background-image: url('./femida1.jpg');
+  /* background-color: #45a1d4; */
+
+  background-size: 100% 100%;
+  background-position: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 2px solid white;
+}
+
+.container {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.bold-text {
+  font-size: 50px;
+  color: #fff5ee;
+}
+
+.search-input-container {
+  margin-top: 1rem;
+}
+
+.question-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.card-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .card-container {
+    width: calc(100% / 3);
+  }
+}

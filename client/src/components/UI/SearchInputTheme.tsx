@@ -11,7 +11,7 @@ import type { ThemeType } from '../../types/theme/themeType';
 type ThemeFromBackend = {
   title: string;
   id: number;
-}
+};
 
 export default function SearchInputTheme(): JSX.Element {
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
@@ -38,8 +38,6 @@ export default function SearchInputTheme(): JSX.Element {
     };
   }, [input]);
 
-
-
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     navigate(`/themes/${input}`);
@@ -47,19 +45,29 @@ export default function SearchInputTheme(): JSX.Element {
 
   return (
     <form onSubmit={(e) => submitHandler(e)}>
-      <Autocomplete
-        id="free-solo-demo"
-        selectOnFocus
-        clearOnBlur
-        freeSolo
-        options={themesInInput.map((option) => ({ label: option.title, id: option.id }))}
-        onInputChange={(event, newInputValue) => {
-          setInput(newInputValue);
-        }}
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        renderInput={(params) => <TextField {...params} label="Тема" name="title" />}
-      />
-      <Button type="submit" variant="contained">
+      <div style={{ width: '30%' }}>
+        <Autocomplete
+          id="free-solo-demo"
+          selectOnFocus
+          clearOnBlur
+          freeSolo
+          options={themesInInput.map((option) => ({ label: option.title, id: option.id }))}
+          onInputChange={(event, newInputValue) => {
+            setInput(newInputValue);
+          }}
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          renderInput={(params) => (
+            <TextField
+              variant="filled"
+              {...params}
+              label="Тема"
+              name="title"
+              style={{ width: '100%', borderRadius: '10px' }}
+            />
+          )}
+        />
+      </div>
+      <Button type="submit" variant="contained" style={{ marginLeft: '10px' }}>
         Найти
       </Button>
     </form>
