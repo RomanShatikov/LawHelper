@@ -5,6 +5,7 @@ import { Autocomplete, Stack, TextField } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
+import SearchIcon from '@mui/icons-material/Search';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import type { ThemeType } from '../../types/theme/themeType';
 
@@ -44,13 +45,14 @@ export default function SearchInputTheme(): JSX.Element {
   };
 
   return (
-    <form onSubmit={(e) => submitHandler(e)}>
-      <div style={{ width: '30%' }}>
+    <form onSubmit={(e) => submitHandler(e)} style={{ width: '100%' }}>
+      <div style={{ width: '100%', marginTop: '2%' }}>
         <Autocomplete
           id="free-solo-demo"
           selectOnFocus
           clearOnBlur
           freeSolo
+          style={{ width: '100%' }}
           options={themesInInput.map((option) => ({ label: option.title, id: option.id }))}
           onInputChange={(event, newInputValue) => {
             setInput(newInputValue);
@@ -58,18 +60,22 @@ export default function SearchInputTheme(): JSX.Element {
           // eslint-disable-next-line react/jsx-props-no-spreading
           renderInput={(params) => (
             <TextField
-              variant="filled"
               {...params}
-              label="Тема"
+              InputProps={{
+                ...params.InputProps,
+                style: {
+                  color: 'black',
+                  backgroundColor: 'white',
+                  width: '100%',
+                },
+              }}
+              label="Введите тему"
               name="title"
-              style={{ width: '100%', borderRadius: '10px' }}
+              style={{ borderRadius: '10px' }}
             />
           )}
         />
       </div>
-      <Button type="submit" variant="contained" style={{ marginLeft: '10px' }}>
-        Найти
-      </Button>
     </form>
   );
 }

@@ -29,83 +29,52 @@ export default function AnswerPage(): JSX.Element {
   }, []);
 
   return (
-    <Container>
+    <Container
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '0',
+      }}
+    >
       <Row>
-        <Col md={4} className="mt-5 mb-4" style={{ marginBottom: '80px', marginRight: '200px' }}>
-          <Card
-            sx={{
-              width: 450,
-              height: 400,
-              borderColor: '#16c0ce',
-              borderWidth: '2px',
-              borderStyle: 'solid',
-              borderRadius: '20px',
-              fontSize: '1em',
-            }}
-          >
-            {/* <CardMedia sx={{ height: 300 }} /> */}
+        <Col
+          style={{
+            maxWidth: '60%',
+            minHeight: 'max-content',
+            margin: '0',
+            padding: '0',
+          }}
+          className="mt-5 mb-4"
+        >
+          <Card>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
                 {question?.title}
               </Typography>
               <div>
-                <VisibilityIcon />
+                <VisibilityIcon style={{ color: '#3F88CC' }} />
                 <Typography gutterBottom variant="h5" component="div">
                   {question?.views}
                 </Typography>
               </div>
               <Typography gutterBottom variant="h5" component="div">
+                Решение:
+              </Typography>
+              <Typography gutterBottom variant="h5" component="div">
                 {question?.answer}
               </Typography>
             </CardContent>
             <CardActions>
-              <FunctionalButton
-                id={Number(id)}
-                pathname={location.pathname}
-              />
+              <FunctionalButton id={Number(id)} pathname={location.pathname} />
             </CardActions>
           </Card>
         </Col>
-        <Col md={4} className="mt-5" style={{ marginBottom: '80px', marginRight: '40px' }}>
-          <Card
-            sx={{
-              width: 300,
-              height: 300,
-              borderColor: '#16c0ce',
-              borderWidth: '2px',
-              borderStyle: 'solid',
-              borderRadius: '20px',
-              fontSize: '1em',
-            }}
-          >
-            {document?.length !== 0 && <Docs id={Number(id)} />}
-          </Card>
+        <Col md={4} className="mt-5">
+          {document?.length !== 0 && <Docs id={Number(id)} />}
         </Col>
       </Row>
-      <Col
-        md={4}
-        className="mt-5"
-        style={{
-          marginBottom: '80px',
-          position: 'absolute',
-          bottom: 0,
-          right: 0,
-          marginRight: '10px',
-        }}
-      >
-        <Card
-          sx={{
-            width: 300,
-            height: 300,
-            borderColor: '#16c0ce',
-            borderWidth: '2px',
-            borderStyle: 'solid',
-            borderRadius: '20px',
-            fontSize: '1em',
-          }}
-        >
-          {question && question.mark1 && question.mark2 && <YandexMap />}
-        </Card>
+      <Col md={4} className="mt-5">
+        {question && question.mark1 && question.mark2 && <YandexMap />}
       </Col>
     </Container>
   );

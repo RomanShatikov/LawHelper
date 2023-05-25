@@ -9,7 +9,7 @@ indexRouter.get('/firstQuestions', async (req, res) => {
   try {
     const questions = await Question.findAll({
       order: [['views', 'DESC']],
-      limit: 5,
+      limit: 6,
     });
     res.send(questions);
   } catch (err) {
@@ -24,7 +24,7 @@ indexRouter.post('/questionsPageCount', async (req, res) => {
       const questions = await Question.findAll({
         where: { themeId: id },
       });
-      const pageCount = Math.ceil(questions.length / 5);
+      const pageCount = Math.ceil(questions.length / 6);
       res.send({ pageCount });
     } else if (title) {
       const questions = await Question.findAll({
@@ -32,11 +32,11 @@ indexRouter.post('/questionsPageCount', async (req, res) => {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
       });
-      const pageCount = Math.ceil(questions.length / 5);
+      const pageCount = Math.ceil(questions.length / 6);
       res.send({ pageCount });
     } else {
       const questions = await Question.findAll();
-      const pageCount = Math.ceil(questions.length / 5);
+      const pageCount = Math.ceil(questions.length / 6);
       res.send({ pageCount });
     }
   } catch (err) {
@@ -51,8 +51,8 @@ indexRouter.post('/paginationQuestions', async (req, res) => {
       const questions = await Question.findAll({
         where: { themeId: id },
         order: [['views', 'DESC']],
-        offset: (page - 1) * 5,
-        limit: 5,
+        offset: (page - 1) * 6,
+        limit: 6,
       });
       res.send(questions);
     } else if (title) {
@@ -61,15 +61,15 @@ indexRouter.post('/paginationQuestions', async (req, res) => {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
         order: [['views', 'DESC']],
-        offset: (page - 1) * 5,
-        limit: 5,
+        offset: (page - 1) * 6,
+        limit: 6,
       });
       res.send(questions);
     } else {
       const questions = await Question.findAll({
         order: [['views', 'DESC']],
-        offset: (page - 1) * 5,
-        limit: 5,
+        offset: (page - 1) * 6,
+        limit: 6,
       });
       res.send(questions);
     }
@@ -87,11 +87,11 @@ indexRouter.post('/themesPageCount', async (req, res) => {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
       });
-      const pageCount = Math.ceil(themes.length / 5);
+      const pageCount = Math.ceil(themes.length / 6);
       res.send({ pageCount });
     } else {
       const themes = await Theme.findAll();
-      const pageCount = Math.ceil(themes.length / 5);
+      const pageCount = Math.ceil(themes.length / 6);
       res.send({ pageCount });
     }
   } catch (err) {
@@ -107,12 +107,12 @@ indexRouter.post('/firstThemes', async (req, res) => {
         where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
-        limit: 5,
+        limit: 6,
       });
       res.send(themes);
     } else {
       const themes = await Theme.findAll({
-        limit: 5,
+        limit: 6,
       });
       res.send(themes);
     }
@@ -138,14 +138,14 @@ indexRouter.post('/paginationThemes', async (req, res) => {
         where: Sequelize.where(Sequelize.fn('LOWER', Sequelize.col('Theme.title')), {
           [Op.like]: `%${title.trim().toLowerCase()}%`,
         }),
-        offset: (page - 1) * 5,
-        limit: 5,
+        offset: (page - 1) * 6,
+        limit: 6,
       });
       res.send(themes);
     } else {
       const themes = await Theme.findAll({
-        offset: (page - 1) * 5,
-        limit: 5,
+        offset: (page - 1) * 6,
+        limit: 6,
       });
       res.send(themes);
     }
@@ -253,7 +253,7 @@ indexRouter.get('/firstQuestionsById/:id', async (req, res) => {
     const questions = await Question.findAll({
       where: { themeId: id },
       order: [['views', 'DESC']],
-      limit: 5,
+      limit: 6,
     });
     res.send(questions);
   } catch (err) {
@@ -269,7 +269,7 @@ indexRouter.get('/firstQuestionsByTitle/:title', async (req, res) => {
         [Op.like]: `%${title.trim().toLowerCase()}%`,
       }),
       order: [['views', 'DESC']],
-      limit: 5,
+      limit: 6,
     });
     res.send(questions);
   } catch (err) {

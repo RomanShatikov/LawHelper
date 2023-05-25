@@ -15,8 +15,18 @@ export default function Requests(): JSX.Element {
   }, []);
 
   return (
-    <div>
-      <Typography>Ваши предложения</Typography>
+    <div
+      style={{
+        margin: 'auto',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '80%',
+        marginTop: '20px',
+      }}
+    >
+      <Typography style={{ margin: 'auto' }}>Ваши предложения</Typography>
       {requests.map((request) => (
         <MediaCard key={request?.id} title={request?.title} feedback={request?.feedback} />
       ))}

@@ -40,16 +40,24 @@ export default function FunctionalButton({ pathname, id }: FunctionalButtonProps
 
   if (favorites.find((favorite) => favorite.questionId === id)) {
     return (
-      <Button size="small" onClick={deleteFavoriteHandler}>
-        <ClearIcon />
+      <Button
+        size="small"
+        onClick={deleteFavoriteHandler}
+        style={{ backgroundColor: 'transparent', border: 'none', color: '#fff' }}
+      >
+        <ClearIcon style={{ color: '#3F88CC' }} />
       </Button>
     );
   }
   if (pathname === '/cabinet/requests') return <p> </p>;
 
   return (
-    <Button size="small" onClick={addFavoriteHandler}>
-      <GradeIcon />
+    <Button
+      size="small"
+      style={{ backgroundColor: 'transparent', border: 'none', color: '#fff' }}
+      onClick={addFavoriteHandler}
+    >
+      <GradeIcon style={{ color: '#3F88CC' }} />
     </Button>
   );
 }

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, FormGroup } from 'react-bootstrap';
 import { Input, Label } from 'reactstrap';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Typography } from '@mui/material';
 import { loginUserThunk } from '../../features/redux/slices/user/thunkActions';
 import type { LoginForm } from '../../types/user/formTypes';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
@@ -18,22 +19,47 @@ export default function LogForm(): JSX.Element {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form
+      onSubmit={handleSubmit}
+      style={{ width: '30%', height: '30%', margin: 'auto', marginTop: '10%' }}
+    >
+      <Typography gutterBottom variant="h5" component="div">
+        Вход
+      </Typography>
       <FormGroup>
-        <Label for="exampleEmail">Email</Label>
-        <Input id="exampleEmail" name="email" type="email" />
+        <Input
+          id="exampleEmail"
+          label="E-mail"
+          name="email"
+          type="email"
+          style={{ marginTop: '10px' }}
+        />
         {erors.EmailEror && <p>{erors.EmailEror}</p>}
       </FormGroup>
 
       <FormGroup>
-        <Label for="examplePassword">Password</Label>
-        <Input id="examplePassword" name="password" type={isVisible ? 'text' : 'password'} />
-        <button type="button" onClick={() => setVisible(!isVisible)}>
-          <VisibilityIcon />
+        <Input
+          id="examplePassword"
+          name="password"
+          label="Пароль"
+          style={{ marginTop: '10px' }}
+          type={isVisible ? 'text' : 'password'}
+        />
+        <button
+          type="button"
+          onClick={() => setVisible(!isVisible)}
+          style={{ backgroundColor: 'transparent', border: 'none', color: '#fff' }}
+        >
+          <VisibilityIcon style={{ color: '#3F88CC' }} />
         </button>
         {erors.loginPasswordEror && <p>{erors.loginPasswordEror}</p>}
       </FormGroup>
-      <Button type="submit">Войти</Button>
+      <Button
+        type="submit"
+        style={{ backgroundColor: '#3F88CC', border: 'none', color: 'white', marginTop: '10px' }}
+      >
+        Войти
+      </Button>
     </Form>
   );
 }

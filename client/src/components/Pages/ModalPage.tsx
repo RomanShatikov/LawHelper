@@ -1,47 +1,31 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import { Dropdown, Modal, Button, Form } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import type { ThemeType } from '../../types/theme/themeType';
-import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { getAllThemes } from '../../features/redux/slices/themes/themeThunk';
+import { useAppSelector } from '../../features/hooks';
+import { getFirstThemes } from '../../features/redux/slices/themes/themeThunk';
+import { deleteRequest } from '../../features/redux/slices/request/requestSlice';
 import { deleteRequestThunk } from '../../features/redux/slices/request/requestThunk';
 import { submitQuestion } from '../../features/redux/slices/questions/questionsThunk';
-import type { RequestType } from '../../types/request/requestType';
-
 
 type State = {
   theme: number;
-  title: string;
   question: string;
   answer: string;
   urlDoc: string;
-  mark1: string;
-  mark2: string;
-  themeId: number;
-  id: number;
-  views: string;
 };
 
-type Props = {
-  showModal: boolean;
-  onHide: () => void;
-  selectedItem: RequestType | null;
-};
-
-export default function ModalPage({ showModal, onHide, selectedItem }: Props): JSX.Element {
-  const dispatch = useAppDispatch();
+export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Element {
+  const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
   const [inputs, setInputs] = useState<State>({
     theme: 0,
-    question: '',
     title: '',
     answer: '',
     urlDoc: '',
-    mark1: '',
-    mark2: '',
-    themeId: 0,
-    id: 0,
-    views: '',
   });
   const [title, setTitle] = useState('');
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
@@ -63,30 +47,22 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
   };
 
   const handleDeleteRequest = (): void => {
-    if (selectedItem && selectedItem.id) {
-      dispatch(deleteRequestThunk(selectedItem.id));
-      setTitle('');
-    }
+    dispatch(deleteRequestThunk(selectedItem.id));
+    setTitle('');
   };
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
     dispatch(submitQuestion(inputs));
     setShowForm(false);
     setInputs({
-      theme: 0,
+      theme: '',
       title: '',
-      question: '',
       answer: '',
       urlDoc: '',
-      mark1: '',
-      mark2: '',
-      themeId: 0,
-      id: 0,
-      views: '',
     });
   };
   useEffect(() => {
-    dispatch(getAllThemes());
+    dispatch(getFirstThemes());
   }, []);
 
   return (
@@ -95,8 +71,8 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
         <Modal.Title>Добавить новый запрос</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p className="title">{selectedItem?.title}</p>
-        <p className="feedback">{selectedItem?.feedback}</p>
+        <p className="title">{selectedItem.title}</p>
+        <p className="feedback">{selectedItem.feedback}</p>
         <div className="buttons">
           <Button
             variant="secondary"
@@ -108,25 +84,33 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
             Удалить
           </Button>
           {!showForm ? (
-            <Button variant="primary" onClick={() => setShowForm(true)}>
+            <Button
+              variant="primary"
+              style={{ marginLeft: '10px' }}
+              onClick={() => setShowForm(true)}
+            >
               Заполнить
             </Button>
           ) : (
-            <Button variant="primary" onClick={() => setShowForm(false)}>
+            <Button
+              variant="primary"
+              style={{ marginLeft: '10px' }}
+              onClick={() => setShowForm(false)}
+            >
               Скрыть
             </Button>
           )}
         </div>
         {showForm && (
-          <Form>
+          <Form style={{ marginTop: '10px' }}>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {title || 'Выберите тему'}
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                {themes?.map((theme: ThemeType) => (
-                  <Dropdown.Item key={theme?.id} onClick={() => handleThemeChange(theme)}>
-                    {theme?.title}
+                {themes?.map((theme) => (
+                  <Dropdown.Item key={theme.id} onClick={() => handleThemeChange(theme)}>
+                    {theme.title}
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -136,7 +120,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
               <Form.Control
                 type="text"
                 name="title"
-                value={inputs?.title}
+                value={inputs.title}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -145,7 +129,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
               <Form.Control
                 type="text"
                 name="answer"
-                value={inputs?.answer}
+                value={inputs.answer}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -154,7 +138,7 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
               <Form.Control
                 type="text"
                 name="urlDoc"
-                value={inputs?.urlDoc}
+                value={inputs.urlDoc}
                 onChange={handleChangeState}
               />
             </Form.Group>
@@ -162,11 +146,11 @@ export default function ModalPage({ showModal, onHide, selectedItem }: Props): J
         )}
       </Modal.Body>
       {showForm && (
-        <Modal.Footer>
+        <Modal.Footer style={{ marginLeft: '10px' }}>
           <Button variant="secondary" onClick={onHide}>
             Закрыть
           </Button>
-          <Button variant="primary" onClick={(e) => submitHandler}>
+          <Button variant="primary" onClick={submitHandler}>
             Добавить
           </Button>
         </Modal.Footer>

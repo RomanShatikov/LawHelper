@@ -22,11 +22,12 @@ export default function TransactionList(): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <ListGroup>
+          <ListGroup style={{ margin: 'auto',marginTop: '20px', marginBottom: '20px', width: '80%'}}>
             {requests.map((request: RequestType) => (
               <ListGroup.Item
                 key={request.id}
                 action
+                style={{backgroundColor: 'white',  margin: '3px', borderRadius: '8px'}}
                 variant="secondary"
                 onClick={() => handleCardClick(request)}
               >

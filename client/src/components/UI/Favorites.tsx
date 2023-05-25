@@ -19,8 +19,18 @@ export default function Favorites(): JSX.Element {
   }
 
   return (
-    <div>
-      <Typography>Ваши избранные вопросы</Typography>
+    <div
+      style={{
+        margin: 'auto',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '80%',
+        marginTop: '20px',
+      }}
+    >
+      <Typography style={{ margin: 'auto' }}>Ваши избранные вопросы</Typography>
       {favorites.map((favorite) => (
         <MediaCard
           key={favorite?.id}
