@@ -33,7 +33,7 @@ export default function MediaCard({
     <Col md={4} className="mt-5" style={{ marginBottom: '80px' }}>
       <Card
         sx={{
-          maxWidth: 450,
+          width: 450,
           height: 400,
           borderColor: '#16c0ce',
           borderWidth: '2px',
