@@ -16,7 +16,7 @@ type MediaCardProps = {
   id?: number;
   views?: number;
   feedback?: string;
-  answer: string
+  answer?: string
 };
 
 export default function MediaCard({
