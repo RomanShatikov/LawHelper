@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Card, Col } from 'reactstrap';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 
 export default function YandexMap(): JSX.Element {
@@ -27,6 +28,21 @@ export default function YandexMap(): JSX.Element {
       void window.ymaps.ready(init);
     }
   }, []);
-  return <div id="map" style={{ width: '300px', height: '300px' }} />;
-
+  return (
+    // <Col md={4} className="mt-5" style={{ marginBottom: '80px', marginRight: '40px' }}>
+    //   <Card
+    //     sx={{
+    //       width: 300,
+    //       height: 300,
+    //       borderColor: '#16c0ce',
+    //       borderWidth: '2px',
+    //       borderStyle: 'solid',
+    //       borderRadius: '20px',
+    //       fontSize: '1em',
+    //     }}
+    //   >
+        <div id="map" style={{ width: '300px', height: '300px' }} />
+    //   </Card>
+    // </Col>
+  );
 }
