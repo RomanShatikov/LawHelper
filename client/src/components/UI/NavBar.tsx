@@ -65,7 +65,7 @@ export default function NavBar(args: any): JSX.Element {
             icon={<ContentPasteIcon fontSize="large" style={{ color: 'white' }} />}
           />
 
-          {user.status === 'logged' && (
+          {user.status === 'active' && (
             <>
               <BottomNavigationAction
                 href="/"
@@ -90,12 +90,14 @@ export default function NavBar(args: any): JSX.Element {
             value="folder"
             icon={<QuizIcon fontSize="large" style={{ color: 'white' }} />}
           />
-          <BottomNavigationAction
-            href="/cabinet/requests"
-            label="Folder"
-            value="folder"
-            icon={<QuizIcon fontSize="large" style={{ color: 'white' }} />}
-          />
+          {user.status === 'active' && (
+            <BottomNavigationAction
+              href="/cabinet/requests"
+              label="Folder"
+              value="folder"
+              icon={<QuizIcon fontSize="large" style={{ color: 'white' }} />}
+            />
+          )}
         </BottomNavigation>
       </Navbar>
       {/* {user.status === 'active' && (
