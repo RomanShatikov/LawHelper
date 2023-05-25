@@ -2,8 +2,6 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useLocation, useParams } from 'react-router-dom';
 import { Col, Container, Row } from 'reactstrap';
@@ -59,9 +57,6 @@ export default function AnswerPage(): JSX.Element {
               <Typography gutterBottom variant="h5" component="div">
                 {question?.answer}
               </Typography>
-              <Typography gutterBottom variant="h5" component="div">
-                {question?.id}
-              </Typography>
             </CardContent>
             <CardActions>
               <FunctionalButton
@@ -84,7 +79,7 @@ export default function AnswerPage(): JSX.Element {
               fontSize: '1em',
             }}
           >
-            {document?.length !== 0 && <Docs id={id} />}
+            {document?.length !== 0 && <Docs id={Number(id)} />}
           </Card>
         </Col>
       </Row>
@@ -113,34 +108,6 @@ export default function AnswerPage(): JSX.Element {
           {question && question.mark1 && question.mark2 && <YandexMap />}
         </Card>
       </Col>
-      <Card sx={{ maxWidth: 400 }}>
-        <CardMedia sx={{ height: 300 }} />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {question?.title}
-          </Typography>
-          <div>
-            <VisibilityIcon />
-            <Typography gutterBottom variant="h5" component="div">
-              {question?.views}
-            </Typography>
-          </div>
-          <Typography gutterBottom variant="h5" component="div">
-            {question?.answer}
-          </Typography>
-          <Typography gutterBottom variant="h5" component="div">
-            {question?.id}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <FunctionalButton
-            id={Number(id)}
-            pathname={location.pathname}
-          />
-        </CardActions>
-      </Card>
-      <Col>{question && question.mark1 && question.mark2 && <YandexMap />}</Col>
-      {document?.length !== 0 && <Docs id={Number(id)} />}
     </Container>
   );
 }
