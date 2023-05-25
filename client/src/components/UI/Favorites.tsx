@@ -1,20 +1,23 @@
 import React, { useEffect } from 'react';
 import { Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import type { ActiveType } from '../../types/user/userType';
-import type { QuestionType } from '../../types/questions/questionType';
+import type { ActiveType, UserType } from '../../types/user/userType';
 import { getFavorites } from '../../features/redux/slices/questions/favoritesThunk';
 
 import MediaCard from './MediaCard';
 import type { FavoriteType } from '../../types/favorite/favoriteType';
 
-export default function Favorites():JSX.Element {
-  const user = useAppSelector<ActiveType>((state) => state.user);
+export default function Favorites(): JSX.Element {
+  const user = useAppSelector<UserType>((state) => state.user);
   const dispatch = useAppDispatch();
   const favorites = useAppSelector<FavoriteType[]>((state) => state.question.favorites);
-  useEffect(() => {
-    dispatch(getFavorites(user.id));
-  }, []);
+  {
+    user.status === 'active' &&
+      useEffect(() => {
+        dispatch(getFavorites(user.id));
+      }, []);
+  }
+
   return (
     <div>
       <Typography>Ваши избранные вопросы</Typography>

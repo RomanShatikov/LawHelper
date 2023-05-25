@@ -23,11 +23,11 @@ export default function AnswerPage(): JSX.Element {
   const { id } = useParams();
 
   React.useEffect(() => {
-    dispatch(getQuestionById(id));
+    dispatch(getQuestionById(Number(id)));
   }, []);
 
   React.useEffect(() => {
-    dispatch(getDocumentById(id));
+    dispatch(getDocumentById(Number(id)));
   }, []);
 
   return (
@@ -113,6 +113,34 @@ export default function AnswerPage(): JSX.Element {
           {question && question.mark1 && question.mark2 && <YandexMap />}
         </Card>
       </Col>
+      <Card sx={{ maxWidth: 400 }}>
+        <CardMedia sx={{ height: 300 }} />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {question?.title}
+          </Typography>
+          <div>
+            <VisibilityIcon />
+            <Typography gutterBottom variant="h5" component="div">
+              {question?.views}
+            </Typography>
+          </div>
+          <Typography gutterBottom variant="h5" component="div">
+            {question?.answer}
+          </Typography>
+          <Typography gutterBottom variant="h5" component="div">
+            {question?.id}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <FunctionalButton
+            id={Number(id)}
+            pathname={location.pathname}
+          />
+        </CardActions>
+      </Card>
+      <Col>{question && question.mark1 && question.mark2 && <YandexMap />}</Col>
+      {document?.length !== 0 && <Docs id={Number(id)} />}
     </Container>
   );
 }

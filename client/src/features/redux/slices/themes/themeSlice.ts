@@ -2,7 +2,13 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import {createSlice} from '@reduxjs/toolkit'
 import type { ThemeType } from '../../../../types/theme/themeType';
 
-const initialState = {
+
+type ThemeInitStateSlice = {
+  themes: ThemeType[],
+};
+
+
+const initialState: ThemeInitStateSlice = {
   themes: [],
 };
 
@@ -14,7 +20,7 @@ export const themeSlice = createSlice({
       state.themes = action.payload;
     },
     deleteTheme: (state, action: PayloadAction<ThemeType['id']>) => {
-      const foundIndex = state.themes.findIndex((el) => el.id === action.payload);
+      const foundIndex = state.themes.findIndex((el:ThemeType) => el.id === action.payload);
       if (foundIndex!== -1) 
       state.themes.splice(foundIndex, 1);
    },

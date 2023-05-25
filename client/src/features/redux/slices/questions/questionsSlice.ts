@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type { QuestionSliceType, QuestionType } from '../../../../types/questions/questionType';
-import { FavoriteType } from '../../../../types/favorite/favoriteType';
-import { DelFavoriteArg } from './favoritesThunk';
+import type { QuestionType } from '../../../../types/questions/questionType';
+import type { FavoriteType, FavoriteArg } from '../../../../types/favorite/favoriteType';
 
-const initialState: QuestionSliceType = {
+type QuestionInitStateSlice = {
+  questions: QuestionType[];
+  favorites: FavoriteType[];
+  currentQuestion: QuestionType | null;
+};
+
+const initialState: QuestionInitStateSlice = {
   questions: [],
   favorites: [],
   currentQuestion: null,
@@ -26,7 +31,7 @@ export const questionsSlice = createSlice({
     addFavorite: (state, action: PayloadAction<FavoriteType>) => {
       state.favorites.push(action.payload);
     },
-    delFavorite: (state, action: PayloadAction<DelFavoriteArg>) => {
+    delFavorite: (state, action: PayloadAction<FavoriteArg>) => {
       const foundFavoriteIndex = state.favorites.findIndex(
         (favorite) =>
           favorite.questionId === action.payload.questionId &&
@@ -39,10 +44,16 @@ export const questionsSlice = createSlice({
     setCurrentQuestion: (state, action: PayloadAction<QuestionType>) => {
       state.currentQuestion = action.payload;
     },
-}});
+  },
+});
 
-
-export const { setQuestions, addQuestion,setCurrentQuestion, setFavorites, addFavorite, delFavorite } =
-  questionsSlice.actions;
+export const {
+  setQuestions,
+  addQuestion,
+  setCurrentQuestion,
+  setFavorites,
+  addFavorite,
+  delFavorite,
+} = questionsSlice.actions;
 
 export default questionsSlice.reducer;

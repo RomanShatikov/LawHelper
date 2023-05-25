@@ -10,11 +10,12 @@ import FingerprintIcon from '@mui/icons-material/Fingerprint';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { logoutThunk } from '../../features/redux/slices/user/thunkActions';
+import { UserType } from '../../types/user/userType';
 import { Fingerprint } from '@mui/icons-material';
 
 export default function NavBar(args: any): JSX.Element {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector<UserType>((state) => state.user);
   const [value, setValue] = React.useState('recents');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {

@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import { useAppSelector } from '../../features/hooks';
-import type { ActiveType } from '../../types/user/userType';
+import type { ActiveType, UserType } from '../../types/user/userType';
 import Requests from '../UI/Requests';
 import Favorites from '../UI/Favorites';
 import UserModalWindow from '../UI/UserModalWindow';
 
 export default function CabinetPage(): JSX.Element {
-  const user = useAppSelector<ActiveType>((state) => state.user);
+  const user = useAppSelector<UserType>((state) => state.user);
+
   console.log(user);
-  const [showModal, setShowModal] = useState(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  if (user.status !== 'active') return <p />;
+
   return (
     <div>
       <Avatar sx={{ bgcolor: '#1ebc6d' }}>

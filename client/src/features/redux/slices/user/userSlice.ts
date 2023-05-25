@@ -1,6 +1,16 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { ActiveType, UserFromBackend, UserType } from '../../../../types/user/userType';
+import type {
+  ActiveType,
+  FetchingUserType,
+  GuestType,
+  NonActiveType,
+  UserFromBackend,
+  UserType,
+} from '../../../../types/user/userType';
 
 // Define the initial state using that type
 const initialState: UserType = {
@@ -9,11 +19,12 @@ const initialState: UserType = {
 
 export const userSlice = createSlice({
   name: 'user',
-  initialState: initialState as UserType,
+  initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserType>) => action.payload,
-    logoutUser: (state) => ({ status: 'guest' }),
-
+    logoutUser: (state: ActiveType, action: PayloadAction<GuestType['status']>) => ({
+      status: action.payload,
+    }),
   },
 });
 
