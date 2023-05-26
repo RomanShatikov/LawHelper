@@ -16,9 +16,10 @@ import type { FavoriteType, FavoriteArg } from '../../types/favorite/favoriteTyp
 type FunctionalButtonProps = {
   pathname?: string;
   id?: number;
+  views?: number;
 };
 
-export default function FunctionalButton({ pathname, id }: FunctionalButtonProps): JSX.Element {
+export default function FunctionalButton({ pathname, id, views }: FunctionalButtonProps): JSX.Element {
   const user = useAppSelector<UserType>((state) => state.user);
   const favorites = useAppSelector<FavoriteType[]>((state) => state.question.favorites);
   const dispatch = useAppDispatch();
@@ -37,8 +38,10 @@ export default function FunctionalButton({ pathname, id }: FunctionalButtonProps
   };
 
   if (user.status !== 'active') return <p> </p>;
+   if (user.isAdmin) return <p> </p>;
+   if (!views) return <p> </p>;
 
-  if (favorites.find((favorite) => favorite.questionId === id)) {
+  if ( favorites.find((favorite) => favorite.questionId === id)) {
     return (
       <Button
         size="small"

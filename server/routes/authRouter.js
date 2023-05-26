@@ -7,73 +7,95 @@ const sendEmail = require('../nodemailer');
 const authRouter = express.Router();
 
 authRouter.post('/signup', async (req, res) => {
-  const { email, firstName, lastName, password } = req.body;
+  try {
+    const { email, firstName, lastName, password } = req.body;
 
-  const hashpass = await bcrypt.hash(password, 10);
+    const hashpass = await bcrypt.hash(password, 10);
 
-  const confirmationCode = crypto.randomBytes(20).toString('hex');
+    const confirmationCode = crypto.randomBytes(20).toString('hex');
 
-  const [foundUser, created] = await User.findOrCreate({
-    where: { email },
-    defaults: {
-      firstName,
-      lastName,
-      hashpass,
-      confirmationCode,
-    },
-  });
+    const [foundUser, created] = await User.findOrCreate({
+      where: { email },
+      defaults: {
+        firstName,
+        lastName,
+        hashpass,
+        confirmationCode,
+      },
+    });
 
-  if (!created) return res.status(401).json({ message: 'e-mail уже зарегистрирован' });
+    if (!created) return res.status(401).json({ message: 'e-mail уже зарегистрирован' });
 
-  sendEmail(foundUser, confirmationCode);
+    sendEmail(foundUser, confirmationCode);
 
-  return res.json({ message: 'Письмо с подтверждением отправлено' });
+    return res.json({ message: 'Письмо с подтверждением отправлено' });
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 authRouter.get('/confirm/:confirmationCode', async (req, res) => {
-  const { confirmationCode } = req.params;
-  console.log(confirmationCode);
-  const foundUser = await User.findOne({ where: { confirmationCode } });
+  try {
+    const { confirmationCode } = req.params;
+    console.log(confirmationCode);
+    const foundUser = await User.findOne({ where: { confirmationCode } });
 
-  if (!foundUser) {
-    return res.status(404).json({ message: 'Неверный код подтверждения' });
+    if (!foundUser) {
+      return res.status(404).json({ message: 'Неверный код подтверждения' });
+    }
+
+    foundUser.confirmed = true;
+
+    await User.update({ confirmed: true }, { where: { id: foundUser.id } });
+    req.session.user = foundUser;
+
+    res.redirect('http://localhost:5173');
+  } catch (e) {
+    console.log(e);
   }
-
-  foundUser.confirmed = true;
-
-  await User.update({ confirmed: true }, { where: { id: foundUser.id } });
-  req.session.user = foundUser;
-
-  res.redirect('http://localhost:5173');
 });
 
 authRouter.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const foundUser = await User.findOne({ where: { email } });
+    const foundUser = await User.findOne({ where: { email } });
 
-  if (!foundUser) return res.status(401).json({ message: 'e-mail не зарегистрирован' });
-  if (!foundUser.confirmed) return res.status(401).json({ message: 'Пожалуйста подвердите свой e-mail' });
+    if (!foundUser) return res.status(401).json({ message: 'e-mail не зарегистрирован' });
+    if (!foundUser.confirmed) {
+      return res.status(401).json({ message: 'Пожалуйста подвердите свой e-mail' });
+    }
 
-  if (await bcrypt.compare(password, foundUser.hashpass)) {
-    req.session.user = foundUser;
-    return res.json(foundUser);
+    if (await bcrypt.compare(password, foundUser.hashpass)) {
+      req.session.user = foundUser;
+      return res.json(foundUser);
+    }
+
+    return res.status(401).json({ message: 'Неверный пароль' });
+  } catch (e) {
+    console.log(e);
   }
-
-  return res.status(401).json({ message: 'Неверный пароль' });
 });
 
 authRouter.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.clearCookie('user_id');
-  res.sendStatus(200);
+  try {
+    req.session.destroy();
+    res.clearCookie('user_id');
+    res.sendStatus(200);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 authRouter.get('/check', async (req, res) => {
-  if (req.session?.user?.id) {
-    return res.json(req.session.user);
+  try {
+    if (req.session?.user?.id) {
+      return res.json(req.session.user);
+    }
+    return res.sendStatus(401);
+  } catch (e) {
+    console.log(e);
   }
-  return res.sendStatus(401);
 });
 
 module.exports = authRouter;

@@ -65,7 +65,7 @@ export default function AnswerPage(): JSX.Element {
               </Typography>
             </CardContent>
             <CardActions>
-              <FunctionalButton id={Number(id)} pathname={location.pathname} />
+              <FunctionalButton id={Number(id)} pathname={location.pathname} views={Number(question?.views)}/>
             </CardActions>
           </Card>
         </Col>

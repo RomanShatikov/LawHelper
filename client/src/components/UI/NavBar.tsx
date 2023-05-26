@@ -60,7 +60,7 @@ export default function NavBar(args: any): JSX.Element {
           value="main"
           icon={<img src="../../../public/logo.png" alt="logo" width="50px" />}
         />
-        {user.status === 'guest' && (
+        {user.status !== 'active'  && (
           <>
             <BottomNavigationAction
               onClick={() => navigate('/signup')}
@@ -111,7 +111,7 @@ export default function NavBar(args: any): JSX.Element {
           value="question"
           icon={<QuestionMarkIcon fontSize="large" style={{ color: '#3F88CC' }} />}
         />
-        {user.status === 'active' && (
+        {user.status === 'active' && !user.isAdmin && (
           <BottomNavigationAction
             onClick={() => navigate('/cabinet/requests')}
             label="Личный кабинет"

@@ -9,7 +9,6 @@ export default function LoginPage(): JSX.Element {
   return (
     <>
       <LoginForm />
-      {user.status === 'non-active' && <p>Подтвердите почту</p>}
     </>
   );
 }

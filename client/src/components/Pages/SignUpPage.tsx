@@ -5,10 +5,5 @@ import type { UserType } from '../../types/user/userType';
 
 export default function SignUpPage(): JSX.Element {
   const user = useAppSelector<UserType>((state) => state.user);
-  return (
-    <>
-      <SignUpForm />
-      {user.status === 'non-active' && <p>Подтвердите почту</p>}
-    </>
-  );
+  return <SignUpForm />;
 }

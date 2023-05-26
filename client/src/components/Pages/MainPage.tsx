@@ -15,7 +15,7 @@ export default function MainPage(): JSX.Element {
               <SearchInputTheme />
             </div>
             <div>
-              <h1 className="bold-text">
+              <h1 style={{ fontSize: '30px', marginTop: '20px', color: 'grey' }} >
                 LawHelper - сервис, который позволяет получить нужный ответ на интересующий
                 юридический вопрос без чтения законов
               </h1>

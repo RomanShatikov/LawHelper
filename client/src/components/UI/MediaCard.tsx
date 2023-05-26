@@ -81,7 +81,7 @@ export default function MediaCard({
               Узнать больше
             </Button>
           )}
-          <FunctionalButton id={id} pathname={location.pathname} />
+          <FunctionalButton id={id} pathname={location.pathname} views={views}/>
         </CardActions>
       </Card>
     </Col>
