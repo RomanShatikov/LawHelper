@@ -7,16 +7,14 @@ import { useAppDispatch, useAppSelector } from '../../features/hooks';
 import { getRequests, loadRequests } from '../../features/redux/slices/request/requestThunk';
 
 export default function TransactionList(): JSX.Element {
-  // const [allRequests, setAllRequests] = useState<RequestType[]>([]);
   const requests = useAppSelector((store) => store.request.requests);
-  const user = useAppSelector((store) => store.user);
   const [showModal, setShowModal] = useState(false);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState<RequestType | null>(null);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(loadRequests());
   }, []);
-  const handleCardClick = (request: RequestType[]) => {
+  const handleCardClick = (request: RequestType): void => {
     setSelectedItem(request);
     setShowModal(true);
   };
@@ -24,11 +22,12 @@ export default function TransactionList(): JSX.Element {
     <Container>
       <Row>
         <Col>
-          <ListGroup>
-            {requests.map((request) => (
+          <ListGroup style={{ margin: 'auto',marginTop: '20px', marginBottom: '20px', width: '80%'}}>
+            {requests.map((request: RequestType) => (
               <ListGroup.Item
                 key={request.id}
                 action
+                style={{backgroundColor: 'white',  margin: '3px', borderRadius: '8px'}}
                 variant="secondary"
                 onClick={() => handleCardClick(request)}
               >

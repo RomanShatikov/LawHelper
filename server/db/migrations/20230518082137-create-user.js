@@ -21,6 +21,13 @@ module.exports = {
       hashpass: {
         type: Sequelize.STRING,
       },
+      confirmationCode: {
+        type: Sequelize.STRING,
+      },
+      confirmed: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       isAdmin: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,

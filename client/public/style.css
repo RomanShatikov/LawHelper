@@ -1,0 +1,22 @@
+body,
+div#root {
+  height: 100vh;
+  margin: 0;
+  width: 100vw;
+  padding: 0;
+}
+
+.img {
+  background: url('./44705888.jpg') no-repeat center / 80vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 2px solid white;
+}
+
+.titleContainer {
+  width: 30%;
+  height: 30%;
+  margin-left: 10%;
+  margin-top: 10%;
+}

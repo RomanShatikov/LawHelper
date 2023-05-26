@@ -13,6 +13,7 @@ module.exports = {
       email: 'admin@example.com',
       hashpass,
       isAdmin: true,
+      confirmed: true,
     });
     for (let i = 0; i < 20; i++) {
       arr.push({

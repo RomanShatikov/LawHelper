@@ -1,5 +1,5 @@
-export type LoggedType = UserFromBackend & {
-  status: 'logged';
+export type ActiveType = UserFromBackend & {
+  status: 'active';
 };
 
 export type FetchingUserType = {
@@ -10,13 +10,17 @@ export type GuestType = {
   status: 'guest';
 };
 
-export type UserType = GuestType | FetchingUserType | LoggedType;
+export type NonActiveType = UserFromBackend & {
+  status: 'non-active';
+};
+
+export type UserType = ActiveType | GuestType | FetchingUserType | NonActiveType;
 
 export type UserFromBackend = {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
-  hashpass: string;
   isAdmin: boolean;
+  confirmed: boolean;
 };

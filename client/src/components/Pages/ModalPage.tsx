@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import React, { useState, useEffect } from 'react';
 import type { ChangeEvent } from 'react';
 import { Dropdown, Modal, Button, Form } from 'react-bootstrap';
@@ -9,21 +11,21 @@ import { deleteRequest } from '../../features/redux/slices/request/requestSlice'
 import { deleteRequestThunk } from '../../features/redux/slices/request/requestThunk';
 import { submitQuestion } from '../../features/redux/slices/questions/questionsThunk';
 
-interface State {
+type State = {
   theme: number;
   question: string;
   answer: string;
   urlDoc: string;
-}
+};
 
 export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Element {
   const dispatch = useDispatch();
   const [showForm, setShowForm] = useState(false);
   const [inputs, setInputs] = useState<State>({
-    theme: 0,
+    theme: null,
     title: '',
     answer: '',
-    urlDoc: '',
+    urlDoc: null,
   });
   const [title, setTitle] = useState('');
   const themes = useAppSelector<ThemeType[]>((state) => state.theme.themes);
@@ -43,22 +45,39 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
       theme: selectedTheme.id,
     }));
   };
-  
+
+  const handleChangeFile = (e: ChangeEvent<HTMLInputElement>): void => {
+    setInputs((prevState) => ({
+      ...prevState,
+      urlDoc: e.target.files ? e.target.files[0] : null,
+    }));
+  };
+
   const handleDeleteRequest = (): void => {
     dispatch(deleteRequestThunk(selectedItem.id));
     setTitle('');
   };
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    dispatch(submitQuestion(inputs));
+    const formData = new FormData();
+    formData.append('theme', inputs.theme);
+    formData.append('title', inputs.title);
+    formData.append('answer', inputs.answer);
+    if (inputs.urlDoc) {
+      formData.append('urlDoc', inputs.urlDoc);
+    }
+    dispatch(submitQuestion(formData));
     setShowForm(false);
     setInputs({
-      theme: '',
+      theme: null,
       title: '',
       answer: '',
-      urlDoc: '',
+      urlDoc: null,
     });
+    onHide();
   };
+
   useEffect(() => {
     dispatch(getFirstThemes());
   }, []);
@@ -82,20 +101,28 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
             Удалить
           </Button>
           {!showForm ? (
-            <Button variant="primary" onClick={() => setShowForm(true)}>
+            <Button
+              variant="primary"
+              style={{ marginLeft: '10px' }}
+              onClick={() => setShowForm(true)}
+            >
               Заполнить
             </Button>
           ) : (
-            <Button variant="primary" onClick={() => setShowForm(false)}>
+            <Button
+              variant="primary"
+              style={{ marginLeft: '10px' }}
+              onClick={() => setShowForm(false)}
+            >
               Скрыть
             </Button>
           )}
         </div>
         {showForm && (
-          <Form>
+          <Form style={{ marginTop: '10px' }}>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {title ? title : 'Выберите тему'}
+                {title || 'Выберите тему'}
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 {themes?.map((theme) => (
@@ -125,22 +152,19 @@ export default function ModalPage({ showModal, onHide, selectedItem }): JSX.Elem
             </Form.Group>
             <Form.Group controlId="input2">
               <Form.Label>Ссылка на источник (url)</Form.Label>
-              <Form.Control
-                type="text"
-                name="urlDoc"
-                value={inputs.urlDoc}
-                onChange={handleChangeState}
-              />
+              <Form.Control type="file" name="urlDoc" onChange={handleChangeFile} />
             </Form.Group>
           </Form>
         )}
       </Modal.Body>
       {showForm && (
-        <Modal.Footer>
+        <Modal.Footer style={{ marginLeft: '10px' }}>
           <Button variant="secondary" onClick={onHide}>
             Закрыть
           </Button>
-          <Button variant="primary" onClick={submitHandler}>Добавить</Button>
+          <Button variant="primary" onClick={submitHandler}>
+            Добавить
+          </Button>
         </Modal.Footer>
       )}
     </Modal>

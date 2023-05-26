@@ -18,8 +18,8 @@ import { signUpThunk } from '../../features/redux/slices/user/thunkActions';
 import type { SignUpFormType } from '../../types/user/formTypes';
 
 export default function SignUpForm(): JSX.Element {
-   const erors = useAppSelector((state) => state.eror);
-   console.log(erors);
+  const erors = useAppSelector((state) => state.eror);
+  console.log(erors);
   const [input, setInput] = useState({
     firstName: '',
     lastName: '',
@@ -44,8 +44,7 @@ export default function SignUpForm(): JSX.Element {
   };
 
   function validatePassword(password: string, repeatPassword: string): boolean {
-    const regex =
-      /^(?=.*[A-Z].*[A-Z])(?=.*[!@#$&*])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8}$/;
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (password === '') {
       setError((prev) => ({ ...prev, password: 'Введите пароль' }));
@@ -55,7 +54,7 @@ export default function SignUpForm(): JSX.Element {
       setError((prev) => ({
         ...prev,
         password:
-          'Введите пароль длиной 8 символов, который содержит 3 прописные латинские буквы, 2 заглавные буквы, 2 цифры и специальный символ',
+          'Введите пароль длинной минимум восемь символов, содержащий минимум одну заглавную букву, одну строчную букву, одну цифру и один специальный символ:',
       }));
       return false;
     }
@@ -92,6 +91,7 @@ export default function SignUpForm(): JSX.Element {
     ) {
       const data = Object.fromEntries(new FormData(e.currentTarget)) as SignUpFormType;
       dispatch(signUpThunk(data));
+      alert('Проверьте почту');
     }
   };
 
@@ -106,11 +106,9 @@ export default function SignUpForm(): JSX.Element {
           alignItems: 'center',
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: 'black' }}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <img src="../../../public/logo.png" width={'70px'} alt="logo" />
         <Typography component="h1" variant="h5">
-          Sign up
+          Зарегистрироваться
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
@@ -167,8 +165,17 @@ export default function SignUpForm(): JSX.Element {
                 onChange={inputHandler}
                 autoComplete="new-password"
               />
-              <button type="button" onClick={() => setVisible(!isVisible)}>
-                <VisibilityIcon />
+              <button
+                type="button"
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#3F88CC',
+                  padding: '0',
+                }}
+                onClick={() => setVisible(!isVisible)}
+              >
+                <VisibilityIcon style={{ color: '#3F88CC' }} />
               </button>
               {error.password && <p>{error.password}</p>}
             </Grid>
@@ -184,12 +191,22 @@ export default function SignUpForm(): JSX.Element {
                 onChange={inputHandler}
                 autoComplete="new-password"
               />
-              <button type="button" onClick={() => setRepeatVisible(!isRepeatVisible)}>
-                <VisibilityIcon />
+              <button
+                type="button"
+                style={{
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                  color: '#3F88CC',
+                  padding: '0',
+                }}
+                onClick={() => setRepeatVisible(!isRepeatVisible)}
+              >
+                <VisibilityIcon style={{ color: '#3F88CC' }} />
               </button>
               {error.repeatPassword && <p>{error.repeatPassword}</p>}
             </Grid>
           </Grid>
+
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Зарегистрироваться
           </Button>

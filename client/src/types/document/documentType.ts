@@ -1,5 +1,6 @@
 export type DocumentType = {
   id: number;
+  title: string;
   questionId: number;
   urlDoc: string;
 };

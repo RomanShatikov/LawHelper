@@ -1,22 +1,32 @@
 import React, { useEffect } from 'react';
+import { Typography } from '@mui/material';
 import { getRequests } from '../../features/redux/slices/request/requestThunk';
 import MediaCard from './MediaCard';
-import { Typography } from '@mui/material';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import { RequestType } from '../../types/request/requestType';
-import { LoggedType } from '../../types/user/userType';
+import type { RequestType } from '../../types/request/requestType';
+import type { ActiveType, UserType } from '../../types/user/userType';
 
-export default function Requests() {
-  const user = useAppSelector<LoggedType>((state) => state.user);
+export default function Requests(): JSX.Element {
+  const user = useAppSelector<UserType>((state) => state.user);
   const dispatch = useAppDispatch();
   const requests = useAppSelector<RequestType[]>((state) => state.request.requests);
   useEffect(() => {
-    dispatch(getRequests(user.id));
+    if (user.status === 'active') dispatch(getRequests(user.id));
   }, []);
 
   return (
-    <div>
-      <Typography>Ваши предложения</Typography>
+    <div
+      style={{
+        margin: 'auto',
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+        alignItems: 'center',
+        width: '80%',
+        marginTop: '20px',
+      }}
+    >
+      <Typography style={{ margin: 'auto' }}>Ваши предложения</Typography>
       {requests.map((request) => (
         <MediaCard key={request?.id} title={request?.title} feedback={request?.feedback} />
       ))}
