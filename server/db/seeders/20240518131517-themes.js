@@ -1,18 +1,27 @@
-const { faker } = require('@faker-js/faker');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    const arr = [];
-    for (let i = 0; i < 20; i++) {
-      arr.push({
-        title: faker.commerce.department(),
-      });
-    }
-    await queryInterface.bulkInsert('Themes', arr, {});
-  },
-
-  async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('Themes', null, {});
+    await queryInterface.bulkInsert('Themes', [
+      {
+        id: 1,
+        title: 'Налоговое право',
+      },
+      {
+        id: 2,
+        title: 'Гражданское право',
+      },
+      {
+        id: 3,
+        title: 'Административное право',
+      },
+      {
+        id: 4,
+        title: 'Семейное право',
+      },
+      {
+        id: 5,
+        title: 'Трудовое право',
+      },
+    ]);
   },
 };
