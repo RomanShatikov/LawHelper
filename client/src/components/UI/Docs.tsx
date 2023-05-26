@@ -26,7 +26,7 @@ export default function DocCard({ url, id }: DocCardProps): JSX.Element {
   };
 
   return (
-    <div style={{ maxHeight: 'max-content', maxWidth: 'max-content', margin: 0 }}>
+    <div style={{ maxHeight: 'max-content', maxWidth: 'max-content', width: '300px', margin: 0 }}>
       <Typography gutterBottom variant="h5" component="div">
         Документы
       </Typography>
@@ -34,16 +34,14 @@ export default function DocCard({ url, id }: DocCardProps): JSX.Element {
         <Card key={document.id}>
           <CardMedia />
           <CardContent>
-            <div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <ArticleIcon
-                style={{ color: '#3F88CC' }}
+                style={{ color: '#3F88CC', width: '30px', height: '30px', marginRight: '10px' }}
                 onClick={() => downloadDoc(document.urlDoc)}
               />
-              <a href={document.urlDoc} download>
-                <Typography gutterBottom variant="h5" component="div">
-                  {`${document.title.slice(0, 20)}...`}
-                </Typography>
-              </a>
+              <Typography gutterBottom variant="h5" component="div" style={{ fontSize: '16px' }}>
+                Нажмите на иконку чтобы скачать документ
+              </Typography>
             </div>
           </CardContent>
         </Card>

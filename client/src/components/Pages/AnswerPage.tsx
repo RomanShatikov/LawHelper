@@ -47,25 +47,34 @@ export default function AnswerPage(): JSX.Element {
           className="mt-5 mb-4"
         >
           <Card>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {question?.title}
-              </Typography>
-              <div>
-                <VisibilityIcon style={{ color: '#3F88CC' }} />
+            <CardContent style={{ fontSize: '18px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  style={{ marginRight: '10px' }}
+                >
+                  {question?.title}
+                </Typography>
+                <VisibilityIcon style={{ color: '#3F88CC', height: '20px', width: '20px' }} />
                 <Typography gutterBottom variant="h5" component="div">
                   {question?.views}
                 </Typography>
               </div>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5" style={{ fontSize: '18px' }} component="div">
                 Решение:
               </Typography>
-              <Typography gutterBottom variant="h5" component="div">
+              <Typography gutterBottom variant="h5" style={{ fontSize: '15px' }} component="div">
                 {question?.answer}
               </Typography>
             </CardContent>
             <CardActions>
-              <FunctionalButton id={Number(id)} pathname={location.pathname} views={Number(question?.views)}/>
+              <FunctionalButton
+                id={Number(id)}
+                pathname={location.pathname}
+                views={Number(question?.views)}
+              />
             </CardActions>
           </Card>
         </Col>
