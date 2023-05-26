@@ -8,21 +8,22 @@ import Typography from '@mui/material/Typography';
 import { useLocation } from 'react-router-dom';
 import ArticleIcon from '@mui/icons-material/Article';
 import { useAppDispatch, useAppSelector } from '../../features/hooks';
-import getDocumentById from '../../features/redux/slices/documents/documentThunk';
 
 type DocCardProps = {
   url?: string;
   id?: number;
 };
-
 export default function DocCard({ url, id }: DocCardProps): JSX.Element {
   const localhost = 'http://localhost:5173/';
   const documents = useAppSelector((state) => state.document.documents);
   const dispatch = useAppDispatch();
   const location = useLocation();
   console.log(location);
-
   console.log('---ddd----', id);
+  const downloadDoc = async (urlDoc: string) => {
+    const filename = urlDoc.split('/').pop();
+    window.location.href = `http://localhost:3001/api/admin/downloads/${filename}`;
+  };
 
   return (
     <div style={{ maxHeight: 'max-content', maxWidth: 'max-content', margin: 0 }}>
@@ -34,9 +35,10 @@ export default function DocCard({ url, id }: DocCardProps): JSX.Element {
           <CardMedia />
           <CardContent>
             <div>
-              <a href={document.urlDoc} download>
-                <ArticleIcon />
-              </a>
+              <ArticleIcon
+                style={{ color: '#3F88CC' }}
+                onClick={() => downloadDoc(document.urlDoc)}
+              />
               <a href={document.urlDoc} download>
                 <Typography gutterBottom variant="h5" component="div">
                   {`${document.title.slice(0, 20)}...`}

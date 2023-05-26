@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const { Question, Theme, Favorite, Request, Sequelize, Document } = require('../db/models');
 
 const { Op } = Sequelize;
@@ -331,7 +332,13 @@ indexRouter.get('/documents/:id', async (req, res) => {
   console.log('-------------', id);
   try {
     const documents = await Document.findAll({ where: { questionId: id } });
-    res.json(documents);
+    const modifiedDocuments = documents.map((document) => ({
+      ...document.toJSON(),
+      title: decodeURIComponent(document.title), // Декодируем поле title
+    }));
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Pragma', 'no-cache');
+    res.json(modifiedDocuments);
   } catch (err) {
     console.log(err);
   }
